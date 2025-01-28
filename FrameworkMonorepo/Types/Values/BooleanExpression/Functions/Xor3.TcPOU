@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Xor3" Id="{c207aa19-7679-484e-95a6-239f8353cd91}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Xor3 : BoolValue
+VAR_INPUT
+	value1 : BoolValue;
+	value2 : BoolValue;
+	value3 : BoolValue;
+END_VAR
+VAR
+	p : POINTER TO BooleanExpression;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[p := __NEW(BooleanExpression);
+
+p^.Op3(
+	operator := BooleanOperator.XORop,
+	value1 := value1,
+	value2 := value2,
+	value3 := value3
+);
+
+Xor3 := p^;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

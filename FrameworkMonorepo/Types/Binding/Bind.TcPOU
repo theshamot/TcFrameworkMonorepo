@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Bind" Id="{90e98975-5217-4b6e-97cc-fa4c6cc2a31b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Bind : BoolValue
+VAR_INPUT
+	boolean : REFERENCE TO BOOL;
+END_VAR
+VAR
+	p : POINTER TO BoolBindingReadOnly;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[p := __NEW(BoolBindingReadOnly);
+
+p^.Bind(boolean);
+
+Bind := p^;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

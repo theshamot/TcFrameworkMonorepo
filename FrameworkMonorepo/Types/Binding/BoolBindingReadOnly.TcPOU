@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="BoolBindingReadOnly" Id="{f035c595-f3d7-4302-a6a4-0e368016167c}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'hide_all_locals'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK BoolBindingReadOnly IMPLEMENTS BoolBindable
+VAR
+	ref : REFERENCE TO BOOL;
+	_Negate : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Bind" Id="{e983f9b6-0ab6-437c-96e5-a762d13ac396}">
+      <Declaration><![CDATA[METHOD Bind
+VAR_INPUT
+	boolean : REFERENCE TO BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ref REF= boolean;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsBinded" Id="{b98b2f4c-bef9-4cbe-8145-c6052f4c6749}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsBinded : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c3ecef46-ab78-4488-800b-ef0c98e1f08e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsBinded := __ISVALIDREF(ref);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Negate" Id="{71f8018d-5674-4339-86f2-5a523bdef0bb}">
+      <Declaration><![CDATA[PROPERTY Negate : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5f5839d5-85dd-4f15-9ce5-a576769aa98b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Negate := _Negate;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{28879c35-1f76-4604-9898-7f1bf0b41a79}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Negate := Negate;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Value" Id="{be34ded7-c52a-40b6-be7d-89514242f0d3}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Value : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c9cb8b85-06e5-474e-ad80-b0bc709ea14b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Value := ref XOR _Negate;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

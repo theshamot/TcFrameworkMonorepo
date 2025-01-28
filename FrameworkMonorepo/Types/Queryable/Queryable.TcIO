@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="Queryable" Id="{b9eb6f36-0420-4aac-a46a-035e38d7498b}">
+    <Declaration><![CDATA[INTERFACE Queryable EXTENDS __SYSTEM.IQueryInterface
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

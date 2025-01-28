@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="BoolValues" Id="{fbfbab9c-b9e2-45c2-963b-b3aa3b72aad8}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	FalseValue : FalseBoolValue := ();
+	TrueValue : TrueBoolValue := ();
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

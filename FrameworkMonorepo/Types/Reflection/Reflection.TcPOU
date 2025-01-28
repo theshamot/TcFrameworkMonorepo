@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Reflection" Id="{e546182a-9a61-412e-a041-ccf1a64e3676}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'hide_all_locals'}
+{attribute 'reflection'}
+FUNCTION_BLOCK Reflection
+VAR
+    {attribute 'instance-path'} 
+    {attribute 'noinit'} 
+    reflectionInstanceName : T_MaxString;
+	_InstanceName : T_MaxString := RemoveReflectionFromName(reflectionInstanceName);
+	
+	typeReader : FB_JsonReadWriteDatatype;
+	_Name : T_MaxString := RemoveReflectionFromName(GetNameOfThis());
+	_TypeName : T_MaxString := GetTypeOfThis();
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="GetNameOfThis" Id="{15a071b2-1f47-454e-b5cb-eb711bcab782}">
+      <Declaration><![CDATA[METHOD PRIVATE GetNameOfThis : T_MaxString
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetNameOfThis := typeReader.GetSymbolNameByAddress(nData := SIZEOF(THIS^), pData := THIS);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetTypeOfThis" Id="{ca83d198-b700-4527-a88a-efbecf5da8c0}">
+      <Declaration><![CDATA[METHOD PRIVATE GetTypeOfThis : T_MaxString
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetTypeOfThis := typeReader.GetDatatypeNameByAddress(nData := SIZEOF(THIS^), pData := THIS);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="InstanceName" Id="{391361aa-c916-4c61-9edb-2a54eb7a55c7}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY InstanceName : STRING]]></Declaration>
+      <Get Name="Get" Id="{5ea0a207-a703-4bfa-bd47-aa2c1b3ca6bb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InstanceName := _InstanceName;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Name" Id="{325eaf0c-0bd3-4bc2-a78c-ecf0516de9de}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Name : STRING]]></Declaration>
+      <Get Name="Get" Id="{7bbb2a49-125e-414c-9a45-34e7df89792d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := _Name;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="RemoveReflectionFromName" Id="{073f797b-509c-4b33-8ad2-e208f3844fad}">
+      <Declaration><![CDATA[METHOD PRIVATE RemoveReflectionFromName : T_MaxString
+VAR_INPUT
+	name : T_MaxString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// 11 is length of ".Reflection"
+RemoveReflectionFromName := LEFT(STR := name, SIZE := LEN(name) - 11);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="TypeName" Id="{a330c7d1-13f1-4230-aa2c-123211104a1e}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY TypeName : STRING]]></Declaration>
+      <Get Name="Get" Id="{b4f36e82-1f01-4f27-9b98-215b534f2e85}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TypeName := _TypeName;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

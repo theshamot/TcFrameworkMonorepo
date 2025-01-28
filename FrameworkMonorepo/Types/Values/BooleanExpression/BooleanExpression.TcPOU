@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="BooleanExpression" Id="{252b437c-5b59-4304-9997-f664160750e1}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'hide_all_locals'}
+{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK BooleanExpression IMPLEMENTS BoolValue
+VAR
+	operands : ARRAY[0..MaxIndex - 1] OF BoolValue;
+	operandCount : INT;
+	operator : BooleanOperator;
+END_VAR
+VAR CONSTANT
+	MaxIndex : INT := 4;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Clear" Id="{a6758dee-09fc-4b38-b201-d1fab7dd2b75}">
+      <Declaration><![CDATA[METHOD Clear
+VAR
+	i : INT;
+	p : POINTER TO BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO operandCount - 1 DO
+	__QUERYPOINTER(operands[i], p);
+	__DELETE(p);
+	operands[i] := 0;
+END_FOR
+
+operandCount := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Op2" Id="{afe9c38d-514a-4c19-96fb-8944ede1e2b3}">
+      <Declaration><![CDATA[METHOD Op2
+VAR_INPUT
+	operator : BooleanOperator;
+	value1 : BoolValue;
+	value2 : BoolValue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Clear();
+
+THIS^.operator := operator;
+
+operands[0] := value1;
+operands[1] := value2;
+operandCount := 2;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Op3" Id="{106970fa-a2de-4258-8006-b4516e9ca319}">
+      <Declaration><![CDATA[METHOD Op3
+VAR_INPUT
+	operator : BooleanOperator;
+	value1 : BoolValue;
+	value2 : BoolValue;
+	value3 : BoolValue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Clear();
+
+THIS^.operator := operator;
+
+operands[0] := value1;
+operands[1] := value2;
+operands[2] := value3;
+operandCount := 3;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Op4" Id="{5d4d13a7-32f9-4ff7-a6cb-aacd64fea72a}">
+      <Declaration><![CDATA[METHOD Op4
+VAR_INPUT
+	operator : BooleanOperator;
+	value1 : BoolValue;
+	value2 : BoolValue;
+	value3 : BoolValue;
+	value4 : BoolValue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Clear();
+
+THIS^.operator := operator;
+
+operands[0] := value1;
+operands[1] := value2;
+operands[2] := value3;
+operands[3] := value4;
+operandCount := 4;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Value" Id="{953ffa41-6c27-4c5e-8b02-5e85c7e4104e}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Value : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ddbb5703-506f-4cc0-81d8-7c2f7c0cd7c2}">
+        <Declaration><![CDATA[VAR
+	i : INT;
+	result : BOOL;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF (operandCount = 0) THEN
+	RETURN;
+END_IF
+
+CASE operator OF
+	
+	BooleanOperator.ANDop:
+		
+		result := operands[0].Value;
+		FOR i := 1 TO operandCount - 1 DO
+			result := result AND operands[i].Value;
+		END_FOR	
+		
+	BooleanOperator.ORop:
+		
+		result := operands[0].Value;
+		FOR i := 1 TO operandCount - 1 DO
+			result := result OR operands[i].Value;
+		END_FOR	
+		
+	BooleanOperator.XORop:
+		
+		result := operands[0].Value;
+		FOR i := 1 TO operandCount - 1 DO
+			result := result XOR operands[i].Value;
+		END_FOR	
+		
+END_CASE
+
+Value := result;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="NotBind" Id="{809af615-d612-4af0-a510-c79c246103b6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION NotBind : BoolValue
+VAR_INPUT
+	boolean : REFERENCE TO BOOL;
+END_VAR
+VAR
+	p : POINTER TO BoolBindingReadOnly;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[p := __NEW(BoolBindingReadOnly);
+
+p^.Bind(boolean);
+p^.Negate := TRUE;
+
+NotBind := p^;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

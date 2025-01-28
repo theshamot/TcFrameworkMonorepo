@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Or4" Id="{f5b3bd71-2cfc-47b1-93e1-87f13328819a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Or4 : BoolValue
+VAR_INPUT
+	value1 : BoolValue;
+	value2 : BoolValue;
+	value3 : BoolValue;
+	value4 : BoolValue;
+END_VAR
+VAR
+	p : POINTER TO BooleanExpression;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[p := __NEW(BooleanExpression);
+
+p^.Op4(
+	operator := BooleanOperator.ORop,
+	value1 := value1,
+	value2 := value2,
+	value3 := value3,
+	value4 := value4
+);
+
+Or4 := p^;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

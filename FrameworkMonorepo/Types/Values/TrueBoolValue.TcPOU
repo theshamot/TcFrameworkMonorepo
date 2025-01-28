@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TrueBoolValue" Id="{32544c48-7ac0-4545-b8e7-eec2336e8f9e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TrueBoolValue IMPLEMENTS BoolValue
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Value" Id="{466e9ca4-1de8-43d8-8bec-ef7297ae9bf7}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Value : BOOL]]></Declaration>
+      <Get Name="Get" Id="{53b48b8a-4560-499f-8562-2f221b611a10}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Value := TRUE;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

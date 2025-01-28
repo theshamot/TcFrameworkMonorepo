@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="BoolValue" Id="{01d29d36-ba7c-4092-b1f5-74f7b21e0ae2}">
+    <Declaration><![CDATA[INTERFACE BoolValue EXTENDS Queryable
+]]></Declaration>
+    <Property Name="Value" Id="{87675c9a-aa39-47a0-9993-c0c6c1a66444}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Value : BOOL]]></Declaration>
+      <Get Name="Get" Id="{47cd0bb6-72a2-4984-b13f-95db0f6a6103}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

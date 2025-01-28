@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Decimal" Id="{1445bc49-7abe-4bdc-98cb-0563cc327d49}">
+    <Declaration><![CDATA[TYPE Decimal : LREAL; END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

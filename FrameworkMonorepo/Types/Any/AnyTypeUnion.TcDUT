@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="AnyTypeUnion" Id="{7f8adaf5-42b0-4d0e-b386-fa6d113a2227}">
+    <Declaration><![CDATA[TYPE AnyTypeUnion :
+UNION
+	BOOL_ : BOOL;
+	BIT_ : BIT;
+	BYTE_ : BYTE;
+	WORD_ : WORD;
+	DWORD_ : DWORD;
+	LWORD_ : LWORD;
+	SINT_ : SINT;
+	INT_ : INT;
+	DINT_ : DINT;
+	LINT_ : LINT;
+	USINT_ : USINT;
+	UINT_ : UINT;
+	UDINT_ : UDINT;
+	ULINT_ : ULINT;
+	REAL_ : REAL;
+	LREAL_ : LREAL;
+	STRING_ : T_MaxString;
+	TIME_ : TIME;
+	DATE_ : DATE;
+	DATEANDTIME_ : DATE_AND_TIME;
+	TIMEOFDAY_ : TIME_OF_DAY;
+	POINTER_ : POINTER TO BYTE;
+	LTIME_ : LTIME;
+END_UNION
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

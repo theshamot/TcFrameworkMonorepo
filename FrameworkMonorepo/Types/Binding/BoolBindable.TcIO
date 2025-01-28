@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="BoolBindable" Id="{8f04499d-19eb-4dd2-b8af-875c3c8c103f}">
+    <Declaration><![CDATA[INTERFACE BoolBindable EXTENDS BoolValue
+]]></Declaration>
+    <Method Name="Bind" Id="{459d7cac-5a1f-4699-9462-ccea2c760ef6}">
+      <Declaration><![CDATA[METHOD Bind
+VAR_INPUT
+	boolean : REFERENCE TO BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="IsBinded" Id="{bf207122-e156-4541-9506-c25dc82fbd26}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsBinded : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9887206b-7c43-4055-99d6-088a465da390}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="Value" Id="{6feaffc9-3a14-40e4-9edd-d6a719a7d44f}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Value : BOOL]]></Declaration>
+      <Get Name="Get" Id="{76862903-a861-4f7e-b2d3-24a8e8d88b0a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>
