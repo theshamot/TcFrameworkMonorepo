@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StringBuilderInfinite" Id="{494d6245-e98b-407b-8559-a62542a9481d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderInfinite
+VAR
+	_Value : POINTER TO STRING := Allocate();
+	_Capacity : DINT;
+	_Length : DINT;
+END_VAR
+VAR CONSTANT
+	InitialCapacity : DINT := 1000;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Allocate" Id="{72f372ee-36a0-4599-bcb3-9e89a2e7d55f}">
+      <Declaration><![CDATA[METHOD PRIVATE Allocate : POINTER TO STRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Capacity := InitialCapacity;
+Allocate := __NEW(STRING, _Capacity);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Append" Id="{3f970321-6f9c-4ccc-a49e-0bee078cd44e}">
+      <Declaration><![CDATA[METHOD Append : REFERENCE TO StringBuilderInfinite
+VAR_INPUT
+	value : T_MaxString;
+END_VAR
+VAR
+	lengthToCopy : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[lengthToCopy := LEN(value);
+
+EnsureCapacity(_Capacity + lengthToCopy);
+
+MEMCPY(
+	destAddr := _Value + _Length,
+	srcAddr := ADR(value),
+	n := lengthToCopy
+);
+
+_Length := _Length + lengthToCopy;
+
+Append REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AppendByPointer" Id="{e006be62-c9ae-42f9-8fa8-db175748148b}">
+      <Declaration><![CDATA[METHOD AppendByPointer : REFERENCE TO StringBuilderInfinite
+VAR_INPUT
+	value : POINTER TO STRING;
+END_VAR
+VAR
+	lengthToCopy : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[lengthToCopy := LEN2(value);
+
+EnsureCapacity(_Capacity + lengthToCopy);
+
+MEMCPY(
+	destAddr := _Value + _Length,
+	srcAddr := value,
+	n := lengthToCopy
+);
+
+_Length := _Length + lengthToCopy;
+
+AppendByPointer REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Capacity" Id="{c6065eee-19df-405d-9144-9537f9fd3d36}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Capacity : DINT]]></Declaration>
+      <Get Name="Get" Id="{82a87c1d-357d-4e74-9854-e7f5ff606f38}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Capacity := _Capacity;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Clear" Id="{1c371b6f-9ba8-42e2-be37-4fe7f206e4c7}">
+      <Declaration><![CDATA[METHOD Clear : REFERENCE TO StringBuilderInfinite
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MEMSET(
+	destAddr := _Value,
+	fillByte := 0,
+	n := _Length
+);
+
+_Length := 0;
+
+Clear REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="EnsureCapacity" Id="{b4d61f91-eb48-4a47-a69f-a556c9b5aa5e}">
+      <Declaration><![CDATA[METHOD PRIVATE EnsureCapacity
+VAR_INPUT
+	needed : DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (needed < _Capacity) THEN
+	RETURN;
+END_IF
+
+IF (needed > _Capacity * 2) THEN
+	_Capacity := needed;
+ELSE
+	_Capacity := NextPowerOf2(needed);
+END_IF
+
+Reallocate();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{089b2b60-5868-4471-8e05-d2e1026c18e5}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[__DELETE(_Value);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsEmpty" Id="{d36d74ea-bcac-4b88-9ef3-3fe5ee91e2e3}">
+      <Declaration><![CDATA[PROPERTY IsEmpty : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5c965a97-5668-4cf4-8e11-ba178f6b9362}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsEmpty := Length = 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Length" Id="{2bbbae11-4f2c-44c2-b6cc-708c2ab7daf4}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Length : DINT]]></Declaration>
+      <Get Name="Get" Id="{ac7f521b-1ab7-44a1-b536-c1b960a89b90}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := _Length;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="NextPowerOf2" Id="{3b448972-0092-4aa9-ae1a-997eaf88648a}">
+      <Declaration><![CDATA[METHOD PRIVATE NextPowerOf2 : UDINT
+VAR_INPUT
+	n : UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[n := n - 1;
+n := n OR SHR(n, 1);
+n := n OR SHR(n, 2);
+n := n OR SHR(n, 4);
+n := n OR SHR(n, 8);
+n := n OR SHR(n, 16);
+n := n + 1;
+NextPowerOf2 := n;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reallocate" Id="{8f039273-b116-47dd-bf35-078db7701848}">
+      <Declaration><![CDATA[METHOD PRIVATE Reallocate
+VAR_INPUT
+END_VAR
+VAR
+	new : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[new := __NEW(STRING, _Capacity);
+MEMCPY(new, _Value, _Length);
+__DELETE(_Value);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Value" Id="{cfdb86ac-3c93-4424-b346-f83099aa6553}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Value : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{8a91e9a7-9267-487a-87eb-3359d3a82716}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Value := _Value;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

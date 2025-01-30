@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ReplaceString" Id="{1d9a911a-d2c2-41a5-bc59-e93c9a23e24a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ReplaceString
+VAR_INPUT
+	in : ANY;
+	replaced : T_MaxString;
+	with : T_MaxString;
+END_VAR
+VAR
+	replaceBegin : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[replaceBegin := FIND2(in.pValue, ADR(replaced));
+
+IF (replaceBegin = 0) THEN
+	RETURN;
+END_IF
+
+REPLACE2(in.pValue, ADR(with), in.pValue, in.diSize, LEN(with), replaceBegin);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3b8cffbe-c2cf-44d5-82c4-318eecafd22f}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>String</Name>
+    <ProgramVersion>3.1.4024.0</ProgramVersion>
+    <Application>{d283251f-c5b3-4cc3-b23c-44face555955}</Application>
+    <TypeSystem>{bd06cedf-8ace-478d-8893-40fb37089fb2}</TypeSystem>
+    <Implicit_Task_Info>{e2b40aee-c68e-4857-a517-53c5a8c607fd}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{3453a471-3ed8-4b3a-b27f-dd5fc4bb647c}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{17144111-23c5-4100-9d44-4328a4777a0f}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{39e59b73-bd67-4771-84b3-ba8d8aef0625}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DUTs" />
+    <Folder Include="GVLs" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+</Project>

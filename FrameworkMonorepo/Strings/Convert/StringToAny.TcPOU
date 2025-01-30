@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StringToAny" Id="{c5971ef8-45ec-4504-93e7-bc3ce7d79625}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION StringToAny
+VAR_INPUT
+	text : T_MaxString;
+	output : ANY;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[StringToAnyType(text, output);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

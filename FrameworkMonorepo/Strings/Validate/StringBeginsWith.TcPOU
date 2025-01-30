@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StringBeginsWith" Id="{80260d38-3b40-4b96-b755-073edaa4e021}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION StringBeginsWith : BOOL
+VAR_INPUT
+	text : ANY;
+	startsWithString : T_MaxString;
+END_VAR
+VAR
+	textLength : DINT;
+	length : DINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[textLength := LEN2(text.pValue);
+length := LEN(startsWithString);
+
+IF (textLength < length) THEN
+	RETURN;
+END_IF
+
+StringBeginsWith := MEMCMP(pBuf1 := text.pValue, pBuf2 := ADR(startsWithString), n := length) = 0;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

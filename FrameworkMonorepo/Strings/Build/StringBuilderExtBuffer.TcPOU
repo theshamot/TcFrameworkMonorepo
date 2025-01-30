@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StringBuilderExtBuffer" Id="{261b6625-c824-4ba7-8b30-9e72c2ea80b1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderExtBuffer
+VAR
+	_Buffer : __SYSTEM.AnyType;
+	_Length : DINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Append" Id="{938d36be-8533-462c-9d1d-ce287c37acd6}">
+      <Declaration><![CDATA[METHOD Append : REFERENCE TO StringBuilderExtBuffer
+VAR_INPUT
+	value : T_MaxString;
+END_VAR
+VAR
+	lengthToCopy : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[lengthToCopy := LIMIT(
+	DINT#0, 								// min
+	LEN(value), 							// value
+	(_Buffer.diSize - TO_DINT(_Length) - 1) // max
+);
+
+MEMCPY(
+	destAddr := _Buffer.pValue + _Length,
+	srcAddr := ADR(value),
+	n := lengthToCopy
+);
+
+_Length := _Length + lengthToCopy;
+
+Append := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AppendByPointer" Id="{301900e5-220a-47d4-9de7-16c47b9c4624}">
+      <Declaration><![CDATA[METHOD AppendByPointer : REFERENCE TO StringBuilderExtBuffer
+VAR_INPUT
+	value : POINTER TO STRING;
+END_VAR
+VAR
+	valueLength : DINT;
+	lengthToCopy : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[valueLength := LEN2(value);
+
+lengthToCopy := LIMIT(
+	DINT#0, 								// min
+	valueLength, 							// value
+	(_Buffer.diSize - TO_DINT(_Length) - 1) // max
+);
+
+MEMCPY(
+	destAddr := _Buffer.pValue + _Length,
+	srcAddr := value,
+	n := lengthToCopy
+);
+
+_Length := _Length + lengthToCopy;
+
+AppendByPointer := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Buffer" Id="{49532420-43d6-4129-898d-64af45bb5d78}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Buffer : REFERENCE TO __SYSTEM.AnyType]]></Declaration>
+      <Get Name="Get" Id="{c541380c-ae02-499c-aa5c-41269e7cc87d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Buffer REF= _Buffer;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Clear" Id="{51ab4961-e81a-4543-af50-292474c11adf}">
+      <Declaration><![CDATA[METHOD Clear : REFERENCE TO StringBuilderExtBuffer
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MEMSET(
+	destAddr := _Buffer.pValue,
+	fillByte := 0,
+	n := _Buffer.diSize
+);
+
+_Length := 0;
+
+Clear := THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{1cd4845e-24ab-4b4d-827c-8967da5ce213}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	buffer : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Buffer := buffer;
+
+_Length := LEN2(pSTRING := buffer.pValue);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsEmpty" Id="{a1bfbe9c-c914-4227-bc67-942558ab1b1e}">
+      <Declaration><![CDATA[PROPERTY IsEmpty : BOOL]]></Declaration>
+      <Get Name="Get" Id="{54abde92-1704-48e1-87d6-d4e40dd27319}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsEmpty := Length = 0;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Length" Id="{96473c69-e45d-4c53-b3ac-0d60f1275aaa}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Length : DINT]]></Declaration>
+      <Get Name="Get" Id="{a114f96d-8619-4574-ab93-f9c3d8b011c8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := _Length;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetBuffer" Id="{604f339c-820d-4f30-abfa-03379d2adc39}">
+      <Declaration><![CDATA[METHOD SetBuffer : REFERENCE TO StringBuilderExtBuffer
+VAR_INPUT
+	buffer : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Buffer := buffer;
+
+_Length := LEN2(pSTRING := buffer.pValue);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
