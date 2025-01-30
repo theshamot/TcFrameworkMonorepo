@@ -35,66 +35,87 @@
   <ItemGroup>
     <Compile Include="Any\AnyTypeUnion.TcDUT">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Binding\BoolBindingReadOnly.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Binding\BoolBindable.TcIO">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Binding\NotBind.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Binding\Bind.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Numbers\Integer.TcDUT">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Numbers\Decimal.TcDUT">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Numbers\Positive.TcDUT">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Reflection\Reflection.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Queryable\Queryable.TcIO">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\BooleanOperator.TcDUT">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\BooleanExpression.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\And2.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\And3.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\And4.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\Or2.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\Or3.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\Or4.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\Xor2.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\Xor3.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BooleanExpression\Functions\Xor4.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BoolValues.TcGVL">
       <SubType>Code</SubType>
@@ -102,12 +123,15 @@
     </Compile>
     <Compile Include="Values\FalseBoolValue.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\TrueBoolValue.TcPOU">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Values\BoolValue.TcIO">
       <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Version\Global_Version.TcGVL">
       <SubType>Code</SubType>

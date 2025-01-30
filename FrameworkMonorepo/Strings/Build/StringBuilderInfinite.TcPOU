@@ -20,7 +20,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_Capacity := InitialCapacity;
-Allocate := __NEW(STRING, _Capacity);]]></ST>
+Allocate := __NEW(BYTE, _Capacity);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Append" Id="{3f970321-6f9c-4ccc-a49e-0bee078cd44e}">
@@ -176,7 +176,7 @@ VAR
 	new : POINTER TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[new := __NEW(STRING, _Capacity);
+        <ST><![CDATA[new := __NEW(BYTE, _Capacity);
 MEMCPY(new, _Value, _Length);
 __DELETE(_Value);]]></ST>
       </Implementation>
