@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="_QuickSort" Id="{bf682295-dce2-071a-1968-ae0df214bdd1}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION _QuickSort
+VAR_INPUT
+	Arr					: __SYSTEM.AnyType;
+	FirstElement		: __SYSTEM.AnyType;
+	SortBy				: __SYSTEM.AnyType;
+	MemberOffset		: DWORD;
+	StartIndex			: DINT; // Start index
+	EndIndex			: DINT; // End index
+	Order 				: SortOrder;
+END_VAR
+VAR 
+	PivotIndex			: DINT; // Partitioning point
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF StartIndex < EndIndex THEN
+
+	PivotIndex := _Partition(Arr, FirstElement, SortBy, MemberOffset, StartIndex, EndIndex, Order);
+	_QuickSort(Arr, FirstElement, SortBy, MemberOffset, StartIndex, PivotIndex - 1, Order);
+	_QuickSort(Arr, FirstElement, SortBy, MemberOffset, PivotIndex + 1, EndIndex, Order);
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="IsGreaterThanOrEqualAnyType" Id="{e2780200-d441-0e1b-2757-946b27435d44}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsGreaterThanOrEqualAnyType : BOOL
+VAR_INPUT
+	a					: __SYSTEM.AnyType; // A and B have to be same type
+	b					: __SYSTEM.AnyType; // A and B have to be same type
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsGreaterThanOrEqualAnyType := NOT IsLessThanAnyType(a, b);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

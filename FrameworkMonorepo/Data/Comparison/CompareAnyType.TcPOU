@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+	<POU Name="CompareAnyType" Id="{dc8e7778-ffdf-0c00-303f-c009e7cd2375}" SpecialFunc="None">
+		<Declaration><![CDATA[FUNCTION CompareAnyType : BOOL
+VAR_INPUT
+	a					: __SYSTEM.AnyType; // a and b have to be same type
+	is					: ComparisonOperator;
+	b					: __SYSTEM.AnyType; // a and b have to be same type
+END_VAR]]></Declaration>
+		<Implementation>
+			<ST><![CDATA[CASE is OF
+	ComparisonOperator.Equal:
+		CompareAnyType := IsEqualAnyType(a, b);
+	ComparisonOperator.NotEqual:
+		CompareAnyType := IsNotEqualAnyType(a, b);
+	ComparisonOperator.LessThan:
+		CompareAnyType := IsLessThanAnyType(a, b);
+	ComparisonOperator.LessThenOrEqual:
+		CompareAnyType := IsLessThanOrEqualAnyType(a, b);
+	ComparisonOperator.GreaterThan:
+		CompareAnyType := IsGreaterThanAnyType(a, b);
+	ComparisonOperator.GraterThanOrEqual:
+		CompareAnyType := IsGreaterThanOrEqualAnyType(a, b);
+END_CASE]]></ST>
+		</Implementation>
+	</POU>
+</TcPlcObject>

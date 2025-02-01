@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="SwapByAddr" Id="{b35f0ba5-480b-005d-053a-a6bc01854ed8}" SpecialFunc="None">
+    <Declaration><![CDATA[// Swaps values of to variables
+FUNCTION SwapByAddr
+VAR_INPUT
+	a : POINTER TO BYTE;
+	b : POINTER TO BYTE;
+	length : DINT;
+END_VAR
+VAR
+	temp : POINTER TO BYTE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[temp := __NEW(BYTE, length);
+
+MEMCPY(temp, a, length);
+MEMCPY(a, b, length);
+MEMCPY(b, temp, length);
+
+__DELETE(temp);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

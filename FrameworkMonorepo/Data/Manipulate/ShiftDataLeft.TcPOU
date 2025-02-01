@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ShiftDataLeft" Id="{e97f8ec7-a46d-05b0-3d60-c70782600e15}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ShiftDataLeft : BOOL
+VAR_INPUT
+	data : ANY;
+	bytes : UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MEMMOVE(destAddr := data.pValue, srcAddr := data.pValue + bytes, data.diSize - bytes);
+MEMSET(destAddr := data.pValue + data.diSize - bytes, fillByte := 0, n := bytes);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

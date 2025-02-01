@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="ComparisonOperator" Id="{2c0f6891-5dc1-00a5-0026-68568e6fbfd7}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE ComparisonOperator :
+(
+	Equal,
+	NotEqual,
+	LessThan,
+	LessThenOrEqual,
+	GreaterThan,
+	GraterThanOrEqual
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="DataEquals" Id="{966a9e14-2fe0-04e4-256c-b130f4885b3a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION DataEquals : BOOL
+VAR_INPUT
+	data1 : ANY;
+	data2 : ANY;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF (data1.diSize <> data2.diSize) THEN
+	RETURN;
+END_IF
+
+DataEquals := MEMCMP(pBuf1 := data1.pValue, pBuf2 := data2.pValue, n := data1.diSize) = 0;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

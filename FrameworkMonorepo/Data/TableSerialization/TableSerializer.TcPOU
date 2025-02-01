@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="TableSerializer" Id="{d72633b8-404b-0f0c-3a80-0e4530f50430}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TableSerializer
+VAR
+	stringBuilder : REFERENCE TO StringBuilderExtBuffer;
+	
+	rowDefinition : __SYSTEM.AnyType;
+	_RowCount : DINT;
+	columnDefinitions : POINTER TO __SYSTEM.AnyType;
+	columnNames : POINTER TO T_MaxString;
+	columnDefinitionCount : INT;
+	definedColumns : INT;
+	
+	_Separator : STRING := ','; // Default separator ';' is compatible with european decimal separator '.'.
+	_NewLine : STRING := '$N'; // Default is Windows newline.
+	_DecimalSeparator : STRING := '.';
+END_VAR
+VAR CONSTANT
+	DefaultDecimalSeparator : STRING := '.';
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddColumnHeader" Id="{a96e7383-fed6-092f-1ef5-a1a0885e5cef}">
+      <Declaration><![CDATA[METHOD PRIVATE AddColumnHeader
+VAR
+	column : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (columnNames = 0) THEN
+	RETURN;
+END_IF
+
+FOR column := 0 TO definedColumns - 1 DO
+	IF (column > 0) THEN
+		stringBuilder.Append(_Separator);
+	END_IF
+	
+	stringBuilder.Append(columnNames[column]);
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddLine" Id="{d9b58cd7-c635-083b-245e-5fb2dcc20db1}">
+      <Declaration><![CDATA[METHOD PRIVATE AddLine
+VAR_INPUT
+	rowIndex : DINT;
+END_VAR
+VAR
+	column : INT;
+	currentData : __SYSTEM.AnyType;
+	converted : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddNewLine();
+
+FOR column := 0 TO definedColumns - 1 DO
+	IF (column > 0) THEN
+		stringBuilder.Append(_Separator);
+	END_IF
+	
+	currentData := columnDefinitions[column];
+	currentData.pValue := rowDefinition.pValue + (rowDefinition.diSize * rowIndex) + (currentData.pValue - rowDefinition.pValue);
+	
+	IF (currentData.TypeClass = IBaseLibrary.TypeClass.TYPE_STRING) THEN
+		stringBuilder.AppendByPointer(currentData.pValue);
+	ELSE
+		converted := AnyTypeToString(currentData);
+		
+		CASE currentData.TypeClass OF
+			TYPE_REAL, TYPE_LREAL:
+				ReplaceString(converted, DefaultDecimalSeparator, _DecimalSeparator);
+		END_CASE
+		
+		stringBuilder.Append(converted);
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddNewLine" Id="{8ec85cae-9933-0793-348f-1132550fb9cc}">
+      <Declaration><![CDATA[METHOD PRIVATE AddNewLine
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stringBuilder.Append(_NewLine);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddRows" Id="{38ae6eb7-6156-043d-0e52-11eeb0fae8ae}">
+      <Declaration><![CDATA[METHOD PRIVATE AddRows
+VAR
+	row : DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR row := 0 TO _RowCount - 1 DO
+	AddLine(row);
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="DecimalSeparator" Id="{dcf4daf8-0815-0c1d-3634-c8ec1556ea4a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY DecimalSeparator : STRING]]></Declaration>
+      <Get Name="Get" Id="{8ea79d6a-2342-0545-2cc0-e4e91166ef27}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DecimalSeparator := _DecimalSeparator;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{80a9824f-9b84-0d64-3268-84dbb3923f5f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_DecimalSeparator := DecimalSeparator;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="DefineNextColumn" Id="{0973f48c-2795-0d69-1d24-997b7f4e2c7c}">
+      <Declaration><![CDATA[METHOD DefineNextColumn : REFERENCE TO TableSerializer
+VAR_INPUT
+	columnInFirstRow : ANY; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (definedColumns < columnDefinitionCount) THEN
+	columnDefinitions[definedColumns] := columnInFirstRow;
+	definedColumns := definedColumns + 1;
+END_IF
+
+DefineNextColumn REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DefineRow" Id="{ce8b20c5-e365-0d17-3c1b-aff8c931bd36}">
+      <Declaration><![CDATA[METHOD DefineRow : REFERENCE TO TableSerializer
+VAR_INPUT
+	firstRow : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[rowDefinition := firstRow;
+
+DefineRow REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{fe66fb2d-3ada-0a13-3317-d1a091459eba}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	stringBuilder : REFERENCE TO StringBuilderExtBuffer;
+	columnDefinitionBuffer : POINTER TO __SYSTEM.AnyType;
+	columnNameDefinitionBuffer : POINTER TO T_MaxString;
+	columnDefinitionCount : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.stringBuilder REF= stringBuilder;
+columnDefinitions := columnDefinitionBuffer;
+columnNames := columnNameDefinitionBuffer;
+THIS^.columnDefinitionCount := columnDefinitionCount;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="NewLine" Id="{cf387b77-20af-05d1-3b26-e50dcbb52567}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY NewLine : STRING]]></Declaration>
+      <Get Name="Get" Id="{ad21bc57-fed1-00cc-1f46-a3e827e39338}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NewLine := _NewLine;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a329f98b-5509-0429-0983-71e2f9448074}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_NewLine := NewLine;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="RowCount" Id="{3e6b6630-8c3b-04e2-1eba-68e455e01a12}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY RowCount : DINT]]></Declaration>
+      <Get Name="Get" Id="{b06bd905-8290-00fb-041b-5e64a8ce6802}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RowCount := _RowCount;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{620d98a1-8b4c-0a2a-1f03-9902bb377224}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_RowCount := RowCount;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Separator" Id="{8cc3ea40-abc9-03a0-0a4f-104f98552394}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Separator : STRING]]></Declaration>
+      <Get Name="Get" Id="{9324c3eb-b7b7-0ad9-16d5-2297110192ec}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Separator := _Separator;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1ecb02ec-8f8c-0059-152f-75162282ff7d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Separator := Separator;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Serialize" Id="{3fe63765-60b0-0c99-3c86-f4191a72f13d}">
+      <Declaration><![CDATA[METHOD Serialize
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stringBuilder.Clear();
+AddColumnHeader();
+AddRows();]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SerializedLength" Id="{0c3ff8d0-5998-0d93-0787-87bbcb89aa15}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY SerializedLength : DINT]]></Declaration>
+      <Get Name="Get" Id="{1dbe863d-9a29-05a4-02ae-9be499a26d02}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SerializedLength := stringBuilder.Length;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SerializedString" Id="{8c948389-713e-0c66-1d60-1dadcc7a4b0c}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY SerializedString : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{e81efac8-b87a-0f5c-0835-40a8ed332183}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SerializedString := stringBuilder.Buffer.pValue;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="_Partition" Id="{01cc0405-8096-0b35-3890-052fa03f42bc}" SpecialFunc="None">
+    <Declaration><![CDATA[// Function used in QuickSort
+FUNCTION _Partition : DINT
+VAR_INPUT
+	arr					: __SYSTEM.AnyType;
+	firstElement		: __SYSTEM.AnyType;
+	sortBy				: __SYSTEM.AnyType;
+	memberOffset		: DWORD;
+	startIndex			: DINT; // Starting comparision index
+	endIndex			: DINT; // Ending comparision index
+	order 				: SortOrder;
+END_VAR
+VAR
+	pivot				: POINTER TO BYTE; // Compared number
+	leftwall			: DINT; // New pivot location
+	iterator			: DINT; // For iterator variable
+	iterAdr				: POINTER TO BYTE;
+	compA				: __SYSTEM.AnyType := sortBy; // get data of compared variable
+	compB				: __SYSTEM.AnyType := sortBy;
+END_VAR]]></Declaration>
+		<Implementation>
+			<ST><![CDATA[pivot := arr.pValue + firstElement.diSize * endIndex;
+leftwall := startIndex;
+
+FOR iterator := startIndex TO endIndex - 1 DO
+
+	iterAdr := arr.pValue + firstElement.diSize * iterator;
+	
+	compA.pValue := iterAdr + memberOffset; // data of compared variable stays the same, just point to other value
+	compB.pValue := pivot + memberOffset;
+	
+	CASE order OF
+		SortOrder.ASCENDING:
+			IF (IsLessThanOrEqualAnyType(compA, compB)) THEN
+
+				SwapByAddr(iterAdr, arr.pValue + firstElement.diSize * leftwall, firstElement.diSize);
+				leftwall := leftwall + 1;
+			END_IF
+		SortOrder.DESCENDING:
+			IF (IsGreaterThanOrEqualAnyType(compA, compB)) THEN
+
+				SwapByAddr(iterAdr, arr.pValue + firstElement.diSize * leftwall, firstElement.diSize);
+				leftwall := leftwall + 1;
+			END_IF
+	END_CASE
+END_FOR
+
+SwapByAddr(arr.pValue + firstElement.diSize * leftwall, pivot, firstElement.diSize);
+
+_Partition := leftwall;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
