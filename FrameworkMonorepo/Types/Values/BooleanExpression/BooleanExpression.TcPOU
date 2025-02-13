@@ -3,7 +3,7 @@
   <POU Name="BooleanExpression" Id="{252b437c-5b59-4304-9997-f664160750e1}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'hide_all_locals'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK BooleanExpression IMPLEMENTS BoolValue
+FUNCTION_BLOCK BooleanExpression IMPLEMENTS BoolValue, Disposable
 VAR
 	operands : ARRAY[0..MaxIndex - 1] OF BoolValue;
 	operandCount : INT;
@@ -19,17 +19,38 @@ END_VAR]]></Declaration>
       <Declaration><![CDATA[METHOD Clear
 VAR
 	i : INT;
-	p : POINTER TO BYTE;
+	disposable : Disposable;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR i := 0 TO operandCount - 1 DO
-	__QUERYPOINTER(operands[i], p);
-	__DELETE(p);
+	__QUERYINTERFACE(operands[i], disposable);
+	disposable.Dispose();
 	operands[i] := 0;
 END_FOR
 
 operandCount := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Dispose" Id="{33cf5739-a669-0d85-3d21-633e2418426a}">
+      <Declaration><![CDATA[METHOD Dispose
+VAR
+	i : INT;
+	disposable : Disposable;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Clear();
+__DELETE(THIS);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{6da8f0cb-fc5b-083f-37ff-3081308acd2f}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Clear();]]></ST>
       </Implementation>
     </Method>
     <Method Name="Op2" Id="{afe9c38d-514a-4c19-96fb-8944ede1e2b3}">

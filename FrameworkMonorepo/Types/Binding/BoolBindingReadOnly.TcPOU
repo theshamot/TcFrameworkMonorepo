@@ -3,7 +3,7 @@
   <POU Name="BoolBindingReadOnly" Id="{f035c595-f3d7-4302-a6a4-0e368016167c}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'hide_all_locals'}
 {attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK BoolBindingReadOnly IMPLEMENTS BoolBindable
+FUNCTION_BLOCK BoolBindingReadOnly IMPLEMENTS BoolBindable, Disposable
 VAR
 	ref : REFERENCE TO BOOL;
 	_Negate : BOOL;
@@ -20,6 +20,13 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[ref REF= boolean;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Dispose" Id="{bd8cff1f-16d8-01d2-320a-1b5c4d6048eb}">
+      <Declaration><![CDATA[METHOD Dispose
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[__DELETE(THIS);]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsBinded" Id="{b98b2f4c-bef9-4cbe-8145-c6052f4c6749}">

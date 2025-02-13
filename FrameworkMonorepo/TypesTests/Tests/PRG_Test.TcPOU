@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="PRG_Test" Id="{59fba049-dffd-419e-9eb9-7a7800aaf4f4}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Test
+VAR
+	boolBindingReadOnlyTest : BoolBindingReadOnlyTest;
+	bindTest : BindTest;
+	notBindTest : NotBindTest;
+	
+	reflectionTest : ReflectionTest;
+	
+	boolValuesTest : BoolValuesTest;
+	booleanExpressionTest : BooleanExpressionTest;
+	booleanExpressionFunctionsTest : BooleanExpressionFunctionsTest;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TcUnit.RUN();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

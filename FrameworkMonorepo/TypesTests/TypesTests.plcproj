@@ -3,143 +3,83 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3c21609a-87c3-4cae-a356-8072488c42dc}</ProjectGuid>
+    <ProjectGuid>{87d178af-7190-4f0d-a7de-f0410bf98981}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Data</Name>
+    <Name>TypesTests</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{37749eda-26fa-47c5-a5e9-b721a81071ba}</Application>
-    <TypeSystem>{c45ea251-1473-4bb7-81c4-db149e8f9598}</TypeSystem>
-    <Implicit_Task_Info>{0891744a-587b-45f7-9685-cdf343df7e32}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{a9fc38b1-fb44-4e21-8909-f923058905f3}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{717b15c9-3a1d-491f-9652-3cc692bd985d}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{7ab15ad9-8fbe-476e-ae74-677f470ede94}</LibraryReferences>
-    <Company>TomasRompotl</Company>
-    <Released>false</Released>
-    <Title>Data</Title>
-    <ProjectVersion>0.0.1</ProjectVersion>
+    <Application>{da029097-2cef-4f7c-a79e-7abba822a5f7}</Application>
+    <TypeSystem>{c220cb7b-e1a5-4b52-913d-4e08a69cf0a4}</TypeSystem>
+    <Implicit_Task_Info>{719f256a-3802-4abe-8a5a-14aa0080c47c}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{15b18e4b-2a05-4352-808b-80e83604b6e1}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{aaec38b0-bc03-492e-ac01-68edb0219ddf}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{cb290b0f-35c6-4077-9205-f6e1efb8fdef}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Comparison" />
-    <Folder Include="Manipulate" />
-    <Folder Include="QuickSort" />
-    <Folder Include="Sort" />
-    <Folder Include="Validate" />
-    <Folder Include="TableSerialization" />
-    <Folder Include="Version" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Comparison\CompareAnyType.TcPOU">
+    <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\ComparisonOperator.TcDUT">
+    <Compile Include="Tests\Binding\BindTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\IsEqualAnyType.TcPOU">
+    <Compile Include="Tests\Binding\NotBindTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\IsGreaterThanAnyType.TcPOU">
+    <Compile Include="Tests\Binding\BoolBindingReadOnlyTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\IsGreaterThanOrEqualAnyType.TcPOU">
+    <Compile Include="Tests\PRG_Test.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\IsLessThanAnyType.TcPOU">
+    <Compile Include="Tests\Values\BooleanExpression\BooleanExpressionTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\IsLessThanOrEqualAnyType.TcPOU">
+    <Compile Include="Tests\Values\BooleanExpression\BooleanExpressionFunctionsTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Comparison\IsNotEqualAnyType.TcPOU">
+    <Compile Include="Tests\_TemplateTest\_Template_Test.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Manipulate\ClearData.TcPOU">
+    <Compile Include="Tests\Reflection\ReflectionTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Manipulate\ShiftDataLeft.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Manipulate\Swap.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Manipulate\SwapByAddr.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="QuickSort\Partition.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="QuickSort\QuickSort.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Sort\SortOrder.TcTLEO">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Sort\Sort.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Sort\_Partition.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Sort\_QuickSort.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="TableSerialization\TableDeserializer.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="TableSerialization\TableSerializer.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Validate\DataEquals.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Version\Global_Version.TcGVL">
+    <Compile Include="Tests\Values\BoolValuesTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <LibraryReference Include="Base Interfaces,newest,System">
-      <Namespace>IBaseLibrary</Namespace>
-    </LibraryReference>
+    <Folder Include="Tests" />
+    <Folder Include="Tests\Binding" />
+    <Folder Include="Tests\Values\BooleanExpression" />
+    <Folder Include="Tests\_TemplateTest" />
+    <Folder Include="Tests\Reflection" />
+    <Folder Include="Tests\Values" />
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="Strings">
-      <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Strings</Namespace>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Utilities">
-      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Utilities</Namespace>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Types">
+      <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Types</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data.tmc">
+    <None Include="TypesTests.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
