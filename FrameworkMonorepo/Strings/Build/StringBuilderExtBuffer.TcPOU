@@ -33,7 +33,7 @@ MEMCPY(
 
 _Length := _Length + lengthToCopy;
 
-Append := THIS^;]]></ST>
+Append REF= THIS^;]]></ST>
       </Implementation>
     </Method>
     <Method Name="AppendByPointer" Id="{301900e5-220a-47d4-9de7-16c47b9c4624}">
@@ -62,7 +62,7 @@ MEMCPY(
 
 _Length := _Length + lengthToCopy;
 
-AppendByPointer := THIS^;]]></ST>
+AppendByPointer REF= THIS^;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Buffer" Id="{49532420-43d6-4129-898d-64af45bb5d78}">
@@ -89,7 +89,7 @@ END_VAR
 
 _Length := 0;
 
-Clear := THIS^;]]></ST>
+Clear REF= THIS^;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{1cd4845e-24ab-4b4d-827c-8967da5ce213}">
@@ -139,7 +139,9 @@ END_VAR
       <Implementation>
         <ST><![CDATA[_Buffer := buffer;
 
-_Length := LEN2(pSTRING := buffer.pValue);]]></ST>
+_Length := LEN2(pSTRING := buffer.pValue);
+
+SetBuffer REF= THIS^;]]></ST>
       </Implementation>
     </Method>
   </POU>

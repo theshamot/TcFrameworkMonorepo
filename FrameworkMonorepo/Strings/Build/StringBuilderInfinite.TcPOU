@@ -3,24 +3,27 @@
   <POU Name="StringBuilderInfinite" Id="{494d6245-e98b-407b-8559-a62542a9481d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderInfinite
 VAR
-	_Value : POINTER TO STRING := Allocate();
 	_Capacity : DINT;
 	_Length : DINT;
+	_Value : POINTER TO STRING := Allocate();
 END_VAR
 VAR CONSTANT
-	InitialCapacity : DINT := 1000;
+	InitialCapacity : DINT := 1024;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Allocate" Id="{72f372ee-36a0-4599-bcb3-9e89a2e7d55f}">
       <Declaration><![CDATA[METHOD PRIVATE Allocate : POINTER TO STRING
-VAR_INPUT
+VAR
+	p : POINTER TO STRING;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_Capacity := InitialCapacity;
-Allocate := __NEW(BYTE, _Capacity);]]></ST>
+p := __NEW(BYTE, (_Capacity + 1));
+MEMSET(destAddr := p, fillByte := 0, n := _Capacity);
+Allocate := p;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Append" Id="{3f970321-6f9c-4ccc-a49e-0bee078cd44e}">
@@ -34,7 +37,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[lengthToCopy := LEN(value);
 
-EnsureCapacity(_Capacity + lengthToCopy);
+EnsureCapacity(_Length + lengthToCopy);
 
 MEMCPY(
 	destAddr := _Value + _Length,
@@ -58,7 +61,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[lengthToCopy := LEN2(value);
 
-EnsureCapacity(_Capacity + lengthToCopy);
+EnsureCapacity(_Length + lengthToCopy);
 
 MEMCPY(
 	destAddr := _Value + _Length,
@@ -176,14 +179,16 @@ VAR
 	new : POINTER TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[new := __NEW(BYTE, _Capacity);
+        <ST><![CDATA[new := __NEW(BYTE, (_Capacity + 1));
+MEMSET(destAddr := new, fillByte := 0, n := _Capacity);
 MEMCPY(new, _Value, _Length);
-__DELETE(_Value);]]></ST>
+__DELETE(_Value);
+_Value := new;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Value" Id="{cfdb86ac-3c93-4424-b346-f83099aa6553}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY Value : POINTER TO STRING]]></Declaration>
+PROPERTY Value : POINTER TO STRING(1000)]]></Declaration>
       <Get Name="Get" Id="{8a91e9a7-9267-487a-87eb-3359d3a82716}">
         <Declaration><![CDATA[VAR
 END_VAR

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ManipulateFunctionsTest" Id="{8e2fe8b8-5e6f-0d30-1f80-87f977530bb8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AddLeadingZerosFunction();
+ReplaceStringFunction();]]></ST>
+    </Implementation>
+    <Method Name="AddLeadingZerosFunction" Id="{5b38fdb2-8f15-0071-0faa-54d830637f22}">
+      <Declaration><![CDATA[METHOD AddLeadingZerosFunction : BOOL
+VAR
+	test : T_MaxString := '555';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Add leading zeros');
+
+AssertEquals_STRING(
+	Expected := '00555',
+	Actual := AddLeadingZeros(test, 5),
+	Message := 'Should pad propper number of zeros');
+
+AssertEquals_STRING(
+	Expected := '555',
+	Actual := AddLeadingZeros(test, 2),
+	Message := 'Should do nothing if formatter string already has more chars');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceStringFunction" Id="{1ccb17b8-aa17-00ee-1667-3fe3bf06c9ae}">
+      <Declaration><![CDATA[METHOD ReplaceStringFunction : BOOL
+VAR
+	test : T_MaxString := 'this is test string';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Replace string');
+
+ReplaceString(test, 'not here', 'replaced');
+
+AssertEquals_STRING(
+	Expected := 'this is test string',
+	Actual := test,
+	Message := 'Should do nothing because searched string is not there');
+
+ReplaceString(test, 'test', 'replaced');
+
+AssertEquals_STRING(
+	Expected := 'this is replaced string',
+	Actual := test,
+	Message := 'Should replace found string');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

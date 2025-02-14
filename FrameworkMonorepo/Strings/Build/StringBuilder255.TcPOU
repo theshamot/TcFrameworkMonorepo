@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="StringBuilder" Id="{b6b3672a-e798-4798-8505-28948b4a51c2}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilder
+  <POU Name="StringBuilder255" Id="{b6b3672a-e798-4798-8505-28948b4a51c2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilder255
 VAR
 	_Value : T_MaxString;
 END_VAR
@@ -10,21 +10,21 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Append" Id="{7f696451-9508-4294-997f-c551e4ac0594}">
-      <Declaration><![CDATA[METHOD Append : REFERENCE TO StringBuilder
+      <Declaration><![CDATA[METHOD Append : REFERENCE TO StringBuilder255
 VAR_INPUT
 	value : T_MaxString;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Append := THIS^;
+        <ST><![CDATA[Append REF= THIS^;
 
 _Value := CONCAT(_Value, value);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Clear" Id="{1edd4649-c2f3-4a46-85d1-e292ca0d812e}">
-      <Declaration><![CDATA[METHOD Clear : REFERENCE TO StringBuilder
+      <Declaration><![CDATA[METHOD Clear : REFERENCE TO StringBuilder255
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Clear := THIS^;
+        <ST><![CDATA[Clear REF= THIS^;
 
 _Value := '';]]></ST>
       </Implementation>

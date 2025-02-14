@@ -18,7 +18,7 @@ IF (replaceBegin = 0) THEN
 	RETURN;
 END_IF
 
-REPLACE2(in.pValue, ADR(with), in.pValue, in.diSize, LEN(with), replaceBegin);]]></ST>
+REPLACE2(in.pValue, ADR(with), in.pValue, in.diSize, LEN(replaced), replaceBegin);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

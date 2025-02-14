@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="BuildStringInline" Id="{4bb7c327-72de-4bac-bd0a-0c4baff7eb29}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION BuildStringInline : REFERENCE TO StringBuilder
+    <Declaration><![CDATA[FUNCTION BuildStringInline : REFERENCE TO StringBuilder255
 VAR_INPUT
 	value : T_MaxString;
 END_VAR
 VAR_STAT
-	builder : StringBuilder;
+	builder : StringBuilder255;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[builder.Clear();
 
 builder.Append(value);
 
-BuildStringInline := builder;]]></ST>
+BuildStringInline REF= builder;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

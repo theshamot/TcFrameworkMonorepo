@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="PRG_Test" Id="{93887d91-9466-4bc5-b21d-06b0d85b60ea}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Test
+VAR
+	validateFunctionsTest : ValidateFunctionsTest;
+	manipulateFunctionsTest : ManipulateFunctionsTest;
+	convertFunctionsTest : ConvertFunctions;
+	
+	sb255Test : StringBuilder255Test;
+	buildStringInlineTest : BuildStringInlineTest;
+	sbExtBufferTest : StringBuilderExtBufferTest;
+	sbInfiniteTest : StringBuilderInfiniteTest;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TcUnit.RUN();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -3,149 +3,56 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{53775aad-fa08-4440-b0b9-741c387ecaa9}</ProjectGuid>
+    <ProjectGuid>{5fa3e815-f79f-4b58-9fe0-6c55eef9ee97}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>false</WriteProductVersion>
+    <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Types</Name>
+    <Name>StringsTests</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{a3d55a87-bc4c-418e-bec8-5347163267f4}</Application>
-    <TypeSystem>{fc2f2316-16b9-4384-bfdf-a9fdf2149941}</TypeSystem>
-    <Implicit_Task_Info>{e2dfdcff-2c89-4cc2-b602-d341ec2bc498}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{df3395b7-0a18-453e-8946-1e0f11d98bc4}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{fed65bee-1d4d-40ad-acbb-1942691d5d7d}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{cd5399ac-354d-43bb-ac54-0e55fffad5eb}</LibraryReferences>
-    <Released>false</Released>
-    <CombineIds>true</CombineIds>
-    <DeploymentEvents>
-      <Events xmlns="">
-        <Event>
-          <CommandType>Copy</CommandType>
-          <DeploymentType>ActivateConfiguration</DeploymentType>
-          <Command1 />
-          <Command2 />
-        </Event>
-      </Events>
-    </DeploymentEvents>
-    <Company>TomasRompotl</Company>
-    <Title>Types</Title>
-    <ProjectVersion>0.0.2</ProjectVersion>
+    <Application>{0ae76c2b-c467-4b14-8895-be9a80747b05}</Application>
+    <TypeSystem>{5ac239cc-6f2e-4938-86b1-fb3325a0cee3}</TypeSystem>
+    <Implicit_Task_Info>{4cd917a1-4254-44ad-8bdf-36c7364fa27a}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{20f8dac3-4a45-4599-a410-c423c40d8a6a}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{f3ca32c2-b89c-402c-af31-edb5827c5760}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{16b5434d-0cf3-4db5-b732-dd154963930a}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Any\AnyTypeUnion.TcDUT">
+    <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Any\GetAnyType.TcPOU">
+    <Compile Include="PRG_Test.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Binding\BoolBindingReadOnly.TcPOU">
+    <Compile Include="Tests\Builders\StringBuilder255Test.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Binding\BoolBindable.TcIO">
+    <Compile Include="Tests\Builders\BuildStringInlineTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Binding\NotBind.TcPOU">
+    <Compile Include="Tests\Builders\StringBuilderExtBufferTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Binding\Bind.TcPOU">
+    <Compile Include="Tests\Builders\StringBuilderInfiniteTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Disposable\Disposable.TcIO">
+    <Compile Include="Tests\Convert\ConvertFunctions.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Numbers\Integer.TcDUT">
+    <Compile Include="Tests\Manipulate\ManipulateFunctionsTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Numbers\Decimal.TcDUT">
+    <Compile Include="Tests\Validate\ValidateFunctionsTest.TcPOU">
       <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Numbers\Positive.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Queryable\Queryable.TcIO">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Reflection\Reflection.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\BooleanOperator.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\BooleanExpression.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\And2.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\And3.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\And4.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\Or2.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\Or3.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\Or4.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\Xor2.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\Xor3.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BooleanExpression\Functions\Xor4.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BoolValues.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\FalseBoolValue.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\TrueBoolValue.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Values\BoolValue.TcIO">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Version\Global_Version.TcGVL">
+    <Compile Include="_TemplateTest\_TemplateTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Strings">
+      <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -154,46 +61,33 @@
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Utilities">
-      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Utilities</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc3_JsonXml">
-      <DefaultResolution>Tc3_JsonXml, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc3_JsonXml</Namespace>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Types.tmc">
+    <Folder Include="Tests" />
+    <Folder Include="Tests\Manipulate" />
+    <Folder Include="Tests\Convert" />
+    <Folder Include="Tests\Builders" />
+    <Folder Include="Tests\Validate" />
+    <Folder Include="_TemplateTest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="StringsTests.tmc">
       <SubType>Content</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Binding" />
-    <Folder Include="Any" />
-    <Folder Include="Disposable" />
-    <Folder Include="Queryable" />
-    <Folder Include="Numbers" />
-    <Folder Include="Reflection" />
-    <Folder Include="Values" />
-    <Folder Include="Values\BooleanExpression" />
-    <Folder Include="Values\BooleanExpression\Functions" />
-    <Folder Include="Version" />
-  </ItemGroup>
-  <ItemGroup>
-    <LibraryReference Include="Base Interfaces,newest,System">
-      <Namespace>IBaseLibrary</Namespace>
-    </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -227,13 +121,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

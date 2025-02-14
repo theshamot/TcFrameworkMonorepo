@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AnyToString" Id="{1f0f5a07-7468-0acf-0462-c5684b77e674}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION AnyToString : T_MaxString
+VAR_INPUT
+	a : ANY;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AnyToString := AnyTypeToString(a);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
