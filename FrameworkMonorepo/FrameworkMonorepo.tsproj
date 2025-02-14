@@ -12,6 +12,9 @@
 				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
+				<Task Id="5" Priority="22" CycleTime="100000" AmsPort="352" AdtTasks="true">
+					<Name>PlcTask1</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Plc>
@@ -88,6 +91,26 @@
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="21" OTCID="#x08502101"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{449DA929-D2D0-4EC9-9052-EADDE666E8FE}" Name="DataTests" PrjFilePath="DataTests\DataTests.plcproj" TmcFilePath="DataTests\DataTests.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9FBEC732-194B-BBC0-48BA-D489E64762F1}">
+					<Name>DataTests Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010050</OTCID>
+							</ManualConfig>
+							<Priority>22</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="22" OTCID="#x08502141"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>

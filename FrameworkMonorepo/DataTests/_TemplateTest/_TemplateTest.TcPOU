@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="_Template_Test" Id="{794ecc0f-2f93-47b7-aa99-433344a376da}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK _Template_Test EXTENDS TcUnit.FB_TestSuite
+  <POU Name="_TemplateTest" Id="{046ee9eb-6990-07e4-3786-b4c9c68c548a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK _TemplateTest EXTENDS TcUnit.FB_TestSuite
 VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[ExampleTest();]]></ST>
     </Implementation>
-    <Method Name="ExampleTest" Id="{3dde4137-332e-41a2-9864-117beae40309}">
+    <Method Name="ExampleTest" Id="{43566aec-618b-0a5d-2cc8-6eea80d71980}">
       <Declaration><![CDATA[METHOD ExampleTest : BOOL
 VAR
 	expected : INT;

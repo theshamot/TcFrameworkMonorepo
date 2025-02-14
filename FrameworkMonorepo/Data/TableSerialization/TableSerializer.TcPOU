@@ -17,7 +17,7 @@ VAR
 	_DecimalSeparator : STRING := '.';
 END_VAR
 VAR CONSTANT
-	DefaultDecimalSeparator : STRING := '.';
+	DefaultDecimalSeparator : STRING := '.'; // When converting number to string.
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
