@@ -7,10 +7,10 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SerializeTable();
-SerializePartOfTableAndSwapColumns();]]></ST>
+SerializePartOfTableAndSwapColumnsAndWithoutHeader();]]></ST>
     </Implementation>
-    <Method Name="SerializePartOfTableAndSwapColumns" Id="{8edd68f6-6783-07c2-1d3d-335d4388dba2}">
-      <Declaration><![CDATA[METHOD SerializePartOfTableAndSwapColumns : BOOL
+    <Method Name="SerializePartOfTableAndSwapColumnsAndWithoutHeader" Id="{8edd68f6-6783-07c2-1d3d-335d4388dba2}">
+      <Declaration><![CDATA[METHOD SerializePartOfTableAndSwapColumnsAndWithoutHeader : BOOL
 VAR
 	table : ARRAY[0..9] OF TestTableRow;
 	i : INT;
@@ -18,12 +18,11 @@ VAR
 	buffer : STRING(1000);
 	sb : StringBuilderExtBuffer(buffer);
 	columns : ARRAY[0..3] OF __SYSTEM.AnyType;
-	columnNames : ARRAY[0..3] OF T_MaxString;
 	maxColumns : INT := 4;
 	serializer : TableSerializer(
 		stringBuilder := sb,
 		columnDefinitionBuffer := ADR(columns),
-		columnNameDefinitionBuffer := ADR(columnNames),
+		columnNameDefinitionBuffer := 0,
 		columnDefinitionCount := maxColumns
 	);
 	
@@ -33,9 +32,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Serialize part of table and swap columns');
 
-columnNames[0] := 'Description';
-columnNames[1] := 'Time';
-columnNames[2] := 'Value 2';
+// Prepare data
 FOR i := 0 TO 9 DO
 	table[i].timestamp := TO_TIME(i);
 	table[i].value1 := i;
@@ -43,17 +40,23 @@ FOR i := 0 TO 9 DO
 	table[i].description := 'some text';
 END_FOR
 
+// Setup serialization
 serializer.DecimalSeparator := ',';
 serializer.Separator := ';';
+
+// Bind data
 serializer.DefineRow(table[0]);
 serializer.RowCount := 7;
+// Column order is different than structure
 serializer.DefineNextColumn(table[0].description);
 serializer.DefineNextColumn(table[0].timestamp);
 serializer.DefineNextColumn(table[0].value2);
 
+// Serialize
 serializer.Serialize();
 
-expected := 'Description;Time;Value 2$Nsome text;T#0ms;0,0$Nsome text;T#1ms;3,14$Nsome text;T#2ms;6,28$Nsome text;T#3ms;9,42$Nsome text;T#4ms;12,56$Nsome text;T#5ms;15,700001$Nsome text;T#6ms;18,84';
+expected := 'some text;T#0ms;0,0$Nsome text;T#1ms;3,14$Nsome text;T#2ms;6,28$Nsome text;T#3ms;9,42$Nsome text;T#4ms;12,56$Nsome text;T#5ms;15,700001$Nsome text;T#6ms;18,84$N';
+
 AssertEquals_BOOL(
 	Expected := TRUE,
 	Actual := expected = buffer,
@@ -86,6 +89,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Serialize table');
 
+// Prepare data
 columnNames[0] := 'Timestamp';
 columnNames[1] := 'Value 1';
 columnNames[2] := 'Value 2';
@@ -97,8 +101,11 @@ FOR i := 0 TO 9 DO
 	table[i].description := 'some text';
 END_FOR
 
+// Setup serialization
 serializer.DecimalSeparator := ',';
 serializer.Separator := ';';
+
+// Bind data
 serializer.DefineRow(table[0]);
 serializer.RowCount := 10;
 serializer.DefineNextColumn(table[0].timestamp);
@@ -106,9 +113,11 @@ serializer.DefineNextColumn(table[0].value1);
 serializer.DefineNextColumn(table[0].value2);
 serializer.DefineNextColumn(table[0].description);
 
+// Serialize
 serializer.Serialize();
 
-expected := 'Timestamp;Value 1;Value 2;Description$NT#0ms;0;0,0;some text$NT#1ms;1;3,14;some text$NT#2ms;2;6,28;some text$NT#3ms;3;9,42;some text$NT#4ms;4;12,56;some text$NT#5ms;5;15,700001;some text$NT#6ms;6;18,84;some text$NT#7ms;7;21,98;some text$NT#8ms;8;25,12;some text$NT#9ms;9;28,26;some text';
+expected := 'Timestamp;Value 1;Value 2;Description$NT#0ms;0;0,0;some text$NT#1ms;1;3,14;some text$NT#2ms;2;6,28;some text$NT#3ms;3;9,42;some text$NT#4ms;4;12,56;some text$NT#5ms;5;15,700001;some text$NT#6ms;6;18,84;some text$NT#7ms;7;21,98;some text$NT#8ms;8;25,12;some text$NT#9ms;9;28,26;some text$N';
+
 AssertEquals_BOOL(
 	Expected := TRUE,
 	Actual := expected = buffer,

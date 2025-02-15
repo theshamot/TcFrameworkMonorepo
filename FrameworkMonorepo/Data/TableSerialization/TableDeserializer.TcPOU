@@ -135,6 +135,9 @@ END_VAR]]></Declaration>
 
 FOR i := 0 TO _RowCount - 1 DO
 	carret := ReadRow(i, carret);
+	IF (carret >= dataLength) THEN
+		EXIT;
+	END_IF
 END_FOR
 
 ReadAllRows := carret;]]></ST>
@@ -170,7 +173,7 @@ FOR i := 0 TO definedColumns - 1 DO
 		cellLength := lineEnd;
 	END_IF
 
-	MEMSET(destAddr := ADR(cell), fillByte := 0, n := SIZEOF(cell));
+	ClearData(cell);
 	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + carret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
 	StringToAny(cell, columnNames[i]);
 	
@@ -216,6 +219,9 @@ IF (lineLength = 0) THEN
 END_IF
 
 FOR i := 0 TO definedColumns - 1 DO
+	IF (carret >= dataLength) THEN
+		EXIT;
+	END_IF
 	cellLength := FIND2(pSrcString := dataString + carret, pFindString := ADR(_Separator));
 	IF (carret + cellLength > startCarret + lineLength) THEN
 		cellLength := (startCarret + lineLength) - carret;
@@ -224,10 +230,14 @@ FOR i := 0 TO definedColumns - 1 DO
 		cellLength := lineLength;
 	END_IF
 
-	MEMSET(destAddr := ADR(cell), fillByte := 0, n := SIZEOF(cell));
+	ClearData(cell);
 	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + carret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
 	tableCell := columnDefinitions[i];
 	tableCell.pValue := tableCell.pValue + rowDefinition.diSize * row;
+	CASE tableCell.TypeClass OF
+		TYPE_REAL, TYPE_LREAL:
+			ReplaceString(cell, _DecimalSeparator, DefaultDecimalSeparator);
+	END_CASE
 	StringToAnyType(cell, tableCell);
 	
 	IF (cellLength = dataLength) THEN

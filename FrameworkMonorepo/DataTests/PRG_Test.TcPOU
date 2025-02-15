@@ -4,6 +4,7 @@
     <Declaration><![CDATA[PROGRAM PRG_Test
 VAR
 	tableSerializerTest : TableSerializerTest;
+	tableDeserializerTest : TableDeserializerTest;
 END_VAR
 ]]></Declaration>
     <Implementation>

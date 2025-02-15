@@ -30,6 +30,9 @@
     <Compile Include="TableSerialization\TestTableRow.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableSerialization\TableDeserializerTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="_TemplateTest\_TemplateTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>

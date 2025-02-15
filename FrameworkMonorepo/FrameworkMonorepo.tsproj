@@ -19,7 +19,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{53775AAD-FA08-4440-B0B9-741C387ECAA9}" Name="Types" PrjFilePath="Types\Types.plcproj" TmcFilePath="Types\Types.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Types\Types.tmc" TmcHash="{85AF6818-2ECA-B3E9-BA6E-6EA9FABA6E10}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Types\Types.tmc" TmcHash="{940F9D6A-CD9F-F8DE-69D5-7B80914DAA90}">
 					<Name>Types Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -75,7 +75,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{5FA3E815-F79F-4B58-9FE0-6C55EEF9EE97}" Name="StringsTests" PrjFilePath="StringsTests\StringsTests.plcproj" TmcFilePath="StringsTests\StringsTests.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{1DB13098-656D-8C00-16E1-8A33EF1306DB}">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="StringsTests\StringsTests.tmc" TmcHash="{32CB322B-B968-F3CE-F219-B02A1A259AA5}">
 					<Name>StringsTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -95,7 +95,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{449DA929-D2D0-4EC9-9052-EADDE666E8FE}" Name="DataTests" PrjFilePath="DataTests\DataTests.plcproj" TmcFilePath="DataTests\DataTests.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{9FBEC732-194B-BBC0-48BA-D489E64762F1}">
+				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{C606FAB4-BBB5-3CFF-6C82-B2FCC09A5AE8}">
 					<Name>DataTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

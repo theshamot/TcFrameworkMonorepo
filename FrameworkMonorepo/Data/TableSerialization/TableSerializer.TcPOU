@@ -39,7 +39,9 @@ FOR column := 0 TO definedColumns - 1 DO
 	END_IF
 	
 	stringBuilder.Append(columnNames[column]);
-END_FOR]]></ST>
+END_FOR
+
+AddNewLine();]]></ST>
       </Implementation>
     </Method>
     <Method Name="AddLine" Id="{d9b58cd7-c635-083b-245e-5fb2dcc20db1}">
@@ -54,9 +56,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[AddNewLine();
-
-FOR column := 0 TO definedColumns - 1 DO
+        <ST><![CDATA[FOR column := 0 TO definedColumns - 1 DO
 	IF (column > 0) THEN
 		stringBuilder.Append(_Separator);
 	END_IF
@@ -76,7 +76,10 @@ FOR column := 0 TO definedColumns - 1 DO
 		
 		stringBuilder.Append(converted);
 	END_IF
-END_FOR]]></ST>
+END_FOR
+
+AddNewLine();
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="AddNewLine" Id="{8ec85cae-9933-0793-348f-1132550fb9cc}">
