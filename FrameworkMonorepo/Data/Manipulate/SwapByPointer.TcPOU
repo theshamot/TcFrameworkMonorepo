@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="SwapByAddr" Id="{b35f0ba5-480b-005d-053a-a6bc01854ed8}" SpecialFunc="None">
-    <Declaration><![CDATA[// Swaps values of to variables
-FUNCTION SwapByAddr
+  <POU Name="SwapByPointer" Id="{b35f0ba5-480b-005d-053a-a6bc01854ed8}" SpecialFunc="None">
+    <Declaration><![CDATA[// Swaps values of two variables
+FUNCTION SwapByPointer
 VAR_INPUT
 	a : POINTER TO BYTE;
 	b : POINTER TO BYTE;

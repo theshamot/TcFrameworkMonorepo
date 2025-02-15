@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="SortAnything" Id="{75e13391-e630-0675-3459-e7fdd87162d1}" SpecialFunc="None">
+    <Declaration><![CDATA[// sort any array of anything
+FUNCTION SortAnything
+VAR_INPUT
+	arr 			: ANY; // Data to be sorted, get size of array
+	firstElement 	: ANY; // Get size of element to be able to get count of elements and iterate over them
+	sortBy 			: ANY; // Possibility to pass array of structures and sort by some of its member - this will get its type and offset in element.
+	order 			: SortOrder;
+END_VAR
+VAR
+	elemSize		: DINT;
+	elemCount 		: DINT;
+	memberOffset 	: DWORD;
+	
+	startIndex 		: DINT := 0;
+	endIndex 		: DINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[elemCount := arr.diSize / firstElement.diSize;
+memberOffset := sortBy.pValue - firstElement.pValue;
+EndIndex := ElemCount - 1;
+
+_QuickSort(arr, firstElement, sortBy, memberOffset, startIndex, endIndex, order);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

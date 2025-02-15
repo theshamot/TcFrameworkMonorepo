@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ManipulateFunctionsTest" Id="{14169c0f-5a0f-0126-0137-c92919737a12}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ClearDataFunction();
+ShiftDataLeftFunction();
+SwapFunction();
+SwapByPointerFunction();]]></ST>
+    </Implementation>
+    <Method Name="ClearDataFunction" Id="{8bab33b3-023a-0211-1df9-0f38203bac79}">
+      <Declaration><![CDATA[METHOD ClearDataFunction : BOOL
+VAR
+	data : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Clear data function');
+
+data := 42;
+ClearData(data);
+
+AssertEquals_INT(
+	Expected := 0,
+	Actual := data,
+	Message := 'Data memory should be all set to 0');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ShiftDataLeftFunction" Id="{7942eae2-dd9e-0588-101a-d8ae892abdac}">
+      <Declaration><![CDATA[METHOD ShiftDataLeftFunction : BOOL
+VAR
+	updatedBuffer : ARRAY[0..LastIndex] OF INT;
+	
+	expected : ARRAY[0..LastIndex] OF INT;
+END_VAR
+VAR CONSTANT
+	LastIndex : INT := 2;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Shift data left function');
+
+updatedBuffer[LastIndex] := 1;
+ShiftDataLeft(updatedBuffer, SIZEOF(INT));
+updatedBuffer[LastIndex] := 2;
+ShiftDataLeft(updatedBuffer, SIZEOF(INT));
+updatedBuffer[LastIndex] := 3;
+
+expected[0] := 1;
+expected[1] := 2;
+expected[2] := 3;
+
+AssertArrayEquals_INT(
+	Expecteds := expected,
+	Actuals := updatedBuffer,
+	Message := 'Data should be gradually shifter from end to begin');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SwapByPointerFunction" Id="{405ad9c9-650c-0fa7-35ef-eedb31cfc7df}">
+      <Declaration><![CDATA[METHOD SwapByPointerFunction : BOOL
+VAR
+	data1 : INT;
+	data2 : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Swap by pointer function');
+
+data1 := 42;
+data2 := 420;
+
+SwapByPointer(ADR(data1), ADR(data2), SIZEOF(data1));
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := data1 = 420 AND data2 = 42,
+	Message := 'Data should be swapped');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SwapFunction" Id="{bd413a57-8fa6-0029-1084-f52da7f97a70}">
+      <Declaration><![CDATA[METHOD SwapFunction : BOOL
+VAR
+	data1 : INT;
+	data2 : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Swap function');
+
+data1 := 42;
+data2 := 420;
+
+Swap(data1, data2);
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := data1 = 420 AND data2 = 42,
+	Message := 'Data should be swapped');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

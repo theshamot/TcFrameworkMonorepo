@@ -10,7 +10,7 @@ TYPE ComparisonOperator :
 	LessThan,
 	LessThenOrEqual,
 	GreaterThan,
-	GraterThanOrEqual
+	GreaterThanOrEqual
 );
 END_TYPE
 ]]></Declaration>

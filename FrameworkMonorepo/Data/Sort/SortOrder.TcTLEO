@@ -5,8 +5,8 @@
 {attribute 'strict'}
 TYPE SortOrder :
 (
-	ASCENDING,
-	DESCENDING
+	Ascending,
+	Descending
 );
 END_TYPE
 ]]></Declaration>
@@ -15,12 +15,12 @@ END_TYPE
         <o xml:space="preserve" t="TextListEnumerationTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
-              <v n="TextID">"ASCENDING"</v>
+              <v n="TextID">"Ascending"</v>
               <v n="TextDefault">""</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"DESCENDING"</v>
+              <v n="TextID">"Descending"</v>
               <v n="TextDefault">""</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>

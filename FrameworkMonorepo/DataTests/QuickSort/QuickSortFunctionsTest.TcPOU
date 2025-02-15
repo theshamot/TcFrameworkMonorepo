@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="QuickSortFunctionsTest" Id="{81fdb1b8-8ce9-0688-223c-7aeffd556e69}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK QuickSortFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[QuickSortREALFunction();
+SortAnythingFunction();]]></ST>
+    </Implementation>
+    <Method Name="QuickSortREALFunction" Id="{d6f0d591-2ef9-01c0-217c-d76a517f38ba}">
+      <Declaration><![CDATA[METHOD QuickSortREALFunction : BOOL
+VAR
+	data : ARRAY[0..4] OF REAL;
+	expected : ARRAY[0..4] OF REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('QuickSort REAL');
+
+data[0] := 3;
+data[1] := 1;
+data[2] := 2;
+data[3] := 5;
+data[4] := 4;
+
+QuickSortREAL(data, 0, 4);
+
+expected[0] := 1;
+expected[1] := 2;
+expected[2] := 3;
+expected[3] := 4;
+expected[4] := 5;
+
+AssertArrayEquals_REAL(
+	Expecteds := expected,
+	Actuals := data,
+	Delta := 0.1,
+	Message := 'What went wrong');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SortAnythingFunction" Id="{bec71799-4bac-0f78-0d45-124eb6188576}">
+      <Declaration><![CDATA[METHOD SortAnythingFunction : BOOL
+VAR
+	data : ARRAY[0..4] OF TestTableRow;
+	expected : ARRAY[0..4] OF TestTableRow;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Sort anything');
+
+data[0] := 3;
+data[1] := 1;
+data[2] := 2;
+data[3] := 5;
+data[4] := 4;
+
+QuickSortREAL(data, 0, 4);
+
+expected[0] := 1;
+expected[1] := 2;
+expected[2] := 3;
+expected[3] := 4;
+expected[4] := 5;
+
+AssertArrayEquals_REAL(
+	Expecteds := expected,
+	Actuals := data,
+	Delta := 0.1,
+	Message := 'What went wrong');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

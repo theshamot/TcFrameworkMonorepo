@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="QuickSortREAL" Id="{cc69f6c6-3c18-036b-3757-07a8aea1d2a7}" SpecialFunc="None">
+    <Declaration><![CDATA[// Will sort array of REAL using QuickSort algorithm
+FUNCTION QuickSortREAL
+VAR_IN_OUT
+	arrayOfREALToSort	: ARRAY[*] OF REAL; // Array to sort
+END_VAR
+VAR_INPUT
+	firstIndex			: INT; // Start index
+	lastIndex			: INT; // End index
+END_VAR
+VAR 
+	pivotLocation		: INT; // Partitioning point
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF firstIndex < lastIndex THEN
+	pivotLocation := PartitionREAL(arrayOfREALToSort, firstIndex, lastIndex);
+	QuickSortREAL(arrayOfREALToSort, firstIndex, pivotLocation - 1);
+	QuickSortREAL(arrayOfREALToSort, pivotLocation + 1, lastIndex);
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

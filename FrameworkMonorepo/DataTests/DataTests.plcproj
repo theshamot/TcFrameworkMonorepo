@@ -18,19 +18,31 @@
     <LibraryReferences>{7e0c4fa5-20c0-4e2a-b0e1-c2bb21362b06}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Manipulate\ManipulateFunctionsTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Comparison\CompareAnyTypeTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Comparison\ComparisonFunctionsTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PRG_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="QuickSort\QuickSortFunctionsTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TableSerialization\TableSerializerTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableSerialization\TestTableRow.TcDUT">
+    <Compile Include="TableSerialization\TableDeserializerTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableSerialization\TableDeserializerTest.TcPOU">
+    <Compile Include="TestTableRow.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="_TemplateTest\_TemplateTest.TcPOU">
@@ -60,9 +72,17 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcUnit">
       <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Types">
+      <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Comparison" />
+    <Folder Include="Manipulate" />
+    <Folder Include="QuickSort" />
+    <Folder Include="Sort" />
     <Folder Include="TableSerialization" />
     <Folder Include="_TemplateTest" />
   </ItemGroup>
@@ -74,8 +94,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -109,13 +129,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

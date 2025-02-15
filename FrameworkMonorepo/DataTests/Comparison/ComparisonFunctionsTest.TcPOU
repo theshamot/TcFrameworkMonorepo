@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ComparisonFunctionsTest" Id="{f90bffaf-3a64-090c-126d-223f1ba9034f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ComparisonFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[DataEqualsFunction();]]></ST>
+    </Implementation>
+    <Method Name="DataEqualsFunction" Id="{6d0ce20e-9b64-0d8d-0ae4-3f5ee07fa4d9}">
+      <Declaration><![CDATA[METHOD DataEqualsFunction : BOOL
+VAR
+	data1 : INT;
+	data2 : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Example test');
+
+data1 := 42;
+data2 := 0;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := DataEquals(data1, data2),
+	Message := 'Data should not be equal');
+
+data2 := data1;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := DataEquals(data1, data2),
+	Message := 'Data should be equal');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

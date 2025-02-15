@@ -26,7 +26,6 @@
     <Folder Include="Manipulate" />
     <Folder Include="QuickSort" />
     <Folder Include="Sort" />
-    <Folder Include="Validate" />
     <Folder Include="TableSerialization" />
     <Folder Include="Version" />
   </ItemGroup>
@@ -36,6 +35,10 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Comparison\ComparisonOperator.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Comparison\DataEquals.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -75,15 +78,15 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Manipulate\SwapByAddr.TcPOU">
+    <Compile Include="Manipulate\SwapByPointer.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="QuickSort\Partition.TcPOU">
+    <Compile Include="QuickSort\PartitionREAL.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="QuickSort\QuickSort.TcPOU">
+    <Compile Include="QuickSort\QuickSortREAL.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -91,7 +94,7 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Sort\Sort.TcPOU">
+    <Compile Include="Sort\SortAnything.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -108,10 +111,6 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="TableSerialization\TableSerializer.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Validate\DataEquals.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
