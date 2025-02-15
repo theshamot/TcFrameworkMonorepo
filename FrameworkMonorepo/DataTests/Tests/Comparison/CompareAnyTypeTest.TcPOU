@@ -149,21 +149,21 @@ data2 := 3.14;
 
 AssertEquals_BOOL(
 	Expected := FALSE,
-	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.LessThenOrEqual, GetAnyType(data2)),
+	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.LessThanOrEqual, GetAnyType(data2)),
 	Message := 'data1 should not be less or equal then data2');
 
 data1 := 3.14;
 
 AssertEquals_BOOL(
 	Expected := TRUE,
-	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.LessThenOrEqual, GetAnyType(data2)),
+	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.LessThanOrEqual, GetAnyType(data2)),
 	Message := 'data1 should be equal to data2');
 
 data1 := 2.14;
 
 AssertEquals_BOOL(
 	Expected := TRUE,
-	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.LessThenOrEqual, GetAnyType(data2)),
+	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.LessThanOrEqual, GetAnyType(data2)),
 	Message := 'data1 should be less then data2');
 
 TEST_FINISHED();]]></ST>
@@ -185,14 +185,14 @@ data1 := 'some test content';
 data2 := 'some test content';
 
 AssertEquals_BOOL(
-	Expected := TRUE,
+	Expected := FALSE,
 	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.NotEqual, GetAnyType(data2)),
 	Message := 'Data should not be equal');
 
 data1 := '';
 
 AssertEquals_BOOL(
-	Expected := FALSE,
+	Expected := TRUE,
 	Actual := CompareAnyType(GetAnyType(data1), ComparisonOperator.NotEqual, GetAnyType(data2)),
 	Message := 'Data should be equal');
 

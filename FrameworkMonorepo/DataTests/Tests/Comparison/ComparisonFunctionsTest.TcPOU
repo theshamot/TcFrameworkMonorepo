@@ -16,7 +16,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('Example test');
+        <ST><![CDATA[TcUnit.TEST('Data equals');
 
 data1 := 42;
 data2 := 0;

@@ -6,8 +6,9 @@ VAR
 	comparisonFunctionsTest : ComparisonFunctionsTest;
 	compareAnyTypeTest : CompareAnyTypeTest;
 	
-	manipulateFunctionsTest : ManipulateFunctionsTest();
+	manipulateFunctionsTest : ManipulateFunctionsTest;
 	quickSortFunctionsTest : QuickSortFunctionsTest;
+	SortFunctionsTest : SortFunctionsTest;
 
 	tableSerializerTest : TableSerializerTest;
 	tableDeserializerTest : TableDeserializerTest;

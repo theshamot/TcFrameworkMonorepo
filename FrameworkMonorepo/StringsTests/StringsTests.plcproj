@@ -21,9 +21,6 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PRG_Test.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Tests\Builders\StringBuilder255Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -36,16 +33,19 @@
     <Compile Include="Tests\Builders\StringBuilderInfiniteTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tests\Convert\ConvertFunctions.TcPOU">
+    <Compile Include="Tests\Convert\ConvertFunctionsTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tests\Manipulate\ManipulateFunctionsTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\PRG_Test.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests\Validate\ValidateFunctionsTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="_TemplateTest\_TemplateTest.TcPOU">
+    <Compile Include="Tests\_TemplateTest\_TemplateTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -76,7 +76,7 @@
     <Folder Include="Tests\Convert" />
     <Folder Include="Tests\Builders" />
     <Folder Include="Tests\Validate" />
-    <Folder Include="_TemplateTest" />
+    <Folder Include="Tests\_TemplateTest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="StringsTests.tmc">
@@ -86,8 +86,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -121,13 +121,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

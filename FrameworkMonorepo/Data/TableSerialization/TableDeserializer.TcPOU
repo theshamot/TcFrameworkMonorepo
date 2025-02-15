@@ -12,7 +12,7 @@ VAR
 	columnDefinitionCount : INT;
 	definedColumns : INT;
 	
-	_Separator : STRING := ','; // Default separator ';' is compatible with european decimal separator '.'.
+	_Separator : STRING := ',';
 	_NewLine : STRING := '$N'; // Default is Windows newline.
 	_DecimalSeparator : STRING := '.';
 END_VAR

@@ -18,34 +18,37 @@
     <LibraryReferences>{7e0c4fa5-20c0-4e2a-b0e1-c2bb21362b06}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Manipulate\ManipulateFunctionsTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Comparison\CompareAnyTypeTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Comparison\ComparisonFunctionsTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PRG_Test.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QuickSort\QuickSortFunctionsTest.TcPOU">
+    <Compile Include="Tests\Comparison\CompareAnyTypeTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableSerialization\TableSerializerTest.TcPOU">
+    <Compile Include="Tests\Comparison\ComparisonFunctionsTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TableSerialization\TableDeserializerTest.TcPOU">
+    <Compile Include="Tests\Manipulate\ManipulateFunctionsTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestTableRow.TcDUT">
+    <Compile Include="Tests\PRG_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="_TemplateTest\_TemplateTest.TcPOU">
+    <Compile Include="Tests\QuickSort\QuickSortFunctionsTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\Sort\SortFunctionsTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\TableSerialization\TableDeserializerTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\TableSerialization\TableSerializerTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\TestTableRow.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\_TemplateTest\_TemplateTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -79,12 +82,13 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Comparison" />
-    <Folder Include="Manipulate" />
-    <Folder Include="QuickSort" />
-    <Folder Include="Sort" />
-    <Folder Include="TableSerialization" />
-    <Folder Include="_TemplateTest" />
+    <Folder Include="Tests" />
+    <Folder Include="Tests\Comparison" />
+    <Folder Include="Tests\Manipulate" />
+    <Folder Include="Tests\QuickSort" />
+    <Folder Include="Tests\Sort" />
+    <Folder Include="Tests\TableSerialization" />
+    <Folder Include="Tests\_TemplateTest" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DataTests.tmc">

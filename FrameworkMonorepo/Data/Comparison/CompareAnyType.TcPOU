@@ -15,7 +15,7 @@ END_VAR]]></Declaration>
 		CompareAnyType := IsNotEqualAnyType(a, b);
 	ComparisonOperator.LessThan:
 		CompareAnyType := IsLessThanAnyType(a, b);
-	ComparisonOperator.LessThenOrEqual:
+	ComparisonOperator.LessThanOrEqual:
 		CompareAnyType := IsLessThanOrEqualAnyType(a, b);
 	ComparisonOperator.GreaterThan:
 		CompareAnyType := IsGreaterThanAnyType(a, b);

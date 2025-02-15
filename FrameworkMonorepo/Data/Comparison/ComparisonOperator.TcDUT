@@ -8,7 +8,7 @@ TYPE ComparisonOperator :
 	Equal,
 	NotEqual,
 	LessThan,
-	LessThenOrEqual,
+	LessThanOrEqual,
 	GreaterThan,
 	GreaterThanOrEqual
 );

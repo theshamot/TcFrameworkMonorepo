@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="ConvertFunctions" Id="{5c60e2d6-28aa-0817-3ab9-bc38d45e25ab}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK ConvertFunctions EXTENDS TcUnit.FB_TestSuite
+  <POU Name="ConvertFunctionsTest" Id="{5c60e2d6-28aa-0817-3ab9-bc38d45e25ab}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ConvertFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
 END_VAR
 ]]></Declaration>

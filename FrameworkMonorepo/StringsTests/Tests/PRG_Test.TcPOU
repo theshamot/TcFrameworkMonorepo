@@ -5,7 +5,7 @@
 VAR
 	validateFunctionsTest : ValidateFunctionsTest;
 	manipulateFunctionsTest : ManipulateFunctionsTest;
-	convertFunctionsTest : ConvertFunctions;
+	convertFunctionsTest : ConvertFunctionsTest;
 	
 	sb255Test : StringBuilder255Test;
 	buildStringInlineTest : BuildStringInlineTest;
