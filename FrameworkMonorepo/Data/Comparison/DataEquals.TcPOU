@@ -3,18 +3,18 @@
   <POU Name="DataEquals" Id="{966a9e14-2fe0-04e4-256c-b130f4885b3a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION DataEquals : BOOL
 VAR_INPUT
-	data1 : ANY;
-	data2 : ANY;
+	a : ANY;
+	b : ANY;
 END_VAR
 VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF (data1.diSize <> data2.diSize) THEN
+      <ST><![CDATA[IF (a.diSize <> b.diSize) THEN
 	RETURN;
 END_IF
 
-DataEquals := MEMCMP(pBuf1 := data1.pValue, pBuf2 := data2.pValue, n := data1.diSize) = 0;]]></ST>
+DataEquals := MEMCMP(pBuf1 := a.pValue, pBuf2 := b.pValue, n := a.diSize) = 0;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

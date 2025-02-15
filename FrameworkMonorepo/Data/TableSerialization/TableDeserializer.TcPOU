@@ -72,14 +72,14 @@ DefineRow REF= THIS^;]]></ST>
     <Method Name="Deserialize" Id="{469a7f4d-b005-006e-04b0-81df065e5112}">
       <Declaration><![CDATA[METHOD Deserialize : DINT
 VAR
-	carret : DINT;
+	caret : DINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[dataLength := LEN2(dataString);
-carret := ReadHeader();
-carret := ReadAllRows(carret);
+caret := ReadHeader();
+caret := ReadAllRows(caret);
 
-Deserialize := carret;]]></ST>
+Deserialize := caret;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{e4f94ead-2283-0af8-1723-a22735221102}">
@@ -124,23 +124,23 @@ END_VAR
     <Method Name="ReadAllRows" Id="{e19a843a-8d18-0ff9-0de4-c88d595663c8}">
       <Declaration><![CDATA[METHOD PRIVATE ReadAllRows : DINT
 VAR_INPUT
-	startCarret : DINT;
+	startCaret : DINT;
 END_VAR
 VAR
-	carret : DINT;
+	caret : DINT;
 	i : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[carret := startCarret;
+        <ST><![CDATA[caret := startCaret;
 
 FOR i := 0 TO _RowCount - 1 DO
-	carret := ReadRow(i, carret);
-	IF (carret >= dataLength) THEN
+	caret := ReadRow(i, caret);
+	IF (caret >= dataLength) THEN
 		EXIT;
 	END_IF
 END_FOR
 
-ReadAllRows := carret;]]></ST>
+ReadAllRows := caret;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ReadHeader" Id="{d90cef34-8289-0ac4-2959-a4dd8ac2e400}">
@@ -148,7 +148,7 @@ ReadAllRows := carret;]]></ST>
 VAR
 	i : DINT;
 	
-	carret : DINT;
+	caret : DINT;
 	lineEnd : DINT;
 	cellLength : DINT;
 	
@@ -165,40 +165,40 @@ IF (lineEnd = 0) THEN
 END_IF
 
 FOR i := 0 TO definedColumns - 1 DO
-	cellLength := FIND2(pSrcString := dataString + carret, pFindString := ADR(_Separator));
-	IF (carret + cellLength > lineEnd) THEN
-		cellLength := lineEnd - carret;
+	cellLength := FIND2(pSrcString := dataString + caret, pFindString := ADR(_Separator));
+	IF (caret + cellLength > lineEnd) THEN
+		cellLength := lineEnd - caret;
 	END_IF
 	IF (cellLength = 0) THEN
 		cellLength := lineEnd;
 	END_IF
 
 	ClearData(cell);
-	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + carret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
+	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
 	StringToAny(cell, columnNames[i]);
 	
 	IF (cellLength = dataLength) THEN
-		carret := lineEnd;
+		caret := lineEnd;
 	ELSIF (cellLength = lineEnd) THEN
-		carret := lineEnd;
+		caret := lineEnd;
 	ELSE
-		carret := carret + cellLength;
+		caret := caret + cellLength;
 	END_IF
 END_FOR
 
-ReadHeader := carret;]]></ST>
+ReadHeader := caret;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ReadRow" Id="{9e4c8000-7c69-0be9-232c-fb4179063f04}">
       <Declaration><![CDATA[METHOD PRIVATE ReadRow : DINT
 VAR_INPUT
 	row : DINT;
-	startCarret : DINT;
+	startCaret : DINT;
 END_VAR
 VAR
 	i : DINT;
 	
-	carret : DINT;
+	caret : DINT;
 	lineLength : DINT;
 	cellLength : DINT;
 	
@@ -211,27 +211,27 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-carret := startCarret;
+caret := startCaret;
 
-lineLength := FIND2(pSrcString := dataString + carret, pFindString := ADR(_NewLine));
+lineLength := FIND2(pSrcString := dataString + caret, pFindString := ADR(_NewLine));
 IF (lineLength = 0) THEN
 	lineLength := dataLength;
 END_IF
 
 FOR i := 0 TO definedColumns - 1 DO
-	IF (carret >= dataLength) THEN
+	IF (caret >= dataLength) THEN
 		EXIT;
 	END_IF
-	cellLength := FIND2(pSrcString := dataString + carret, pFindString := ADR(_Separator));
-	IF (carret + cellLength > startCarret + lineLength) THEN
-		cellLength := (startCarret + lineLength) - carret;
+	cellLength := FIND2(pSrcString := dataString + caret, pFindString := ADR(_Separator));
+	IF (caret + cellLength > startCaret + lineLength) THEN
+		cellLength := (startCaret + lineLength) - caret;
 	END_IF
 	IF (cellLength = 0) THEN
 		cellLength := lineLength;
 	END_IF
 
 	ClearData(cell);
-	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + carret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
+	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
 	tableCell := columnDefinitions[i];
 	tableCell.pValue := tableCell.pValue + rowDefinition.diSize * row;
 	CASE tableCell.TypeClass OF
@@ -241,15 +241,15 @@ FOR i := 0 TO definedColumns - 1 DO
 	StringToAnyType(cell, tableCell);
 	
 	IF (cellLength = dataLength) THEN
-		carret := startCarret + lineLength;
+		caret := startCaret + lineLength;
 	ELSIF (cellLength = lineLength) THEN
-		carret := startCarret + lineLength;
+		caret := startCaret + lineLength;
 	ELSE
-		carret := carret + cellLength;
+		caret := caret + cellLength;
 	END_IF
 END_FOR
 
-ReadRow := carret;]]></ST>
+ReadRow := caret;]]></ST>
       </Implementation>
     </Method>
     <Property Name="RowCount" Id="{ed443da8-c273-0153-280d-4c621b350138}">

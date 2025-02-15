@@ -5,11 +5,11 @@
 FUNCTION ShiftDataLeft : BOOL
 VAR_INPUT
 	data : ANY;
-	bytes : UDINT;
+	byteCount : UDINT; // How far to left are shifted
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[MEMMOVE(destAddr := data.pValue, srcAddr := data.pValue + bytes, data.diSize - bytes);
-MEMSET(destAddr := data.pValue + data.diSize - bytes, fillByte := 0, n := bytes);]]></ST>
+      <ST><![CDATA[MEMMOVE(destAddr := data.pValue, srcAddr := data.pValue + byteCount, data.diSize - byteCount);
+MEMSET(destAddr := data.pValue + data.diSize - byteCount, fillByte := 0, n := byteCount);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
