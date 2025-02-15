@@ -37,7 +37,7 @@ AssertArrayEquals_REAL(
 	Expecteds := expected,
 	Actuals := data,
 	Delta := 0.1,
-	Message := 'What went wrong');
+	Message := 'Array should be sorter');
 
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -47,30 +47,69 @@ TEST_FINISHED();]]></ST>
 VAR
 	data : ARRAY[0..4] OF TestTableRow;
 	expected : ARRAY[0..4] OF TestTableRow;
+	
+	i : INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Sort anything');
 
-data[0] := 3;
-data[1] := 1;
-data[2] := 2;
-data[3] := 5;
-data[4] := 4;
+ClearData(data);
+ClearData(expected);
 
-QuickSortREAL(data, 0, 4);
+data[0].timestamp := T#3S;
+data[0].value1 := 2;
+data[0].value2 := 5.555;
+data[0].description := 'some text';
+data[1].timestamp := T#1S;
+data[1].value1 := 8;
+data[1].value2 := 3.14;
+data[1].description := 'hello world';
+data[2].timestamp := T#5S;
+data[2].value1 := 15;
+data[2].value2 := 9.876;
+data[2].description := 'test data';
+data[3].timestamp := T#2S;
+data[3].value1 := 4;
+data[3].value2 := 1.234;
+data[3].description := 'sample entry';
+data[4].timestamp := T#7S;
+data[4].value1 := 11;
+data[4].value2 := 6.789;
+data[4].description := 'final record';
 
-expected[0] := 1;
-expected[1] := 2;
-expected[2] := 3;
-expected[3] := 4;
-expected[4] := 5;
+SortAnything(
+	arr := data,
+	firstElement := data[0],
+	sortBy := data[0].value1,
+	order := SortOrder.Descending
+);
 
-AssertArrayEquals_REAL(
-	Expecteds := expected,
-	Actuals := data,
-	Delta := 0.1,
-	Message := 'What went wrong');
+expected[0].timestamp := T#5S;
+expected[0].value1 := 15;
+expected[0].value2 := 9.876;
+expected[0].description := 'test data';
+expected[1].timestamp := T#7S;
+expected[1].value1 := 11;
+expected[1].value2 := 6.789;
+expected[1].description := 'final record';
+expected[2].timestamp := T#1S;
+expected[2].value1 := 8;
+expected[2].value2 := 3.14;
+expected[2].description := 'hello world';
+expected[3].timestamp := T#2S;
+expected[3].value1 := 4;
+expected[3].value2 := 1.234;
+expected[3].description := 'sample entry';
+expected[4].timestamp := T#3S;
+expected[4].value1 := 2;
+expected[4].value2 := 5.555;
+expected[4].description := 'some text';
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := DataEquals(data, expected),
+	Message := 'Array should be sorted descending by value1 column');
 
 TEST_FINISHED();]]></ST>
       </Implementation>

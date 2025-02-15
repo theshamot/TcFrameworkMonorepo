@@ -95,7 +95,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{449DA929-D2D0-4EC9-9052-EADDE666E8FE}" Name="DataTests" PrjFilePath="DataTests\DataTests.plcproj" TmcFilePath="DataTests\DataTests.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{5B606D19-89DC-21EE-7B43-A02AE7669D56}">
+				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{F114DE20-92FB-ACFF-6596-CCFFFDDF6BB3}">
 					<Name>DataTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
