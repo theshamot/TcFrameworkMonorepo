@@ -3,90 +3,12 @@
   <POU Name="TableDeserializerTest" Id="{f701bd83-31b6-0bf4-046e-5139c1411279}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK TableDeserializerTest EXTENDS TcUnit.FB_TestSuite
 VAR
-		data : STRING(1000);
-	i : INT;
-
-	table : ARRAY[0..9] OF TestTableRow;
-	columns : ARRAY[0..3] OF __SYSTEM.AnyType;
-	columnNames : ARRAY[0..3] OF T_MaxString;
-	columnCount : INT := 4;
-	deserializer : TableDeserializer := (
-		DataString := ADR(data),
-		ColumnDefinitionBuffer := ADR(columns),
-		ColumnNameBuffer := ADR(columnNames),
-		MaxColumnCount := columnCount
-	);
-	
-	expected : ARRAY[0..9] OF TestTableRow;
-	expectedHeader : ARRAY[0..3] OF T_MaxString;
-	
-	actual : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[DeserializeTable();
 DeserializePartOfTableWithSwappedColumnsAndNoHeader();
-
-TcUnit.TEST('Deserialize table');
-
-// Clear buffers to be able to compare data using memory compare
-ClearData(columnNames);
-ClearData(expectedHeader);
-ClearData(table);
-ClearData(expected);
-
-data := 'Timestamp;Value 1;Value 2;Description$NT#0ms;0;0,0;some text$NT#1ms;1;3,14;some text$NT#2ms;2;6,28;some text$NT#3ms;3;9,42;some text$NT#4ms;4;12,56;some text$NT#5ms;5;15,700001;some text$NT#6ms;6;18,84;some text$NT#7ms;7;21,98;some text$NT#8ms;8;25,12;some text$NT#9ms;9;28,26;some text';
-
-// Define format of data
-deserializer.DecimalSeparator := ',';
-deserializer.Separator := ';';
-
-// Bind output table
-deserializer.DefineRow(table[0]);
-deserializer.RowCount := 10;
-deserializer.DefineNextColumn(table[0].timestamp);
-deserializer.DefineNextColumn(table[0].value1);
-deserializer.DefineNextColumn(table[0].value2);
-deserializer.DefineNextColumn(table[0].description);
-
-// Deserialize
-deserializer.Deserialize(TRUE);
-
-// Expected data
-expectedHeader[0] := 'Timestamp';
-expectedHeader[1] := 'Value 1';
-expectedHeader[2] := 'Value 2';
-expectedHeader[3] := 'Description';
-FOR i := 0 TO 9 DO
-	expected[i].timestamp := TO_TIME(i);
-	expected[i].value1 := i;
-	expected[i].value2 := i * 3.14;
-	expected[i].description := 'some text';
-END_FOR
-
-actual := TRUE;
-FOR i := 0 TO 9 DO
-	IF (table[i].timestamp <> expected[i].timestamp
-		OR table[i].value1 <> expected[i].value1
-		OR ABS(table[i].value2 - expected[i].value2) > 0.1
-		OR table[i].description <> expected[i].description) THEN
-		
-		actual := FALSE;
-		EXIT;
-	END_IF
-END_FOR
-
-AssertEquals_BOOL(
-	Expected := TRUE,
-	Actual := MEMCMP(ADR(columnNames), ADR(expectedHeader), SIZEOF(columnNames)) = 0,
-	Message := 'Header was not properly deserialized');
-	
-AssertEquals_BOOL(
-	Expected := TRUE,
-	Actual := actual,
-	Message := 'Data were not properly deserialized');
-
-TEST_FINISHED();]]></ST>
+]]></ST>
     </Implementation>
     <Method Name="DeserializePartOfTableWithSwappedColumnsAndNoHeader" Id="{f9a1a1c5-b559-0ff5-3dd3-6d99c3f88b92}">
       <Declaration><![CDATA[METHOD DeserializePartOfTableWithSwappedColumnsAndNoHeader : BOOL
@@ -162,87 +84,87 @@ TEST_FINISHED();]]></ST>
     <Method Name="DeserializeTable" Id="{60a57af8-7555-0c7f-01de-607b1570b0a0}">
       <Declaration><![CDATA[METHOD DeserializeTable : BOOL
 VAR
-//	data : STRING(1000);
-//	i : INT;
+	data : STRING(1000);
+	i : INT;
 
-//	table : ARRAY[0..9] OF TestTableRow;
-//	columns : ARRAY[0..3] OF __SYSTEM.AnyType;
-//	columnNames : ARRAY[0..3] OF T_MaxString;
-//	columnCount : INT := 4;
-//	deserializer : TableDeserializer := (
-//		DataString := ADR(data),
-//		ColumnDefinitionBuffer := ADR(columns),
-//		ColumnNameBuffer := ADR(columns),
-//		MaxColumnCount := columnCount
-//	);
+	table : ARRAY[0..9] OF TestTableRow;
+	columns : ARRAY[0..3] OF __SYSTEM.AnyType;
+	columnNames : ARRAY[0..3] OF T_MaxString;
+	columnCount : INT := 4;
+	deserializer : TableDeserializer := (
+		DataString := ADR(data),
+		ColumnDefinitionBuffer := ADR(columns),
+		ColumnNameBuffer := ADR(columnNames),
+		MaxColumnCount := columnCount
+	);
 	
-//	expected : ARRAY[0..9] OF TestTableRow;
-//	expectedHeader : ARRAY[0..3] OF T_MaxString;
+	expected : ARRAY[0..9] OF TestTableRow;
+	expectedHeader : ARRAY[0..3] OF T_MaxString;
 	
-//	actual : BOOL;
+	actual : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//TcUnit.TEST('Deserialize table');
+        <ST><![CDATA[TcUnit.TEST('Deserialize table');
 
-//// Clear buffers to be able to compare data using memory compare
-//ClearData(columnNames);
-//ClearData(expectedHeader);
-//ClearData(table);
-//ClearData(expected);
+// Clear buffers to be able to compare data using memory compare
+ClearData(columnNames);
+ClearData(expectedHeader);
+ClearData(table);
+ClearData(expected);
 
-//data := 'Timestamp;Value 1;Value 2;Description$NT#0ms;0;0,0;some text$NT#1ms;1;3,14;some text$NT#2ms;2;6,28;some text$NT#3ms;3;9,42;some text$NT#4ms;4;12,56;some text$NT#5ms;5;15,700001;some text$NT#6ms;6;18,84;some text$NT#7ms;7;21,98;some text$NT#8ms;8;25,12;some text$NT#9ms;9;28,26;some text';
+data := 'Timestamp;Value 1;Value 2;Description$NT#0ms;0;0,0;some text$NT#1ms;1;3,14;some text$NT#2ms;2;6,28;some text$NT#3ms;3;9,42;some text$NT#4ms;4;12,56;some text$NT#5ms;5;15,700001;some text$NT#6ms;6;18,84;some text$NT#7ms;7;21,98;some text$NT#8ms;8;25,12;some text$NT#9ms;9;28,26;some text';
 
-//// Define format of data
-//deserializer.DecimalSeparator := ',';
-//deserializer.Separator := ';';
+// Define format of data
+deserializer.DecimalSeparator := ',';
+deserializer.Separator := ';';
 
-//// Bind output table
-//deserializer.DefineRow(table[0]);
-//deserializer.RowCount := 10;
-//deserializer.DefineNextColumn(table[0].timestamp);
-//deserializer.DefineNextColumn(table[0].value1);
-//deserializer.DefineNextColumn(table[0].value2);
-//deserializer.DefineNextColumn(table[0].description);
+// Bind output table
+deserializer.DefineRow(table[0]);
+deserializer.RowCount := 10;
+deserializer.DefineNextColumn(table[0].timestamp);
+deserializer.DefineNextColumn(table[0].value1);
+deserializer.DefineNextColumn(table[0].value2);
+deserializer.DefineNextColumn(table[0].description);
 
-//// Deserialize
-//deserializer.Deserialize(TRUE);
+// Deserialize
+deserializer.Deserialize(TRUE);
 
-//// Expected data
-//expectedHeader[0] := 'Timestamp';
-//expectedHeader[1] := 'Value 1';
-//expectedHeader[2] := 'Value 2';
-//expectedHeader[3] := 'Description';
-//FOR i := 0 TO 9 DO
-//	expected[i].timestamp := TO_TIME(i);
-//	expected[i].value1 := i;
-//	expected[i].value2 := i * 3.14;
-//	expected[i].description := 'some text';
-//END_FOR
+// Expected data
+expectedHeader[0] := 'Timestamp';
+expectedHeader[1] := 'Value 1';
+expectedHeader[2] := 'Value 2';
+expectedHeader[3] := 'Description';
+FOR i := 0 TO 9 DO
+	expected[i].timestamp := TO_TIME(i);
+	expected[i].value1 := i;
+	expected[i].value2 := i * 3.14;
+	expected[i].description := 'some text';
+END_FOR
 
-//actual := TRUE;
-//FOR i := 0 TO 9 DO
-//	IF (table[i].timestamp <> expected[i].timestamp
-//		OR table[i].value1 <> expected[i].value1
-//		OR ABS(table[i].value2 - expected[i].value2) > 0.1
-//		OR table[i].description <> expected[i].description) THEN
+actual := TRUE;
+FOR i := 0 TO 9 DO
+	IF (table[i].timestamp <> expected[i].timestamp
+		OR table[i].value1 <> expected[i].value1
+		OR ABS(table[i].value2 - expected[i].value2) > 0.1
+		OR table[i].description <> expected[i].description) THEN
 		
-//		actual := FALSE;
-//		EXIT;
-//	END_IF
-//END_FOR
+		actual := FALSE;
+		EXIT;
+	END_IF
+END_FOR
 
-//AssertEquals_BOOL(
-//	Expected := TRUE,
-//	Actual := MEMCMP(ADR(columnNames), ADR(expectedHeader), SIZEOF(columnNames)) = 0,
-//	Message := 'Header was not properly deserialized');
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := MEMCMP(ADR(columnNames), ADR(expectedHeader), SIZEOF(columnNames)) = 0,
+	Message := 'Header was not properly deserialized');
 	
-//AssertEquals_BOOL(
-//	Expected := TRUE,
-//	Actual := actual,
-//	Message := 'Data were not properly deserialized');
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := actual,
+	Message := 'Data were not properly deserialized');
 
-//TEST_FINISHED();]]></ST>
+TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
   </POU>
