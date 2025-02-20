@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="File" Id="{de1840e6-6126-0b1b-3259-f1ec0dc2154b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK File
+VAR
+	_Busy : BOOL;
+	_Done : BOOL;
+	_Error : BOOL;
+	
+	openRequest : BOOL;
+	readRequest : BOOL;
+	writeRequest : BOOL;
+	appendMode : BOOL;
+	filePath : T_MaxString;
+	
+	buffer : POINTER TO BYTE;
+	bufferLength : UDINT;
+
+	handle : UINT;
+	opener : FB_FileOpen;
+	closer : FB_FileClose;
+	reader : FB_FileRead;
+	writer : FB_FileWrite;
+	
+	fileState : (Waiting, OpenMode, Opening, Reading, Writing, Closing);
+	
+END_VAR
+VAR CONSTANT
+	NotFoundErrorNumber : UDINT := 16#70C;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Busy" Id="{39637069-ad71-0e7b-2708-deacacfec070}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{101c984c-f4d0-0197-2073-acf04044788f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := _Busy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Cyclic" Id="{d7851b7e-e8df-0535-3f15-3ce94d3bda28}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE fileState OF
+	
+	Waiting:
+	
+		IF (openRequest) THEN
+			openRequest := FALSE;
+			_Done := FALSE;
+			
+			fileState := OpenMode;
+		END_IF
+	
+	OpenMode:
+	
+		IF (readRequest) THEN
+			opener.nMode := FOPEN_MODEREAD;
+		ELSIF (writeRequest) THEN
+			IF (appendMode) THEN
+				opener.nMode := FOPEN_MODEAPPEND;
+			ELSE
+				opener.nMode := FOPEN_MODEWRITE;
+			END_IF
+		END_IF
+		
+		opener.nMode := opener.nMode OR FOPEN_MODETEXT;
+
+		fileState := Opening;
+	
+	Opening:
+	
+		opener(
+			bExecute := NOT opener.bBusy,
+			sPathName := filePath,
+			hFile => handle,
+		);
+		
+		IF (NOT opener.bExecute AND NOT opener.bBusy AND handle <> 0) THEN
+			opener();
+			IF (readRequest) THEN
+				fileState := Reading;
+			ELSIF (writeRequest) THEN
+				fileState := Writing;
+			END_IF
+		END_IF
+	
+	Reading:
+	
+		reader(
+			bExecute := NOT reader.bBusy,
+			hFile := handle,
+			pReadBuff := buffer,
+			cbReadLen := bufferLength,
+		);
+		
+		IF (NOT reader.bExecute AND NOT reader.bBusy) THEN
+			fileState := Closing;
+		END_IF
+	
+	Writing:
+	
+		writer(
+			bExecute := NOT writer.bBusy,
+			hFile := handle,
+			pWriteBuff := buffer,
+			cbWriteLen := bufferLength,
+		);
+		
+		IF (NOT writer.bExecute AND NOT writer.bBusy) THEN
+			fileState := Closing;
+		END_IF
+	
+	Closing:
+	
+		closer(
+			bExecute := NOT closer.bBusy,
+			hFile := handle,
+		);
+		
+		IF (NOT closer.bExecute AND NOT closer.bBusy) THEN
+			closer();
+			handle := 0;
+			_Done := TRUE;
+			
+			fileState := Waiting;
+		END_IF
+	
+END_CASE
+
+_Busy := fileState <> Waiting;
+
+_Error := opener.bError OR closer.bError OR reader.bError OR writer.bError;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Done" Id="{55291a61-d05b-0a48-3c18-6798884dc6b1}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Done : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b8c8defc-19ee-0f08-37b2-31b3ca24ac43}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Done := _Done;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{2b9e7ff5-57e3-0de2-1849-56ea242c89c0}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{84d83e28-8398-0028-3541-5cbea1ee2adb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := _Error;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Read" Id="{864f7368-a611-0ae8-28b2-0d3f9d414814}">
+      <Declaration><![CDATA[METHOD Read
+VAR_INPUT
+	buffer : POINTER TO BYTE;
+	bufferLength : UDINT;
+	filePath : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (NOT _Busy) THEN
+	THIS^.filePath := filePath;
+	THIS^.buffer := buffer;
+	THIS^.bufferLength := bufferLength;
+	
+	openRequest := TRUE;
+	readRequest := TRUE;
+	writeRequest := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Write" Id="{b6e90204-5ab5-0a36-123e-8ee0b5b32492}">
+      <Declaration><![CDATA[METHOD Write
+VAR_INPUT
+	buffer : POINTER TO BYTE;
+	bufferLength : UDINT;
+	filePath : T_MaxString;
+	append : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (NOT _Busy) THEN
+	THIS^.filePath := filePath;
+	THIS^.buffer := buffer;
+	THIS^.bufferLength := bufferLength;
+	
+	openRequest := TRUE;
+	writeRequest := TRUE;
+	readRequest := FALSE;
+	appendMode := append;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

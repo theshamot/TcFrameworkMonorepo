@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Directory" Id="{2249bebd-97d6-0598-2285-3e82d8824005}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Directory
+VAR
+	creator : FB_CreateDir; // can only create on level of folder
+	remover : FB_RemoveDir; // can only remove topmost folder. Not folder with folders.
+
+	listDir : FB_EnumFindFileList;	
+	listingFinishedTrigger : F_TRIG;
+	fileListDone : BOOL;
+	checkingFolder : BOOL;
+	checkingFileExistence : BOOL;
+
+	page : ARRAY[0..50 - 1] OF ST_FindFileEntry;
+	_FileNameList : ARRAY[0..50 - 1] OF T_MaxString;
+	_FileExists : BOOL;
+END_VAR
+VAR CONSTANT
+	EntriesPerPage : INT := 50;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Abort" Id="{3028eaae-44eb-0639-284d-cd8671b65d39}">
+      <Declaration><![CDATA[METHOD PRIVATE Abort
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[listDir(
+	bExecute := TRUE,
+	eCmd := E_EnumCmdType.eEnumCmd_Abort
+);
+listDir(bExecute := FALSE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Create" Id="{5261a63a-4bf4-05eb-3d54-5f8d5f5f5b50}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable':='1'}
+METHOD Create
+VAR_INPUT
+	path : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[creator(
+	sPathName := path,
+	bExecute := TRUE,
+);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Cyclic" Id="{f3d38fcf-5c78-0bd2-0f7f-a8d48fb4188d}">
+      <Declaration><![CDATA[METHOD Cyclic
+VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[creator(bExecute := FALSE);
+remover(bExecute := FALSE);
+
+listDir(
+	pFindList := ADR(page),
+	cbFindList := SIZEOF(page)
+);
+
+listingFinishedTrigger(CLK := listDir.bBusy);
+IF (listingFinishedTrigger.Q AND listDir.eCmd <> E_EnumCmdType.eEnumCmd_Abort) THEN
+
+	listDir(bExecute := FALSE);
+	fileListDone := TRUE;
+	
+	FOR i := 0 TO EntriesPerPage - 1 DO
+		_FileNameList[i] := page[i].sFileName;
+		
+		IF (checkingFileExistence) THEN
+			IF (page[i].fileAttributes.bDirectory = checkingFolder
+				AND page[i].sFileName <> '') THEN
+				_FileExists := TRUE;
+			END_IF
+		END_IF
+	END_FOR
+	
+	IF (NOT listDir.bEOE) THEN
+		Abort();
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="FileExists" Id="{90ece582-5e1b-01dc-0274-516d568d103f}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY FileExists : BOOL]]></Declaration>
+      <Get Name="Get" Id="{888b3ecc-224e-074c-06f8-8ccb5c9ed7a8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FileExists := _FileExists;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="FileNameList" Id="{8d6fa6ed-c4df-048c-3f37-69a9a0b7b188}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY FileNameList : REFERENCE TO ARRAY[0..49] OF T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{4c8de85d-3a9d-0dc1-2bf7-958db259dc14}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FileNameList REF= _FileNameList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="CheckFileExists" Id="{153a5eb4-6f1b-0815-21fc-1d24e1d857f2}">
+      <Declaration><![CDATA[METHOD CheckFileExists
+VAR_INPUT
+	path : T_MaxString;
+	folder : BOOL; // FALSE = File, TRUE = Folder
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (NOT listDir.bBusy) THEN
+	
+	List(path);
+	
+	_FileExists := FALSE;
+	checkingFileExistence := TRUE;
+	checkingFolder := folder;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="List" Id="{3d045257-9a2c-01d9-167a-bfeb0b1760e1}">
+      <Declaration><![CDATA[ // Usage of * wildcard recommended
+ // Add * to the end of path to list all files
+METHOD List
+VAR_INPUT
+	path : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (NOT listDir.bBusy) THEN
+	
+	checkingFileExistence := FALSE;
+	fileListDone := FALSE;
+	
+	listDir(bExecute := FALSE);
+	listDir(
+		sPathName := path,
+		eCmd := E_EnumCmdType.eEnumCmd_First,
+		bExecute := TRUE
+	);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Remove" Id="{1bc872e8-0a59-0cee-2768-74b2c8c4a37c}">
+      <Declaration><![CDATA[METHOD Remove
+VAR_INPUT
+	path : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[remover(
+	sPathName := path,
+	bExecute := TRUE,
+);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
