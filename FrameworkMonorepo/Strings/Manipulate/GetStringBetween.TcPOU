@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="GetStringBetween" Id="{7218c11b-efb2-07ad-2ef2-29f3bfe9e682}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetStringBetween : T_MaxString
+VAR_INPUT
+	searched : T_MaxString;
+	left : T_MaxString;
+	right : T_MaxString;
+END_VAR
+VAR
+	length : INT;
+	leftIndex : INT;
+	rightIndex : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[leftIndex := FIND(searched, left);
+IF (leftIndex = 0) THEN
+	RETURN;
+END_IF
+leftIndex := leftIndex + 1;
+rightIndex := FIND(searched, right);
+IF (rightIndex <= leftIndex) THEN // Find at least one char
+	RETURN;
+END_IF
+length := LEN(searched);
+GetStringBetween := 
+	MID(STR := searched, POS := leftIndex, LEN := rightIndex - leftIndex);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

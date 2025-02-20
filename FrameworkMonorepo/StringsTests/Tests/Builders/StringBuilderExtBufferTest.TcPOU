@@ -12,7 +12,7 @@ END_VAR
       <Declaration><![CDATA[METHOD AppendAndClear : BOOL
 VAR
 	buffer : STRING(2000);
-	builder : StringBuilderExtBuffer(buffer);
+	builder : StringBuilderExtBuffer := (Buffer := ToAnyType(buffer));
 	
 	testValue : STRING := ' very long strings';
 END_VAR

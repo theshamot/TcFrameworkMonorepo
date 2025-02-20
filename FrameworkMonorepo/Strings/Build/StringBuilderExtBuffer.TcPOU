@@ -65,15 +65,37 @@ _Length := _Length + lengthToCopy;
 AppendByPointer REF= THIS^;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Buffer" Id="{49532420-43d6-4129-898d-64af45bb5d78}">
+    <Property Name="Buffer" Id="{c3578d29-1549-0429-27de-75edb5f9215e}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY Buffer : REFERENCE TO __SYSTEM.AnyType]]></Declaration>
-      <Get Name="Get" Id="{c541380c-ae02-499c-aa5c-41269e7cc87d}">
+PROPERTY Buffer : __SYSTEM.AnyType]]></Declaration>
+      <Get Name="Get" Id="{e3dd9b57-7e84-075a-26d7-b67560acb852}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Buffer REF= _Buffer;]]></ST>
+          <ST><![CDATA[Buffer := _Buffer;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3ec3b96e-0819-0fc9-0909-b8f4f13f7aea}">
+        <Declaration><![CDATA[
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Buffer := Buffer;
+_Length := LEN2(pSTRING := _Buffer.pValue);]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="BufferRef" Id="{d4798934-c4b7-01c3-3201-d2bc4df0f096}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY BufferRef : REFERENCE TO __SYSTEM.AnyType]]></Declaration>
+      <Get Name="Get" Id="{586b9518-2963-0976-11d0-f73596376593}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferRef REF= _Buffer;]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -90,21 +112,6 @@ END_VAR
 _Length := 0;
 
 Clear REF= THIS^;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="FB_init" Id="{1cd4845e-24ab-4b4d-827c-8967da5ce213}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
-VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	
-	buffer : ANY;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_Buffer := buffer;
-
-_Length := LEN2(pSTRING := buffer.pValue);]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsEmpty" Id="{a1bfbe9c-c914-4227-bc67-942558ab1b1e}">
@@ -130,18 +137,45 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Method Name="SetBuffer" Id="{604f339c-820d-4f30-abfa-03379d2adc39}">
-      <Declaration><![CDATA[METHOD SetBuffer : REFERENCE TO StringBuilderExtBuffer
+    <Method Name="Prepend" Id="{515fb912-465d-0b0a-2cc9-379413c7fcad}">
+      <Declaration><![CDATA[METHOD Prepend : REFERENCE TO StringBuilderExtBuffer
 VAR_INPUT
-	buffer : ANY;
+	value : T_MaxString;
+END_VAR
+VAR
+	lengthToCopy : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[lengthToCopy := LIMIT(
+	DINT#0, 								// min
+	LEN(value), 							// value
+	_Buffer.diSize // max
+);
+
+MEMMOVE(
+	destAddr := _Buffer.pValue + lengthToCopy,
+	srcAddr := _Buffer.pValue,
+	n := MIN(_Buffer.diSize - lengthToCopy, _Length)
+);
+
+MEMCPY(
+	destAddr := _Buffer.pValue,
+	srcAddr := ADR(value),
+	n := lengthToCopy
+);
+
+_Length := MIN(_Length + lengthToCopy, _Buffer.diSize);
+
+Prepend REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="UpdateBufferLength" Id="{5e5adda4-44b4-09db-1572-dec8c8e05479}">
+      <Declaration><![CDATA[METHOD UpdateBufferLength
+VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_Buffer := buffer;
-
-_Length := LEN2(pSTRING := buffer.pValue);
-
-SetBuffer REF= THIS^;]]></ST>
+        <ST><![CDATA[_Length := LEN2(_Buffer.pValue);]]></ST>
       </Implementation>
     </Method>
   </POU>

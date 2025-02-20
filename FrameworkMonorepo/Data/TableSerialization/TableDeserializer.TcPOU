@@ -3,13 +3,13 @@
   <POU Name="TableDeserializer" Id="{ac25e541-c19a-0342-2f23-5f00fecd60cf}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK TableDeserializer
 VAR
-	dataString : POINTER TO STRING;
+	_DataString : POINTER TO STRING;
 	dataLength : DINT;
 	rowDefinition : __SYSTEM.AnyType;
 	_RowCount : DINT;
-	columnDefinitions : POINTER TO __SYSTEM.AnyType;
-	columnNames : POINTER TO T_MaxString;
-	columnDefinitionCount : INT;
+	_ColumnDefinitionBuffer : POINTER TO __SYSTEM.AnyType;
+	_ColumnNameBuffer : POINTER TO T_MaxString;
+	_MaxColumnCount : INT;
 	definedColumns : INT;
 	
 	_Separator : STRING := ',';
@@ -22,7 +22,67 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="DecimalSeparator" Id="{effbb7a0-88d9-0d0e-0448-85f466915204}">
+    <Property Name="ColumnDefinitionBuffer" Id="{b4120291-24ed-4123-9785-5c54814bd401}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY ColumnDefinitionBuffer : POINTER TO __SYSTEM.AnyType]]></Declaration>
+      <Get Name="Get" Id="{6362e76c-1c60-42e0-8e2f-7f07dd4f9ffc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ColumnDefinitionBuffer := _ColumnDefinitionBuffer;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{99a4b0f6-57a1-4a95-9547-6cab2c158e22}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_ColumnDefinitionBuffer := ColumnDefinitionBuffer;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="ColumnNameBuffer" Id="{b0a2e4d8-d997-4605-b86a-2d27d7005b94}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY ColumnNameBuffer : POINTER TO T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{abe63e5f-4a56-4575-b74a-0ec19787b319}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ColumnNameBuffer := _ColumnNameBuffer;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{85a6ef17-c838-4707-a379-ca636d632e16}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_ColumnNameBuffer := ColumnNameBuffer;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="DataString" Id="{3487dc60-cc91-4a43-8a0d-0551ca27c8b6}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY DataString : POINTER TO STRING]]></Declaration>
+      <Get Name="Get" Id="{8cc0e152-d7a2-4043-a052-b993cd54d7db}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DataString := _DataString;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bd17b9aa-3d4c-41a0-b30b-2c68dc3bad68}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_DataString := DataString;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="DecimalSeparator" Id="{d3dad73a-0f1a-41a0-a71e-05862e1d10d8}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY DecimalSeparator : STRING]]></Declaration>
       <Get Name="Get" Id="{43213d27-d09c-0e10-0860-afcf924a6719}">
@@ -49,8 +109,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (definedColumns < columnDefinitionCount) THEN
-	columnDefinitions[definedColumns] := columnInFirstRow;
+        <ST><![CDATA[IF (definedColumns < _MaxColumnCount) THEN
+	_ColumnDefinitionBuffer[definedColumns] := columnInFirstRow;
 	definedColumns := definedColumns + 1;
 END_IF
 
@@ -71,37 +131,44 @@ DefineRow REF= THIS^;]]></ST>
     </Method>
     <Method Name="Deserialize" Id="{469a7f4d-b005-006e-04b0-81df065e5112}">
       <Declaration><![CDATA[METHOD Deserialize : DINT
+VAR_INPUT
+	includingHeader : BOOL;
+END_VAR
 VAR
 	caret : DINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[dataLength := LEN2(dataString);
-caret := ReadHeader();
+IF (includingHeader) THEN
+	caret := ReadHeader();
+END_IF
 caret := ReadAllRows(caret);
 
 Deserialize := caret;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{e4f94ead-2283-0af8-1723-a22735221102}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
-VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	
-	dataString : ANY;
-	columnDefinitionBuffer : POINTER TO __SYSTEM.AnyType;
-	columnNameDefinitionBuffer : POINTER TO T_MaxString;
-	columnDefinitionCount : INT;
+    <Property Name="MaxColumnCount" Id="{c12b5d3c-a0f1-41d0-969c-0ee97d37f1be}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY MaxColumnCount : INT
+]]></Declaration>
+      <Get Name="Get" Id="{fac12986-8515-4caf-9693-1471bfdd59d7}">
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[THIS^.dataString := dataString.pValue;
-columnDefinitions := columnDefinitionBuffer;
-columnNames := columnNameDefinitionBuffer;
-THIS^.columnDefinitionCount := columnDefinitionCount;]]></ST>
-      </Implementation>
-    </Method>
-    <Property Name="NewLine" Id="{de109979-ef1f-0c5f-19f3-e60ca1ff7a79}">
+        <Implementation>
+          <ST><![CDATA[MaxColumnCount := _MaxColumnCount;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{1a6ef7af-62de-464c-9f12-c0a3b1826c8b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_MaxColumnCount := MaxColumnCount;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="NewLine" Id="{e231f9e3-68dc-40f1-baa5-667ee97338a5}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY NewLine : STRING]]></Declaration>
       <Get Name="Get" Id="{4313d227-83a4-058f-0465-9ca8841186a4}">
@@ -134,10 +201,10 @@ END_VAR]]></Declaration>
         <ST><![CDATA[caret := startCaret;
 
 FOR i := 0 TO _RowCount - 1 DO
-	caret := ReadRow(i, caret);
 	IF (caret >= dataLength) THEN
 		EXIT;
 	END_IF
+	caret := ReadRow(i, caret);
 END_FOR
 
 ReadAllRows := caret;]]></ST>
@@ -155,17 +222,17 @@ VAR
 	cell : T_MaxString;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (columnNames = 0) THEN
+        <ST><![CDATA[IF (_ColumnNameBuffer = 0) THEN
 	RETURN;
 END_IF
 
-lineEnd := FIND2(pSrcString := dataString, pFindString := ADR(_NewLine));
+lineEnd := FIND2(pSrcString := _DataString, pFindString := ADR(_NewLine));
 IF (lineEnd = 0) THEN
 	lineEnd := dataLength;
 END_IF
 
 FOR i := 0 TO definedColumns - 1 DO
-	cellLength := FIND2(pSrcString := dataString + caret, pFindString := ADR(_Separator));
+	cellLength := FIND2(pSrcString := _DataString + caret, pFindString := ADR(_Separator));
 	IF (caret + cellLength > lineEnd) THEN
 		cellLength := lineEnd - caret;
 	END_IF
@@ -173,9 +240,9 @@ FOR i := 0 TO definedColumns - 1 DO
 		cellLength := lineEnd;
 	END_IF
 
-	ClearData(cell);
-	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
-	StringToAny(cell, columnNames[i]);
+	MEMSET(destAddr := ADR(cell), fillByte := 0, n := SIZEOF(cell));
+	MEMCPY(destAddr := ADR(cell), srcAddr := _DataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
+	StringToAny(cell, _ColumnNameBuffer[i]);
 	
 	IF (cellLength = dataLength) THEN
 		caret := lineEnd;
@@ -207,32 +274,33 @@ VAR
 	tableCell : __SYSTEM.AnyType;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (columnDefinitions = 0) THEN
+        <ST><![CDATA[IF (_ColumnDefinitionBuffer = 0) THEN
 	RETURN;
 END_IF
 
 caret := startCaret;
 
-lineLength := FIND2(pSrcString := dataString + caret, pFindString := ADR(_NewLine));
+lineLength := FIND2(pSrcString := _DataString + caret, pFindString := ADR(_NewLine));
 IF (lineLength = 0) THEN
 	lineLength := dataLength;
 END_IF
 
 FOR i := 0 TO definedColumns - 1 DO
-	IF (caret >= dataLength) THEN
+  IF (caret >= dataLength) THEN
 		EXIT;
 	END_IF
-	cellLength := FIND2(pSrcString := dataString + caret, pFindString := ADR(_Separator));
-	IF (caret + cellLength > startCaret + lineLength) THEN
-		cellLength := (startCaret + lineLength) - caret;
+	cellLength := FIND2(pSrcString := _DataString + caret, pFindString := ADR(_Separator));
+	IF (cellLength = 0 OR caret + cellLength > startCaret + lineLength) THEN
+		cellLength := lineLength + startCaret - caret;
 	END_IF
 	IF (cellLength = 0) THEN
-		cellLength := lineLength;
+		caret := dataLength;
+		EXIT;
 	END_IF
 
 	ClearData(cell);
-	MEMCPY(destAddr := ADR(cell), srcAddr := dataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
-	tableCell := columnDefinitions[i];
+	MEMCPY(destAddr := ADR(cell), srcAddr := _DataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
+	tableCell := _ColumnDefinitionBuffer[i];
 	tableCell.pValue := tableCell.pValue + rowDefinition.diSize * row;
 	CASE tableCell.TypeClass OF
 		TYPE_REAL, TYPE_LREAL:

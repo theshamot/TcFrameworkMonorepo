@@ -3,95 +3,30 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5fa3e815-f79f-4b58-9fe0-6c55eef9ee97}</ProjectGuid>
+    <ProjectGuid>{8cc7b01a-23a8-4e47-8e43-e4dd75371101}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>StringsTests</Name>
+    <Name>Recipes</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{0ae76c2b-c467-4b14-8895-be9a80747b05}</Application>
-    <TypeSystem>{5ac239cc-6f2e-4938-86b1-fb3325a0cee3}</TypeSystem>
-    <Implicit_Task_Info>{4cd917a1-4254-44ad-8bdf-36c7364fa27a}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{20f8dac3-4a45-4599-a410-c423c40d8a6a}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{f3ca32c2-b89c-402c-af31-edb5827c5760}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{16b5434d-0cf3-4db5-b732-dd154963930a}</LibraryReferences>
+    <Application>{f45a8f64-57c0-4708-a88d-5d28275c50c1}</Application>
+    <TypeSystem>{bb7eeccb-fc7b-4347-9433-4b063141fde4}</TypeSystem>
+    <Implicit_Task_Info>{78b00134-c31f-4c59-b712-fb2107128e4d}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{46c15b9c-7575-4a37-a7c9-63afd9d04c61}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{634d34cb-b436-4127-b0d0-74d10ae8490e}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{be5506ce-9095-4ac2-802f-c8cb944bc9f2}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PlcTask.TcTTO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Builders\StringBuilder255Test.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Builders\BuildStringInlineTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Builders\StringBuilderExtBufferTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Builders\StringBuilderInfiniteTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Convert\ConvertFunctionsTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Manipulate\ManipulateFunctionsTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\PRG_Test.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\Validate\ValidateFunctionsTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Tests\_TemplateTest\_TemplateTest.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <PlaceholderReference Include="Strings">
-      <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Strings</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Standard">
-      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Standard</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_System">
-      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_System</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc3_Module">
-      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc3_Module</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="TcUnit">
-      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
-      <Namespace>TcUnit</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Types">
-      <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
-    </PlaceholderReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests" />
-    <Folder Include="Tests\Manipulate" />
-    <Folder Include="Tests\Convert" />
-    <Folder Include="Tests\Builders" />
-    <Folder Include="Tests\Validate" />
-    <Folder Include="Tests\_TemplateTest" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="StringsTests.tmc">
+    <None Include="Recipes.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -125,13 +60,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

@@ -88,6 +88,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="Manipulate\GetStringBetween.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Manipulate\ReplaceString.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

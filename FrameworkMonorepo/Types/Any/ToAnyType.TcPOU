@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ToAnyType" Id="{174e1356-f49a-01e1-2125-3395432c8939}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ToAnyType : __SYSTEM.AnyType
+VAR_INPUT
+	object		: ANY;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ToAnyType := object;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
