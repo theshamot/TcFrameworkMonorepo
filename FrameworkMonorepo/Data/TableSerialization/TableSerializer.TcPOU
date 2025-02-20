@@ -7,9 +7,8 @@ VAR
 	
 	rowDefinition : __SYSTEM.AnyType;
 	_RowCount : DINT;
-	_ColumnDefinitionBuffer : POINTER TO __SYSTEM.AnyType;
-	_ColumnNameBuffer : POINTER TO T_MaxString;
-	_MaxColumnCount : INT;
+	_ColumnDefinitionBuffer : ARRAY[0..MaxColumnCount - 1] OF __SYSTEM.AnyType;
+	_ColumnNameBuffer : ARRAY[0..MaxColumnCount - 1] OF T_MaxString;
 	definedColumns : INT;
 	
 	_Separator : STRING := ','; // Default separator ';' is compatible with european decimal separator '.'.
@@ -17,6 +16,7 @@ VAR
 	_DecimalSeparator : STRING := '.';
 END_VAR
 VAR CONSTANT
+	MaxColumnCount : INT := TableSerializationParameters.SerializerMaxColumns;
 	DefaultDecimalSeparator : STRING := '.';
 END_VAR]]></Declaration>
     <Implementation>
@@ -29,11 +29,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (_ColumnNameBuffer = 0) THEN
-	RETURN;
-END_IF
-
-FOR column := 0 TO definedColumns - 1 DO
+        <ST><![CDATA[FOR column := 0 TO definedColumns - 1 DO
 	IF (column > 0) THEN
 		_StringBuilder.Append(_Separator);
 	END_IF
@@ -93,53 +89,13 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR row := 0 TO _RowCount - 1 DO
-	IF (row > 0 OR _ColumnNameBuffer <> 0) THEN
+	IF (row > 0) THEN
 		AddNewLine();
 	END_IF
 	AddLine(row);
 END_FOR]]></ST>
       </Implementation>
     </Method>
-    <Property Name="ColumnDefinitionBuffer" Id="{660698f0-c1d3-4a00-900a-f885f81bb48e}">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY ColumnDefinitionBuffer : POINTER TO __SYSTEM.AnyType]]></Declaration>
-      <Get Name="Get" Id="{b5e4488b-22d8-4eb5-b645-aaf35052d0a1}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[ColumnDefinitionBuffer := _ColumnDefinitionBuffer;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{f8083016-dd74-4259-b24f-3b31bc3d5c43}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_ColumnDefinitionBuffer := ColumnDefinitionBuffer;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Property Name="ColumnNameBuffer" Id="{d988f2e4-649e-4509-ba3e-66967024563d}">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY ColumnNameBuffer : POINTER TO T_MaxString]]></Declaration>
-      <Get Name="Get" Id="{51886be8-6bcd-4324-b0b0-e0aae75aa8ad}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[ColumnNameBuffer := _ColumnNameBuffer;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{be5b42c1-fa0a-4dac-ab54-9c93cda9858c}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_ColumnNameBuffer := ColumnNameBuffer;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Property Name="DecimalSeparator" Id="{e0d5ba62-8fd6-40b3-9562-489e5ddaa896}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY DecimalSeparator : STRING]]></Declaration>
@@ -167,7 +123,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (definedColumns < _MaxColumnCount) THEN
+        <ST><![CDATA[IF (definedColumns < MaxColumnCount) THEN
 	_ColumnDefinitionBuffer[definedColumns] := columnInFirstRow;
 	definedColumns := definedColumns + 1;
 END_IF
@@ -183,7 +139,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (definedColumns < _MaxColumnCount) THEN
+        <ST><![CDATA[IF (definedColumns < MaxColumnCount) THEN
 	_ColumnDefinitionBuffer[definedColumns] := columnInFirstRow;
 	_ColumnNameBuffer[definedColumns] := name;
 	definedColumns := definedColumns + 1;
@@ -204,27 +160,6 @@ END_VAR
 DefineRow REF= THIS^;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="MaxColumnCount" Id="{05645d7b-daed-4ed4-94cd-1a8c11bd8e09}">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY MaxColumnCount : INT
-]]></Declaration>
-      <Get Name="Get" Id="{8a91f54f-cb76-440b-bea0-6663a354b44d}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[MaxColumnCount := _MaxColumnCount;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{fc50a890-64fc-43bb-8824-81c3a557dbd9}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_MaxColumnCount := MaxColumnCount;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Property Name="NewLine" Id="{f3191bed-a76c-497f-9870-657f833967bb}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY NewLine : STRING]]></Declaration>
@@ -288,13 +223,17 @@ END_VAR
     <Method Name="Serialize" Id="{3fe63765-60b0-0c99-3c86-f4191a72f13d}">
       <Declaration><![CDATA[METHOD Serialize
 VAR_INPUT
+	includeHeader : BOOL;
 	clearBuffer : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (clearBuffer) THEN
 	_StringBuilder.Clear();
 END_IF
-AddColumnHeader();
+IF (includeHeader) THEN
+	AddColumnHeader();
+	AddNewLine();
+END_IF
 AddRows();]]></ST>
       </Implementation>
     </Method>

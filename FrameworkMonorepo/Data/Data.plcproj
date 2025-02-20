@@ -110,6 +110,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="TableSerialization\TableSerializationParameters.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="TableSerialization\TableSerializer.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

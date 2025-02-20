@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="TableSerializationParameters" Id="{18fa224f-895c-08b7-0652-17bfee0d9dec}" ParameterList="True">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	SerializerMaxColumns : INT := 10;
+	DeserializerMaxColumns : INT := 10;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
