@@ -16,17 +16,93 @@
     <Implicit_KindOfTask>{46c15b9c-7575-4a37-a7c9-63afd9d04c61}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{634d34cb-b436-4127-b0d0-74d10ae8490e}</Implicit_Jitter_Distribution>
     <LibraryReferences>{be5506ce-9095-4ac2-802f-c8cb944bc9f2}</LibraryReferences>
+    <Released>false</Released>
+    <CombineIds>true</CombineIds>
+    <Company>TomasRompotl</Company>
+    <Title>Recipes</Title>
+    <ProjectVersion>0.0.1</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Include="Recipes.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RecipeManager" />
+    <Folder Include="RecipeManager\RecipeValues" />
+    <Folder Include="Version" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RecipeManager\RecipeManager.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeParameters.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeValues\RecipeAssignment.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeValues\RecipeSingleValue.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeValues\RecipeSingleValueType.TcIO">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeValues\RecipeTableValue.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeValues\RecipeTableValueType.TcIO">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="RecipeManager\RecipeValues\RecipeValue.TcIO">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Version\Global_Version.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Data">
+      <DefaultResolution>Data, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Data</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Files">
+      <DefaultResolution>Files, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Files</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Strings">
+      <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Strings</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Types">
+      <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Types</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -60,13 +136,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

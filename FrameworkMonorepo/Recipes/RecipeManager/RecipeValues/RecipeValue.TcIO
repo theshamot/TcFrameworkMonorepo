@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="RecipeValue" Id="{10526825-4eae-0cf1-2d65-fc0b8b7d3392}">
+    <Declaration><![CDATA[INTERFACE RecipeValue EXTENDS Disposable
+]]></Declaration>
+    <Property Name="Assignment" Id="{e3fcb79e-b4bc-0931-0f99-2c5b1ddaca8a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Assignment : STRING]]></Declaration>
+      <Get Name="Get" Id="{e6672e5d-d30e-00f5-28b4-a62a16f0689a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{3d0135c9-1cba-00dd-09a6-34f535593b08}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Method Name="BuildAndGetAssignmentString" Id="{9fc7466d-b4d0-0591-1c75-00641ec1f548}">
+      <Declaration><![CDATA[METHOD BuildAndGetAssignmentString : POINTER TO STRING
+]]></Declaration>
+    </Method>
+    <Method Name="Dispose" Id="{d2bd2681-d1d5-0d12-285e-6abadc415be7}">
+      <Declaration><![CDATA[METHOD Dispose
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Name" Id="{b2fc78d9-a141-0fe0-1d41-65176e85faf4}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Name : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{53c948ac-6637-03c8-11ef-65cec4d00cc8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{5d416326-5b16-0676-365a-3f1166940f69}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

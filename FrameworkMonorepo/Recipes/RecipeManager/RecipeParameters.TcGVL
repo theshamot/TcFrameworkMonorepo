@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="RecipeParameters" Id="{d9be3204-2b08-0ff7-0d69-0af1093d67f3}" ParameterList="True">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	ValueCountLimit : INT := 20;
+	TableColumnLimit : INT := 10;
+	
+	TableBufferSize : INT := 1500;
+	BufferSize : INT := 1000;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

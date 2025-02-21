@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RecipeManager" Id="{77c5c610-1c81-0616-06a3-6337e886bd1e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RecipeManager
+VAR
+	values : ARRAY[0..RecipeParameters.ValueCountLimit - 1] OF RecipeValue;
+	valueCount : INT;
+
+	tableBuffer : STRING(RecipeParameters.TableBufferSize);
+	buffer : STRING(RecipeParameters.BufferSize);
+	sb : StringBuilderExtBuffer := (Buffer := ToAnyType(Buffer));
+
+	_FolderPath : T_MaxString;
+	_FileName : T_MaxString;
+	file : File;
+	savingFile : BOOL;
+	loadingFile : BOOL;
+	directory : Directory;
+
+	_NewLine : STRING := '$N';
+	_Assignment : STRING := ':=';
+	_Extension : STRING := '.txt';
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AddSingleValue" Id="{9c02c9fb-7c7b-0661-015f-e417480cf676}">
+      <Declaration><![CDATA[METHOD AddSingleValue
+VAR_INPUT
+	value : ANY;
+	name : T_MaxString;
+END_VAR
+VAR
+	newValue : POINTER TO RecipeSingleValue;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (valueCount < RecipeParameters.ValueCountLimit) THEN
+	newValue := __NEW(RecipeSingleValue);
+	newValue^.Bind(value);
+	newValue^.Name := name;
+	values[valueCount] := newValue^;
+	
+	valueCount := valueCount + 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddTableValue" Id="{a0ec7a96-2cd5-06a8-338d-e79a080e8ef1}">
+      <Declaration><![CDATA[METHOD AddTableValue : REFERENCE TO RecipeTableValue
+VAR_INPUT
+	firstRow : ANY;
+	name : T_MaxString;
+END_VAR
+VAR
+	newValue : POINTER TO RecipeTableValue;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (valueCount < RecipeParameters.ValueCountLimit) THEN
+	newValue := __NEW(RecipeTableValue);
+	newValue^.Buffer := ToAnyType(tableBuffer);
+	newValue^.DefineRow(firstRow);
+	newValue^.Name := name;
+	values[valueCount] := newValue^;
+	
+	valueCount := valueCount + 1;
+	
+	AddTableValue REF= newValue^;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Assignment" Id="{7b617ac0-6621-0620-25e6-167c8d314db3}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Assignment : STRING]]></Declaration>
+      <Get Name="Get" Id="{ff7c6d30-30ed-05c0-15ed-a55cdafd19f5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Assignment := _Assignment;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b83d7434-de63-0421-248b-53035cc15ef9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Assignment := Assignment;
+
+//serializer.Assignment := _Assignment;
+//deserializer.Assignment := _Assignment;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="BuildValueString" Id="{f214b55b-5050-0596-38a7-7e0d32dc8021}">
+      <Declaration><![CDATA[METHOD BuildValueString : BOOL
+VAR
+	i : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sb.Clear();
+FOR i := 0 TO valueCount - 1 DO
+	IF (i > 0) THEN
+		sb.Append(_NewLine);
+	END_IF
+	sb.AppendByPointer(values[i].BuildAndGetAssignmentString());
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Busy" Id="{7cfa17eb-d3a3-07fa-3d85-776882933b67}">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{99ff0090-9192-030e-0556-a7e5db2b7f61}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := savingFile OR loadingFile;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Cyclic" Id="{788b2b89-a987-0ac7-0a9d-51b6f200985e}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[file.Cyclic();
+directory.Cyclic();
+
+IF (savingFile AND file.Done) THEN
+	savingFile := FALSE;
+	sb.Clear();
+END_IF
+
+IF (loadingFile AND file.Done) THEN
+	loadingFile := FALSE;
+	ParseValueString();
+	sb.Clear();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Extension" Id="{b2ad55aa-52f2-0956-066e-a1a2576c9f56}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Extension : STRING]]></Declaration>
+      <Get Name="Get" Id="{0e62e0c4-473c-0784-1ea5-a8f46398960e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Extension := _Extension;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bdd58266-6978-0f1a-2ec7-37de221f0f67}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Extension := Extension;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="FB_exit" Id="{eb111b38-3aef-0830-0bd7-caa81c03b2e3}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+VAR
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO valueCount - 1 DO
+	values[i].Dispose();
+	values[i] := 0;
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{8a42ac39-82f5-014b-0bba-01df588c4943}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//serializer.NewLine := _NewLine;
+//serializer.Assignment := _Assignment;
+
+//deserializer.NewLine := _NewLine;
+//deserializer.Assignment := _Assignment;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="FileName" Id="{122af664-9e40-0299-141f-ec89317ca077}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY FileName : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{d0dc6add-cd61-07c8-0a12-c52e0a4af129}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FileName := _FileName;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6c1b1c2f-310a-01ed-009a-4841fd625cfb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_FileName := FileName;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="FolderPath" Id="{86b647fc-bf27-0419-0d76-a2f28385d87e}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY FolderPath : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{7e41cdcc-67a2-035c-364c-87055d04effd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FolderPath := _FolderPath;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{4581bd7b-a2f8-0080-3203-1c1a2fa0e72e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_FolderPath := FolderPath;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="GetNextLine" Id="{eefc1513-9dc1-006f-1ceb-593db6ad3425}">
+      <Declaration><![CDATA[METHOD PRIVATE GetNextLine : T_MaxString
+VAR_INPUT
+	startCaret : DINT;
+END_VAR
+VAR_OUTPUT
+	caret : DINT;
+END_VAR
+VAR
+	length : DINT;
+	lineEndLength : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[length := FIND2(
+			pSrcString := ADR(buffer[startCaret]),
+			pFindString := ADR(_NewLine)
+			);
+IF (length = 0) THEN
+	length := sb.Length - startCaret;
+	lineEndLength := 0;
+ELSE
+	lineEndLength := LEN(_NewLine);
+END_IF
+
+MEMSET(
+	destAddr := ADR(GetNextLine),
+	fillByte := 0,
+	n := SIZEOF(GetNextLine)
+);
+MEMCPY(
+	srcAddr := ADR(buffer[startCaret]),
+	destAddr := ADR(GetNextLine),
+	n := MIN(length - lineEndLength, SIZEOF(GetNextLine) - 1)
+);
+caret := startCaret + length;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetRecipePath" Id="{aa927626-c3f3-0065-0867-fe8915b16b40}">
+      <Declaration><![CDATA[METHOD PRIVATE GetRecipePath : T_MaxString
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetRecipePath := CONCAT(_FolderPath, _FileName);
+
+IF (NOT StringEndsWith(_FileName, _Extension)) THEN
+	GetRecipePath := CONCAT(GetRecipePath, _Extension);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetTable" Id="{ebd01b12-3e62-008e-1e08-da5f95dc4ad3}">
+      <Declaration><![CDATA[METHOD GetTable : REFERENCE TO RecipeTableValue
+VAR_INPUT
+	name : T_MaxString;
+END_VAR
+VAR
+	value : RecipeValue;
+	p : POINTER TO RecipeTableValue;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[value := GetValue(name);
+__QUERYPOINTER(value, p);
+IF (p <> 0) THEN
+	GetTable REF= p^;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetValue" Id="{bb49e33a-de77-0d8c-1bfc-e271c4ee3ff5}">
+      <Declaration><![CDATA[METHOD GetValue : RecipeValue
+VAR_INPUT
+	name : T_MaxString;
+END_VAR
+VAR
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 0 TO valueCount - 1 DO
+	IF (values[i].Name = name) THEN
+		GetValue := values[i];
+		RETURN;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ListRecipes" Id="{06b24d78-54a3-0fd9-025f-f678dfd8873d}">
+      <Declaration><![CDATA[METHOD ListRecipes
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[directory.List(
+	BuildStringInline(_FolderPath)
+		.Append('*')
+		.Append(_Extension)
+		.GetString()
+);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Load" Id="{e13ba227-265c-003c-16a9-027fd14cba33}">
+      <Declaration><![CDATA[METHOD Load
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (_FileName = '' OR _FolderPath = '') THEN
+	RETURN;
+END_IF
+
+sb.Clear();
+
+file.Read(
+	buffer := ADR(buffer),
+	bufferLength := SIZEOF(buffer) - 1,
+	filePath := GetRecipePath()
+);
+
+loadingFile := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="NewLine" Id="{5e9e4f96-dcb0-0eff-0f4b-96624bfd49c8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY NewLine : STRING]]></Declaration>
+      <Get Name="Get" Id="{a0908233-b4ff-0b65-14b9-2990cbb2630f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NewLine := _NewLine;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8e433a38-c0cb-0c47-2e09-30d231261540}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_NewLine := NewLine;
+
+//serializer.NewLine := _NewLine;
+//deserializer.NewLine := _NewLine;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="ParseValueString" Id="{f8989f6e-d562-0c64-0845-3edcee6fa0d9}">
+      <Declaration><![CDATA[METHOD ParseValueString
+VAR
+	caret : DINT;
+	lines : ARRAY[0..MaxLines - 1] OF T_MaxString;
+	lineCount : INT;
+	
+	isAssignment : BOOL;
+	assignments : ARRAY[0..RecipeParameters.ValueCountLimit - 1] OF RecipeAssignment;
+	assignmentCount : INT;
+	
+	value : RecipeValue;
+	singleValue : RecipeSingleValueType;
+	tableValue : RecipeTableValueType;
+	
+	row : INT;
+	sbTable : StringBuilderExtBuffer := (Buffer := ToAnyType(tableBuffer));
+
+	i : INT;
+	
+END_VAR
+VAR CONSTANT
+	MaxLines : INT := 50;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sb.UpdateBufferLength();
+
+WHILE caret < sb.Length DO
+	lines[lineCount] := GetNextLine(startCaret := caret, caret => caret);
+	lineCount := lineCount + 1;
+END_WHILE
+
+FOR i := 0 TO lineCount - 1 DO
+	isAssignment := FindAndSplit(
+		pSeparator := ADR(_Assignment),
+		pSrcString := ADR(lines[i]),
+		pLeftString := ADR(assignments[assignmentCount].Name),
+		nLeftSize := SIZEOF(RecipeAssignment.Name) - 1,
+		pRightString := ADR(assignments[assignmentCount].Value),
+		nRightSize := SIZEOF(RecipeAssignment.Value) - 1,
+		bSearchFromRight := FALSE
+	);
+	IF (isAssignment) THEN
+		assignments[assignmentCount].Name := F_LTrim(F_RTrim(assignments[assignmentCount].Name));
+		assignments[assignmentCount].Value := F_LTrim(F_RTrim(assignments[assignmentCount].Value));
+		assignments[assignmentCount].LineIndex := i;
+		StringToAny(
+			GetStringBetween(assignments[assignmentCount].Name, '[', ']'),
+			assignments[assignmentCount].TableRows
+		);
+		IF (assignments[assignmentCount].TableRows > 0) THEN
+			assignments[assignmentCount].Name := 
+				LEFT(assignments[assignmentCount].Name,
+					FIND(assignments[assignmentCount].Name, '[') - 1
+				);
+		END_IF
+	
+		assignmentCount := assignmentCount + 1;
+		
+		IF (assignmentCount = RecipeParameters.ValueCountLimit) THEN
+			EXIT;
+		END_IF
+	END_IF
+END_FOR
+
+FOR i := 0 TO assignmentCount - 1 DO
+	value := GetValue(assignments[i].Name);
+	IF (value = 0) THEN
+		CONTINUE;
+	END_IF
+	
+	IF (__QUERYINTERFACE(value, singleValue)) THEN
+		singleValue.ParseAndAssignValue(assignments[i].Value);
+		CONTINUE;
+	END_IF
+	
+	IF (__QUERYINTERFACE(value, tableValue)) THEN
+		sbTable.Clear();
+		FOR row := assignments[i].LineIndex + 2 // Without assignment and header
+		TO assignments[i].LineIndex + assignments[i].TableRows + 1 DO // Header shifts table one line lower
+			sbTable.Append(lines[row]).Append(_NewLine);
+		END_FOR
+		tableValue.ParseAndAssignValues(
+			assignments[i].TableRows
+		);
+		CONTINUE;
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RecipeList" Id="{53671a00-5ebb-040a-0250-856488ee25e9}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY RecipeList : REFERENCE TO ARRAY[0..49] OF T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{cc34b112-61db-075c-07c4-6224ca7c3cef}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RecipeList REF= directory.FileNameList;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Save" Id="{f0759a7e-99b2-0933-354d-07d2436af8d4}">
+      <Declaration><![CDATA[METHOD Save
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (_FileName = '' OR _FolderPath = '') THEN
+	RETURN;
+END_IF
+
+BuildValueString();
+
+file.Write(
+	buffer := ADR(buffer),
+	bufferLength := LEN2(ADR(buffer)),
+	filePath := GetRecipePath(),
+	append := FALSE
+);
+
+savingFile := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

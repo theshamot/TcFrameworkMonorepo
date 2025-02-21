@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RecipeTableValue" Id="{a901a7f6-c79a-0f5f-0ccd-9f64b01ee294}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK RecipeTableValue IMPLEMENTS RecipeTableValueType
+VAR
+	_Name : T_MaxString;
+	_Table : __SYSTEM.AnyType;
+	_ColumnNames : ARRAY[0..RecipeParameters.TableColumnLimit - 1] OF T_MaxString;
+	_ColumnDefinitions : ARRAY[0..RecipeParameters.TableColumnLimit - 1] OF __SYSTEM.AnyType;
+	_Assignment : STRING := ':=';
+	_NewLine : STRING := '$N';
+	
+	sb : StringBuilderExtBuffer;
+	serializer : TableSerializer := (
+		Stringbuilder := sb
+	);
+	deserializer : TableDeserializer;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Assignment" Id="{de30e308-eecd-0fc7-1d52-4026702ae927}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Assignment : STRING]]></Declaration>
+      <Get Name="Get" Id="{0af5ba0b-d9dc-044b-3717-516af7b896b4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Assignment := _Assignment;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9f41f366-9ab7-0cf0-1ae9-0548f3bec3f0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Assignment := Assignment;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Buffer" Id="{2441c0cb-74e3-09ff-2455-13c74a0f7715}">
+      <Declaration><![CDATA[PROPERTY Buffer : __SYSTEM.AnyType]]></Declaration>
+      <Get Name="Get" Id="{083f3bd2-1618-0b76-2d60-ba5624a98f72}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Buffer := sb.Buffer;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5acf2cd8-1d3b-01cf-01a8-f9106ff1e0cb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sb.Buffer := Buffer;
+deserializer.DataString := Buffer.pValue;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="BuildAndGetAssignmentString" Id="{5d0f2bda-a6a1-0dfe-132c-124ff6778e6a}">
+      <Declaration><![CDATA[METHOD BuildAndGetAssignmentString : POINTER TO STRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sb.Clear();
+sb.Append(
+	BuildStringInline(_Name)
+	.Append('[')
+	.Append(TO_STRING(serializer.RowCount))
+	.Append('] ')
+	.Append(_Assignment)
+	.Append(_Newline)
+	.GetString()
+);
+serializer.Serialize(TRUE, FALSE);
+BuildAndGetAssignmentString := sb.BufferRef.pValue;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DefineNextColumn" Id="{0a9b053c-85e9-0b4a-3a77-c8f3cab70c29}">
+      <Declaration><![CDATA[METHOD DefineNextColumn : REFERENCE TO RecipeTableValue
+VAR_INPUT
+	columnInFirstRow : ANY;
+	name : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serializer.DefineNextColumnWithName(columnInFirstRow, name);
+deserializer.DefineNextColumn(columnInFirstRow);
+
+DefineNextColumn REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DefineRow" Id="{b6e5ff02-eb10-0a53-3e90-687d3b9c0051}">
+      <Declaration><![CDATA[METHOD DefineRow : REFERENCE TO RecipeTableValue
+VAR_INPUT
+	firstRow : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[serializer.DefineRow(firstRow);
+deserializer.DefineRow(firstRow);
+
+DefineRow REF= THIS^;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Dispose" Id="{5403898a-e276-03bb-2ede-bf500f10a46d}">
+      <Declaration><![CDATA[METHOD Dispose
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[__DELETE(THIS);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Name" Id="{20245116-ac5e-08bd-2f0e-8f1fea3717fd}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Name : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{6cbfc5c0-a96e-0139-0f47-8f79cdfabdf5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := _Name;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5029de5a-4d5a-0142-1ee6-b930d08183c6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Name := Name;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="NewLine" Id="{baf1a565-4e22-0c10-0c9b-788dba23f59d}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY NewLine : STRING]]></Declaration>
+      <Get Name="Get" Id="{44eaae7a-a493-0864-349f-82bc5d60cd7c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NewLine := _NewLine;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5b4b4e14-5bf7-0e44-0382-4a6fb903a96d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_NewLine := NewLine;
+
+serializer.NewLine := _NewLine;
+deserializer.NewLine := _NewLine;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="ParseAndAssignValues" Id="{95d34ae4-2421-0d85-0ea7-021c6435d929}">
+      <Declaration><![CDATA[METHOD ParseAndAssignValues
+VAR_INPUT
+	rowCount : INT;
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.RowCount := rowCount;
+deserializer.Deserialize(FALSE);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RowCount" Id="{f2ad5cf7-7917-08c6-14be-6ee28337e3b2}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY RowCount : DINT]]></Declaration>
+      <Get Name="Get" Id="{f2ba093e-fe77-03ff-17c4-47ff1298b941}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RowCount := serializer.RowCount;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{f41396b4-d207-0f2f-1bd1-3a42b4d9ff8f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[serializer.RowCount := RowCount;
+deserializer.RowCount := RowCount;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

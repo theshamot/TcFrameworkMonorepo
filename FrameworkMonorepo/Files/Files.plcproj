@@ -16,6 +16,11 @@
     <Implicit_KindOfTask>{be0d9b22-7a69-49f3-b218-53cbfc031379}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{39d2cbad-2eff-447c-85c4-c49eb3f25a5a}</Implicit_Jitter_Distribution>
     <LibraryReferences>{51bdd567-c8b6-4cb3-a17e-43c7366b9f4e}</LibraryReferences>
+    <Company>TomasRompotl</Company>
+    <Released>false</Released>
+    <Title>Files</Title>
+    <ProjectVersion>0.0.1</ProjectVersion>
+    <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -28,6 +33,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Utilities">
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -36,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="File" />
+    <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="File\Directory.TcPOU">
@@ -45,6 +52,9 @@
     <Compile Include="File\File.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Version\Global_Version.TcGVL">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

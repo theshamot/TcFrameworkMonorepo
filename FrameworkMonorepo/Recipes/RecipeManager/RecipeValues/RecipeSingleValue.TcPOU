@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RecipeSingleValue" Id="{942ad2e3-e169-0d10-23b7-39164624dfb7}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK RecipeSingleValue IMPLEMENTS RecipeSingleValueType
+VAR
+	_Name : T_MaxString;
+	_Value : __SYSTEM.AnyType;
+	_AssignmentSymbol : STRING := ':=';
+	_AssignmentString : T_MaxString;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Assignment" Id="{f2e379a6-6acc-0cb4-3f61-526d7942b9e8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Assignment : STRING]]></Declaration>
+      <Get Name="Get" Id="{803a6e83-74e6-0f1e-00a3-e65750706004}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Assignment := _AssignmentSymbol;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3ddf8cbe-8880-015e-2b54-049636be31d7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_AssignmentSymbol := Assignment;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Bind" Id="{53f3350b-066f-0459-2828-74755586ae97}">
+      <Declaration><![CDATA[METHOD Bind
+VAR_INPUT
+	value : ANY;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Value := value;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="BuildAndGetAssignmentString" Id="{f950f745-9204-0d83-0156-682978ab7e06}">
+      <Declaration><![CDATA[METHOD BuildAndGetAssignmentString : POINTER TO STRING
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_AssignmentString := 
+	BuildStringInline(_Name)
+	.Append(' ')
+	.Append(_AssignmentSymbol)
+	.Append(' ')
+	.Append(ValueString)
+	.GetString();
+BuildAndGetAssignmentString := ADR(_AssignmentString);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Dispose" Id="{20effca3-ad4b-0592-28db-63b359f9939a}">
+      <Declaration><![CDATA[METHOD Dispose
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[__DELETE(THIS);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Name" Id="{f5f59799-4de8-0350-1461-82001d0fab6e}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Name : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{2277b73e-3ebe-0763-348b-5c19875b9a80}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := _Name;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d054d088-4dc5-003f-34b6-72da849ecf8e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Name := Name;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="ParseAndAssignValue" Id="{ba3fab94-a61b-0cea-03fa-c1d2fb0eef56}">
+      <Declaration><![CDATA[METHOD ParseAndAssignValue
+VAR_INPUT
+	value : T_MaxString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[StringToAnyType(value, _Value);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ValueString" Id="{e677d293-dd1f-0c68-237c-9798e0861df8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY ValueString : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{1735fe82-6618-0f32-1e2b-d212e7d4fb07}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF (IsAnyTypeBinded(_Value)) THEN
+	ValueString := AnyTypeToString(_Value);
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

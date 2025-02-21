@@ -20,6 +20,7 @@
     <Released>false</Released>
     <Title>Data</Title>
     <ProjectVersion>0.0.1</ProjectVersion>
+    <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Comparison" />
