@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Itf Name="Name" Id="{fc4be3a0-9295-0d76-0cd4-c8f5c6544e2f}">
+    <Declaration><![CDATA[INTERFACE Name
+]]></Declaration>
+    <Property Name="Name" Id="{4aed2bca-5d35-04a5-10f7-74ad509dbcf2}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Name : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{92af3c9b-98b2-0cf2-3701-7d1dda325c3a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b5ca13f9-2b56-0775-0301-98fbfef773c5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

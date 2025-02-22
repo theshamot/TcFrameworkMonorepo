@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4ce0fb41-6bf1-4fb5-89a1-30950f19439a}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>Time</Name>
+    <ProgramVersion>3.1.4024.0</ProgramVersion>
+    <Application>{fe53d069-1983-49d3-ba8b-e3e843404af2}</Application>
+    <TypeSystem>{bdbe6f91-e94d-49a8-878e-7b9861afb9ae}</TypeSystem>
+    <Implicit_Task_Info>{ec1d2669-277e-438c-93e5-7b620217377a}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{031246df-92a2-4078-af25-bd92275e529b}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{b7dc502a-af92-4ade-b123-c32d8dfac0ce}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{7abbb082-1fc7-496c-be23-43c797b224b4}</LibraryReferences>
+  </PropertyGroup>
+</Project>

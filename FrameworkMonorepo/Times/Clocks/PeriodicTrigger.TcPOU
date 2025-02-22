@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="PeriodicTrigger" Id="{77873279-c925-0549-0828-ecc8b0e9a359}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PeriodicTrigger IMPLEMENTS Cyclic
+VAR
+	_Enable : BOOL;
+	_Period : TIME;
+	_PulseAtStart : BOOL; // If TRUE, pulse is generated at start of period. If FALSE, pulse is generated after period finishes.
+	
+	_Trigger : BOOL;
+	timer : TON;
+	justEnabled : R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Cyclic" Id="{10f06c7a-2902-02fa-1216-c2b81308f612}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[justEnabled(CLK := _Enable);
+IF (justEnabled.Q AND _PulseAtStart) THEN
+	_Trigger := TRUE;
+	timer(IN := TRUE, PT := _Period);
+END_IF
+
+IF (_Enable) THEN
+	IF (NOT justEnabled.Q) THEN
+		_Trigger := FALSE;
+	END_IF
+	
+	timer(IN := TRUE, PT := _Period);
+	IF (timer.Q) THEN
+		_Trigger := TRUE;
+		timer(IN := FALSE);
+		timer(IN := TRUE);
+	END_IF
+ELSE
+	timer(IN := FALSE);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Enable" Id="{85ff9dd2-2077-0def-0617-db92381837ec}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Enable : BOOL]]></Declaration>
+      <Get Name="Get" Id="{46baf5b6-5fd8-041c-0e62-3e6b5e7cb86c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Enable := _Enable;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a00ada4e-8145-06ad-1195-6626d3a6d512}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Enable := Enable;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Period" Id="{48dc1bba-18f9-0df5-0e38-4318d81a877a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Period : TIME]]></Declaration>
+      <Get Name="Get" Id="{4bc85f97-a290-09f8-04da-0a20bc25ffc6}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Period := _Period;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{741d89f7-012e-0673-0ef4-7f138b10dd38}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Period := Period;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="PulseAtStart" Id="{80a7130a-e41e-0879-1266-0e04aea941f7}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY PulseAtStart : BOOL]]></Declaration>
+      <Get Name="Get" Id="{67c7f3f7-a4a1-07d0-3cc0-d92e3f789cab}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PulseAtStart := _PulseAtStart;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{11ee319f-ca6d-0a90-29e6-69e5c2e1a233}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_PulseAtStart := PulseAtStart;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Trigger" Id="{facd1ce4-6816-04e0-2682-1901ba4c31dd}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Trigger : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c5b43b36-6eda-0396-0bb4-bc9472eb026c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[//Trigger := edgeTrigger.Q AND _Enable;
+Trigger := _Trigger AND _Enable;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

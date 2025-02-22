@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TimeProvider" Id="{755f2388-0a77-089b-3b91-7475f96d33f3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TimeProvider IMPLEMENTS Cyclic
+VAR
+	localSystemTime : FB_LocalSystemTime;
+	getTimeZoneInformation : FB_GetTimeZoneInformation;
+    timeZoneInformation : ST_TimeZoneInformation;
+    specificLocalTimeToFileTime : FB_TzSpecificLocalTimeToFileTime;
+    fileTime : T_FILETIME;
+    onZerothSecondLastCycle : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Cyclic" Id="{52fdfe74-bb7d-012a-3a74-15cf8be573ee}">
+      <Declaration><![CDATA[METHOD Cyclic
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[localSystemTime(bEnable := FALSE);
+
+// On the zeroth second of each minute sync timezone information
+IF (timeZoneInformation.standardName = '' OR (localSystemTime.systemTime.wSecond = 0 AND NOT onZerothSecondLastCycle)) THEN
+    getTimeZoneInformation(sNetID := '', bExecute := TRUE, tzInfo => timeZoneInformation);
+END_IF;
+
+// Convert local system time to unix timestamps
+specificLocalTimeToFileTime(in := Tc2_Utilities.SYSTEMTIME_TO_FILETIME(localSystemTime.systemTime), tzInfo := timeZoneInformation, out => fileTime);
+
+onZerothSecondLastCycle := localSystemTime.systemTime.wSecond = 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{9bd34bf1-0792-097d-3cdd-8f3c72bf04e7}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[localSystemTime(bEnable := TRUE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetMonthName" Id="{04e4358c-834f-08be-101b-4fa863354c67}">
+      <Declaration><![CDATA[METHOD GetMonthName : STRING
+VAR_INPUT
+	monthNumber			: UINT;
+	shortName			: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF shortName THEN
+	CASE monthNumber OF
+		1	: GetMonthName := 'Jan';
+		2	: GetMonthName := 'Feb';
+		3	: GetMonthName := 'Mar';
+		4	: GetMonthName := 'Apr';
+		5	: GetMonthName := 'May';
+		6	: GetMonthName := 'Jun';
+		7	: GetMonthName := 'Jul';
+		8	: GetMonthName := 'Aug';
+		9	: GetMonthName := 'Sep';
+		10	: GetMonthName := 'Oct';
+		11	: GetMonthName := 'Nov';
+		12	: GetMonthName := 'Dec';
+	END_CASE
+ELSE
+	CASE monthNumber OF
+		1	: GetMonthName := 'January';
+		2	: GetMonthName := 'February';
+		3	: GetMonthName := 'March';
+		4	: GetMonthName := 'April';
+		5	: GetMonthName := 'May';
+		6	: GetMonthName := 'June';
+		7	: GetMonthName := 'July';
+		8	: GetMonthName := 'August';
+		9	: GetMonthName := 'September';
+		10	: GetMonthName := 'October';
+		11	: GetMonthName := 'November';
+		12	: GetMonthName := 'December';
+	END_CASE
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetTimeString" Id="{4d1f63b8-8fee-05fe-2b91-6a9725e9b743}">
+      <Declaration><![CDATA[METHOD GetTimeString : STRING
+VAR_INPUT
+	format : STRING; // Example: {hh}:{mm}:{ss}:{SSS} {dd}:{MM}:{yyyy} https://www.ibm.com/docs/en/rtw/9.0.1?topic=reference-formatting-parsing-date-time-patterns
+END_VAR
+VAR
+	placeholder : STRING(4);
+	
+	beginIndex	: INT;
+	endIndex	: INT;
+	length		: INT;
+		
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetTimeString := format;
+
+WHILE (beginIndex := FIND(GetTimeString, '{')) > 0 AND (endIndex := FIND(GetTimeString, '}')) > (beginIndex + 1) AND  (length := endIndex - beginIndex - 1) > 0 DO
+	
+	placeholder := MID(STR := GetTimeString, POS := beginIndex + 1, LEN := length);
+		
+	IF 		placeholder = 'h' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := TO_STRING(localSystemTime.systemTime.wHour), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'hh' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wHour), 2), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'm' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := TO_STRING(localSystemTime.systemTime.wMinute), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'mm' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wMinute), 2), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 's' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := TO_STRING(localSystemTime.systemTime.wSecond), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'ss' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wSecond), 2), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'S' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := TO_STRING(localSystemTime.systemTime.wMilliseconds/100), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'SS' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wMilliseconds/10), 2), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'SSS' 	THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wMilliseconds), 3), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'd' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := TO_STRING(localSystemTime.systemTime.wDay), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'dd' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wDay), 2), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'ddd' 	THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := GetWeekdayName(localSystemTime.systemTime.wDayOfWeek, TRUE), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'dddd'	THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := GetWeekdayName(localSystemTime.systemTime.wDayOfWeek, FALSE), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'M' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := TO_STRING(localSystemTime.systemTime.wMonth), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'MM' 		THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := AddLeadingZeros(TO_STRING(localSystemTime.systemTime.wMonth), 2), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'MMM' 	THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := GetMonthName(localSystemTime.systemTime.wMonth, TRUE), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'MMMM'	THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := GetMonthName(localSystemTime.systemTime.wMonth, FALSE), L := length + 2, P := beginIndex);
+	ELSIF 	placeholder = 'y' OR placeholder = 'yy' OR placeholder = 'yyy' OR placeholder = 'yyyy'
+									THEN GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := RIGHT(TO_STRING(localSystemTime.systemTime.wYear), length), L := length + 2, P := beginIndex);
+	ELSE 
+			GetTimeString := REPLACE( STR1 := GetTimeString, STR2 := 'ERR', L := length + 2, P := beginIndex);
+	END_IF
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetWeekdayName" Id="{0c9a5b93-1e5e-0471-3d51-442c66988d92}">
+      <Declaration><![CDATA[METHOD GetWeekdayName : STRING
+VAR_INPUT
+	weekDayNumber		: UINT;
+	shortName			: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF shortName THEN
+	CASE weekDayNumber OF
+		0	: GetWeekdayName := 'Sun';
+		1	: GetWeekdayName := 'Mon';
+		2	: GetWeekdayName := 'Tue';
+		3	: GetWeekdayName := 'Wed';
+		4	: GetWeekdayName := 'Thu';
+		5	: GetWeekdayName := 'Fri';
+		6	: GetWeekdayName := 'Sat';
+	END_CASE
+ELSE
+	CASE weekDayNumber OF
+		0	: GetWeekdayName := 'Sunday';
+		1	: GetWeekdayName := 'Monday';
+		2	: GetWeekdayName := 'Tuesday';
+		3	: GetWeekdayName := 'Wednesday';
+		4	: GetWeekdayName := 'Thursday';
+		5	: GetWeekdayName := 'Friday';
+		6	: GetWeekdayName := 'Saturday';
+	END_CASE
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Timestamp" Id="{9d8171ce-1e10-070a-1da4-a2999eb636e4}">
+      <Declaration><![CDATA[PROPERTY Timestamp : ULINT // Unix timestamp in milliseconds]]></Declaration>
+      <Get Name="Get" Id="{73a03111-d77e-02b4-0d1d-5c497433ef20}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// TODO is this even right?
+Timestamp := (SHL(DWORD_TO_ULINT(fileTime.dwHighDateTime), 32) + DWORD_TO_ULINT(fileTime.dwLowDateTime)) / 10000 - 11644473600000;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="TimeStruct" Id="{bc43b882-e966-05fb-043d-efb9907800d3}">
+      <Declaration><![CDATA[PROPERTY TimeStruct : TIMESTRUCT // Week starts with Sunday]]></Declaration>
+      <Get Name="Get" Id="{3cd6ccf0-83aa-0f62-2fc9-77ec30b982d7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TimeStruct := localSystemTime.systemTime;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="TimeStructISO8601" Id="{394508f5-d35c-0533-3a04-b9a1807dc675}">
+      <Declaration><![CDATA[PROPERTY TimeStructISO8601 : TIMESTRUCT // Week starts with Monday]]></Declaration>
+      <Get Name="Get" Id="{4c21e8c5-35a7-0d74-03fe-c921aa8d90cd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TimeStructISO8601 := localSystemTime.systemTime;
+IF TimeStructISO8601.wDayOfWeek = 0 THEN
+	TimeStructISO8601.wDayOfWeek := 6; // Move Sunday to the end of the week
+ELSE
+	TimeStructISO8601.wDayOfWeek := TimeStructISO8601.wDayOfWeek - 1;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

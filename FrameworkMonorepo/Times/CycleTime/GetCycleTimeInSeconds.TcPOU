@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="GetCycleTimeInSeconds" Id="{dfc608dd-d47c-054c-06a3-41bbea9aa324}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetCycleTimeInSeconds : LREAL
+VAR CONSTANT
+	DefaultCTUnit : LREAL := 0.0000001; // PlcTaskSystemInfo.CycleTime is in [100*ns]
+END_VAR
+VAR
+	cycleTime : UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[cycleTime := _TaskInfo[GETCURTASKINDEXEX()].CycleTime;
+GetCycleTimeInSeconds := TO_LREAL(cycleTime) * DefaultCTUnit;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

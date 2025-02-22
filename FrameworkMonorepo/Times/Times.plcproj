@@ -3,65 +3,50 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8cc7b01a-23a8-4e47-8e43-e4dd75371101}</ProjectGuid>
+    <ProjectGuid>{953da86c-a3be-407b-8547-3e99333fbf99}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Recipes</Name>
+    <Name>Times</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{f45a8f64-57c0-4708-a88d-5d28275c50c1}</Application>
-    <TypeSystem>{bb7eeccb-fc7b-4347-9433-4b063141fde4}</TypeSystem>
-    <Implicit_Task_Info>{78b00134-c31f-4c59-b712-fb2107128e4d}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{46c15b9c-7575-4a37-a7c9-63afd9d04c61}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{634d34cb-b436-4127-b0d0-74d10ae8490e}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{be5506ce-9095-4ac2-802f-c8cb944bc9f2}</LibraryReferences>
-    <Released>false</Released>
-    <CombineIds>true</CombineIds>
+    <Application>{09f890c7-5986-49b2-be11-f03ffff3fe3b}</Application>
+    <TypeSystem>{35fe7ee8-5c00-4b1d-ac70-a27b6ddd41fc}</TypeSystem>
+    <Implicit_Task_Info>{aa772468-f6d6-40a3-96e4-acedb9da8b64}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{4395c8bd-c897-4519-8bef-febcfb0c8dbe}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{a633fdd1-97ff-46a1-a5ab-f8ab2187f2d4}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{2fa1e62f-7553-4adb-8416-aac5bcaf580f}</LibraryReferences>
     <Company>TomasRompotl</Company>
-    <Title>Recipes</Title>
+    <Released>false</Released>
+    <Title>Times</Title>
     <ProjectVersion>0.0.1</ProjectVersion>
+    <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Recipes.tmc">
-      <SubType>Content</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RecipeManager" />
-    <Folder Include="RecipeManager\RecipeValues" />
+    <Folder Include="Clocks" />
+    <Folder Include="TimeProvider" />
+    <Folder Include="CycleTime" />
+    <Folder Include="Convert" />
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RecipeManager\RecipeManager.TcPOU">
+    <Compile Include="Clocks\PeriodicTrigger.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="RecipeManager\RecipeParameters.TcGVL">
+    <Compile Include="Convert\SecondsToTime.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeAssignment.TcDUT">
+    <Compile Include="Convert\TimeToSeconds.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeSingleValue.TcPOU">
+    <Compile Include="CycleTime\GetCycleTimeInSeconds.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeSingleValueType.TcIO">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeTableValue.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeTableValueType.TcIO">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeValue.TcIO">
+    <Compile Include="TimeProvider\TimeProvider.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -70,13 +55,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="Data">
-      <DefaultResolution>Data, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Data</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Files">
-      <DefaultResolution>Files, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Files</Namespace>
+    <PlaceholderReference Include="MachineBase">
+      <DefaultResolution>MachineBase, * (TomasRompotl)</DefaultResolution>
     </PlaceholderReference>
     <PlaceholderReference Include="Strings">
       <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
@@ -94,10 +74,11 @@
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
-    <PlaceholderReference Include="Types">
-      <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Types</Namespace>
-    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Times.tmc">
+      <SubType>Content</SubType>
+    </None>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

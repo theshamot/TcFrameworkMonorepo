@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TimeToSeconds" Id="{bfe2c987-5709-0bad-0a27-ffb4c219b3a0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION TimeToSeconds : LREAL
+VAR_INPUT
+	t : TIME;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TimeToSeconds := TIME_TO_LREAL(t) * 0.001;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
