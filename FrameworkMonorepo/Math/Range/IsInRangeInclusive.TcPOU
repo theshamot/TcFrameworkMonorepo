@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="IsInRangeInclusive" Id="{8dd7d775-21b8-05d0-2476-b7ec38ff0002}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsInRangeInclusive : BOOL
+VAR_INPUT
+	value : LREAL;
+	range : Range;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsInRangeInclusive := range.Bottom <= value AND value <= range.Top;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

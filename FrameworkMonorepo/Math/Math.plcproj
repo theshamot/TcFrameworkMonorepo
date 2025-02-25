@@ -3,50 +3,35 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{953da86c-a3be-407b-8547-3e99333fbf99}</ProjectGuid>
+    <ProjectGuid>{6fbf6e92-fb4d-4371-9288-fd05e9ab792a}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Times</Name>
+    <Name>Math</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{09f890c7-5986-49b2-be11-f03ffff3fe3b}</Application>
-    <TypeSystem>{35fe7ee8-5c00-4b1d-ac70-a27b6ddd41fc}</TypeSystem>
-    <Implicit_Task_Info>{aa772468-f6d6-40a3-96e4-acedb9da8b64}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{4395c8bd-c897-4519-8bef-febcfb0c8dbe}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{a633fdd1-97ff-46a1-a5ab-f8ab2187f2d4}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{2fa1e62f-7553-4adb-8416-aac5bcaf580f}</LibraryReferences>
+    <Application>{4815fa5f-5aec-4287-a922-09225a3c62ca}</Application>
+    <TypeSystem>{fde93696-f009-4c45-affa-dd3c7749ef12}</TypeSystem>
+    <Implicit_Task_Info>{7f80ce9a-858c-4cb5-b5e8-6282df2d6281}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{a9e9ceb8-08e9-4010-afa3-294c06e71687}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{810f5472-e6e5-49c0-99c3-7a49a6ee2321}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{6f1536b5-7139-46d0-aff4-ff20a6ba2e4b}</LibraryReferences>
     <Company>TomasRompotl</Company>
     <Released>false</Released>
-    <Title>Times</Title>
+    <Title>Math</Title>
     <ProjectVersion>0.0.1</ProjectVersion>
     <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Clocks" />
-    <Folder Include="TimeProvider" />
-    <Folder Include="CycleTime" />
-    <Folder Include="Convert" />
+    <Folder Include="Range" />
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clocks\PeriodicTrigger.TcPOU">
+    <Compile Include="Range\IsInRangeInclusive.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Convert\SecondsToTime.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Convert\TimeToSeconds.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="CycleTime\GetCycleTimeInSeconds.TcPOU">
-      <SubType>Code</SubType>
-      <External>false</External>
-    </Compile>
-    <Compile Include="TimeProvider\TimeProvider.TcPOU">
+    <Compile Include="Range\Range.TcDUT">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -55,29 +40,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="MachineBase">
-      <DefaultResolution>MachineBase, * (TomasRompotl)</DefaultResolution>
-      <Namespace>MachineBase</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Strings">
-      <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Strings</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Standard">
-      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Standard</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_System">
-      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_System</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Utilities">
-      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Utilities</Namespace>
-    </PlaceholderReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Times.tmc">
+    <None Include="Math.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>

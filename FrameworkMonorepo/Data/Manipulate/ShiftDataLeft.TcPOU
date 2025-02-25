@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="ShiftDataLeft" Id="{e97f8ec7-a46d-05b0-3d60-c70782600e15}" SpecialFunc="None">
     <Declaration><![CDATA[// Shift data from end to begin
 FUNCTION ShiftDataLeft : BOOL
 VAR_INPUT
 	data : ANY;
-	byteCount : UDINT; // How far to left are shifted
+	byteCount : UDINT; // How far to the left are shifted
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[MEMMOVE(destAddr := data.pValue, srcAddr := data.pValue + byteCount, data.diSize - byteCount);

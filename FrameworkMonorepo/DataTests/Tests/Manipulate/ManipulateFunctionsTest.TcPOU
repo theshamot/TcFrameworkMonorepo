@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="ManipulateFunctionsTest" Id="{14169c0f-5a0f-0126-0137-c92919737a12}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
@@ -8,6 +8,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[ClearDataFunction();
 ShiftDataLeftFunction();
+ShiftDataRightFunction();
 SwapFunction();
 SwapByPointerFunction();]]></ST>
     </Implementation>
@@ -58,6 +59,37 @@ AssertArrayEquals_INT(
 	Expecteds := expected,
 	Actuals := updatedBuffer,
 	Message := 'Data should be gradually shifter from end to begin');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ShiftDataRightFunction" Id="{675e3647-39fe-0b70-2d1f-5970c0bafebd}">
+      <Declaration><![CDATA[METHOD ShiftDataRightFunction : BOOL
+VAR
+	updatedBuffer : ARRAY[0..LastIndex] OF INT;
+	
+	expected : ARRAY[0..LastIndex] OF INT;
+END_VAR
+VAR CONSTANT
+	LastIndex : INT := 2;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Shift data right function');
+
+updatedBuffer[0] := 3;
+ShiftDataRight(updatedBuffer, SIZEOF(INT));
+updatedBuffer[0] := 2;
+ShiftDataRight(updatedBuffer, SIZEOF(INT));
+updatedBuffer[0] := 1;
+
+expected[0] := 1;
+expected[1] := 2;
+expected[2] := 3;
+
+AssertArrayEquals_INT(
+	Expecteds := expected,
+	Actuals := updatedBuffer,
+	Message := 'Data should be gradually shifter from begin to end');
 
 TEST_FINISHED();]]></ST>
       </Implementation>

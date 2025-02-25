@@ -75,6 +75,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="Manipulate\ShiftDataRight.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Manipulate\Swap.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
