@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FileRemover" Id="{f7631349-6fbc-06d3-2ed1-b29f37a58820}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FileRemover IMPLEMENTS Cyclic
+VAR
+	remover : FB_FileDelete;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Busy" Id="{6bd9c1ba-3f65-0d10-0cde-1b0febffc27a}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{7330f990-a5d5-04b3-07af-6d657e583eb7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := remover.bBusy;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Cyclic" Id="{e68b946e-3bea-094e-29ea-8dfdd035f074}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[remover(bExecute := FALSE);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Done" Id="{8d1148ae-8a6e-029b-0ac4-e72e888d52f0}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Done : BOOL]]></Declaration>
+      <Get Name="Get" Id="{901f71c5-f4ad-031d-3b10-edc5b10ddbfc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Done := NOT remover.bBusy;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Error" Id="{37d95ad4-6e51-025d-1e9c-0f61cddc459e}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{c687127d-3d11-0455-00b6-d05aa4aff756}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := remover.bError;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Remove" Id="{b55707fa-85a0-0194-3bd7-ee768eaf1a8e}">
+      <Declaration><![CDATA[METHOD Remove
+VAR_INPUT
+	filePath : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[remover(
+	sPathName := filePath,
+	bExecute := TRUE
+);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

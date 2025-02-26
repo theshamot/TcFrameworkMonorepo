@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="RecipeManager" Id="{77c5c610-1c81-0616-06a3-6337e886bd1e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK RecipeManager
 VAR
@@ -16,6 +16,9 @@ VAR
 	savingFile : BOOL;
 	loadingFile : BOOL;
 	directory : Directory;
+	
+	_JustLoaded : BOOL;
+	_JustSaved : BOOL;
 
 	_NewLine : STRING := '$N';
 	_Assignment : STRING := ':=';
@@ -107,7 +110,8 @@ END_FOR]]></ST>
       </Implementation>
     </Method>
     <Property Name="Busy" Id="{7cfa17eb-d3a3-07fa-3d85-776882933b67}">
-      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Busy : BOOL]]></Declaration>
       <Get Name="Get" Id="{99ff0090-9192-030e-0556-a7e5db2b7f61}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -124,13 +128,18 @@ END_VAR
         <ST><![CDATA[file.Cyclic();
 directory.Cyclic();
 
+_JustSaved := FALSE;
+_JustLoaded := FALSE;
+
 IF (savingFile AND file.Done) THEN
 	savingFile := FALSE;
+	_JustSaved := TRUE;
 	sb.Clear();
 END_IF
 
 IF (loadingFile AND file.Done) THEN
 	loadingFile := FALSE;
+	_JustLoaded := TRUE;
 	ParseValueString();
 	sb.Clear();
 END_IF]]></ST>
@@ -308,6 +317,30 @@ END_VAR]]></Declaration>
 END_FOR]]></ST>
       </Implementation>
     </Method>
+    <Property Name="JustLoaded" Id="{2077e4de-4c40-0aeb-0b63-275e0632eaf0}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY JustLoaded : BOOL]]></Declaration>
+      <Get Name="Get" Id="{dbfa9129-0a70-0d56-33d3-bb4fc63f0d3d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[JustLoaded := _JustLoaded;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="JustSaved" Id="{35c04087-3a17-0a9a-36f5-3fc152d5e4f8}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY JustSaved : BOOL]]></Declaration>
+      <Get Name="Get" Id="{75ffa0b7-f455-05fe-1195-95f3478693dc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[JustSaved := _JustSaved;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="ListRecipes" Id="{06b24d78-54a3-0fd9-025f-f678dfd8873d}">
       <Declaration><![CDATA[METHOD ListRecipes
 VAR_INPUT

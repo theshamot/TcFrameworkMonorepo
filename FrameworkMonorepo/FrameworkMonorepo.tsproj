@@ -118,7 +118,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{BF166AC3-50F2-48F3-99F6-10001F994B9E}" Name="Files" PrjFilePath="Files\Files.plcproj" TmcFilePath="Files\Files.tmc" ReloadTmc="true" AmsPort="857" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{9C163C54-5A29-D9D6-4A4F-8630F1B8C428}">
+				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{49E3F2A8-03F8-2F91-EAA9-5F3FAA155000}">
 					<Name>Files Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -130,7 +130,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{8CC7B01A-23A8-4E47-8E43-E4DD75371101}" Name="Recipes" PrjFilePath="Recipes\Recipes.plcproj" TmcFilePath="Recipes\Recipes.tmc" ReloadTmc="true" AmsPort="858" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Recipes\Recipes.tmc" TmcHash="{C37B32BD-1559-1CC5-9993-4536EE86A6C6}">
+				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Recipes\Recipes.tmc" TmcHash="{5BCD7A8B-8E68-6615-8147-7C3CB51D13B4}">
 					<Name>Recipes Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -166,7 +166,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{6FBF6E92-FB4D-4371-9288-FD05E9AB792A}" Name="Math" PrjFilePath="Math\Math.plcproj" TmcFilePath="Math\Math.tmc" ReloadTmc="true" AmsPort="861" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502280" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{6C6A85FF-810D-C30A-D51B-5AE807529E6D}">
+				<Instance Id="#x08502280" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Math\Math.tmc" TmcHash="{6C6A85FF-810D-C30A-D51B-5AE807529E6D}">
 					<Name>Math Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
