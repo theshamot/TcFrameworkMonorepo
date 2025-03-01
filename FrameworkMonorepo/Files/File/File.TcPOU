@@ -23,7 +23,10 @@ VAR
 	writer : FB_FileWrite;
 	
 	fileState : (Waiting, OpenMode, Opening, Reading, Writing, Closing);
-	
+	openErrorTrigger : R_TRIG;
+	readErrorTrigger : R_TRIG;
+	writeErrorTrigger : R_TRIG;
+	closeErrorTrigger : R_TRIG;
 END_VAR
 VAR CONSTANT
 	NotFoundErrorNumber : UDINT := 16#70C;
@@ -119,24 +122,46 @@ END_VAR
 	
 	Closing:
 	
-		closer(
-			bExecute := NOT closer.bBusy,
-			hFile := handle,
-		);
-		
-		IF (NOT closer.bExecute AND NOT closer.bBusy) THEN
-			closer();
-			handle := 0;
-			_Done := TRUE;
-			
+		IF (handle = 0) THEN
 			fileState := Waiting;
+		ELSE
+			closer(
+				bExecute := NOT closer.bBusy,
+				hFile := handle,
+			);
+			
+			IF (NOT closer.bExecute AND NOT closer.bBusy) THEN
+				closer();
+				handle := 0;
+				_Done := TRUE;
+				
+				fileState := Waiting;
+			END_IF
 		END_IF
 	
 END_CASE
 
 _Busy := fileState <> Waiting;
 
-_Error := opener.bError OR closer.bError OR reader.bError OR writer.bError;]]></ST>
+openErrorTrigger(CLK := opener.bError);
+readErrorTrigger(CLK := reader.bError);
+writeErrorTrigger(CLK := writer.bError);
+closeErrorTrigger(CLK := closer.bError);
+_Error := 
+	openErrorTrigger.Q
+	OR readErrorTrigger.Q
+	OR writeErrorTrigger.Q
+	OR closeErrorTrigger.Q
+	;
+IF (_Error) THEN
+	openRequest := FALSE;
+	readRequest := FALSE;
+	writeRequest := FALSE;
+	IF (fileState > Waiting AND fileState < Closing) THEN
+		fileState := Closing;
+	END_IF
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Done" Id="{55291a61-d05b-0a48-3c18-6798884dc6b1}">

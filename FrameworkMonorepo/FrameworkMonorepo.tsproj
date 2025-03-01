@@ -118,7 +118,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{BF166AC3-50F2-48F3-99F6-10001F994B9E}" Name="Files" PrjFilePath="Files\Files.plcproj" TmcFilePath="Files\Files.tmc" ReloadTmc="true" AmsPort="857" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{49E3F2A8-03F8-2F91-EAA9-5F3FAA155000}">
+				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{3C2EEF27-6E1C-4DF2-ADB6-9E0F87C8B91E}">
 					<Name>Files Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
