@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="EventLoggerManager" Id="{92790c3e-d2fe-06db-267a-42aa72ce045d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK EventLoggerManager IMPLEMENTS EventManager
+VAR
+	eventLogger : FB_TcEventLogger;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="ClearAll" Id="{28e95231-a3ef-0a9a-1795-305279e64ada}">
+      <Declaration><![CDATA[METHOD ClearAll
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[eventLogger.ClearAlarms(0, TRUE, 0);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -4,6 +4,13 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FileRemover IMPLEMENTS Cyclic
 VAR
 	remover : FB_FileDelete;
+	
+	removeErrorTrigger : R_TRIG;
+	notFoundError : MessageEventLogger(TC_EVENTS.FileEventClass.InvalidPath);
+	removeError : MessageEventLogger(TC_EVENTS.FileEventClass.RemoveFileError);
+END_VAR
+VAR CONSTANT
+	NotFoundErrorNumber : UDINT := 16#70C;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -27,6 +34,17 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[remover(bExecute := FALSE);
+
+removeErrorTrigger(CLK := remover.bError);
+IF (removeErrorTrigger.Q) THEN
+	IF (remover.nErrId = NotFoundErrorNumber) THEN
+		notFoundError.Arguments.Clear().AddStringByValue(remover.sPathName);
+		notFoundError.Send();
+	ELSE
+		removeError.Arguments.Clear().AddStringByValue(remover.sPathName);
+		removeError.Send();
+	END_IF
+END_IF
 ]]></ST>
       </Implementation>
     </Method>

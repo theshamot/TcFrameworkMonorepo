@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="Directory" Id="{2249bebd-97d6-0598-2285-3e82d8824005}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Directory
 VAR
@@ -15,6 +15,13 @@ VAR
 	page : ARRAY[0..50 - 1] OF ST_FindFileEntry;
 	_FileNameList : ARRAY[0..50 - 1] OF T_MaxString;
 	_FileExists : BOOL;
+	
+	createDirectoryErrorTrig : R_TRIG;
+	removeDirectoryErrorTrig : R_TRIG;
+	listingDirectoryErrorTrig : R_TRIG;
+	createDirectoryError : MessageEventLogger(TC_EVENTS.DirectoryEventClass.CreateDirectoryError);
+	removeDirectoryError : MessageEventLogger(TC_EVENTS.DirectoryEventClass.RemoveDirectoryError);
+	listingDirectoryError : MessageEventLogger(TC_EVENTS.DirectoryEventClass.ListDirectoryError);
 END_VAR
 VAR CONSTANT
 	EntriesPerPage : INT := 50;
@@ -86,7 +93,22 @@ IF (listingFinishedTrigger.Q AND listDir.eCmd <> E_EnumCmdType.eEnumCmd_Abort) T
 		Abort();
 	END_IF
 END_IF
-]]></ST>
+
+createDirectoryErrorTrig(CLK := creator.bError);
+removeDirectoryErrorTrig(CLK := remover.bError);
+listingDirectoryErrorTrig(CLK := listDir.bError);
+IF (createDirectoryErrorTrig.Q) THEN
+	createDirectoryError.Arguments.Clear().AddStringByValue(creator.sPathName);
+	createDirectoryError.Send();
+END_IF
+IF (removeDirectoryErrorTrig.Q) THEN
+	removeDirectoryError.Arguments.Clear().AddStringByValue(remover.sPathName);
+	removeDirectoryError.Send();
+END_IF
+IF (listingDirectoryErrorTrig.Q) THEN
+	listingDirectoryError.Arguments.Clear().AddStringByValue(listDir.sPathName);
+	listingDirectoryError.Send();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="FileExists" Id="{90ece582-5e1b-01dc-0274-516d568d103f}">

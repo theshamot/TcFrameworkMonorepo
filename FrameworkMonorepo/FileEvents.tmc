@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<TcModuleClass>
+	<Translations>
+		<Text TxtId="FileEventClass">
+			<Text LcId="1029"><![CDATA[Události souboru]]></Text>
+			<Text LcId="1033"><![CDATA[File events]]></Text>
+		</Text>
+		<Text TxtId="InvalidPath">
+			<Text LcId="1029"><![CDATA[Jméno nebo cesta k souboru jsou neplatné]]></Text>
+			<Text LcId="1033"><![CDATA[File path or name is invalid]]></Text>
+		</Text>
+		<Text TxtId="OpenFileError">
+			<Text LcId="1029"><![CDATA[Chyba otevírání souboru]]></Text>
+			<Text LcId="1033"><![CDATA[Open file error]]></Text>
+		</Text>
+		<Text TxtId="ReadFileError">
+			<Text LcId="1029"><![CDATA[Chyba čtení souboru]]></Text>
+			<Text LcId="1033"><![CDATA[Read file error]]></Text>
+		</Text>
+		<Text TxtId="WriteFileError">
+			<Text LcId="1029"><![CDATA[Chyba zápisu souboru]]></Text>
+			<Text LcId="1033"><![CDATA[Write file error]]></Text>
+		</Text>
+		<Text TxtId="CloseFileError">
+			<Text LcId="1029"><![CDATA[Chyba zavírání souboru]]></Text>
+			<Text LcId="1033"><![CDATA[Close file error]]></Text>
+		</Text>
+		<Text TxtId="RemoveFileError">
+			<Text LcId="1029"><![CDATA[Chyba mazání souboru]]></Text>
+			<Text LcId="1033"><![CDATA[Remove file error]]></Text>
+		</Text>
+	</Translations>
+	<DataTypes>
+		<DataType>
+			<Name GUID="{252C337E-F61F-4E0C-BBEE-D5A647859662}">FileEventClass</Name>
+			<DisplayName TxtId=""><![CDATA[FileEventClass]]></DisplayName>
+			<EventId>
+				<Name Id="1">InvalidPath</Name>
+				<DisplayName TxtId=""><![CDATA[InvalidPath]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="2">OpenFileError</Name>
+				<DisplayName TxtId=""><![CDATA[OpenFileError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="6">RemoveFileError</Name>
+				<DisplayName TxtId=""><![CDATA[RemoveFileError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="3">ReadFileError</Name>
+				<DisplayName TxtId=""><![CDATA[ReadFileError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="4">WriteFileError</Name>
+				<DisplayName TxtId=""><![CDATA[WriteFileError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="5">CloseFileError</Name>
+				<DisplayName TxtId=""><![CDATA[CloseFileError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{9E2DAE71-584C-4EC2-A788-32908081D816}"/>
+				<Hide GUID="{C6EB7148-71F1-4168-BD29-EB89AFFC62CB}"/>
+				<Hide GUID="{E14665CC-473A-4F82-9364-20D962C619E4}"/>
+				<Hide GUID="{D174ADA9-6C0B-4577-8E89-E5CE66E8C7D6}"/>
+				<Hide GUID="{8490BD4B-2307-423D-B3F4-40C7CF424168}"/>
+				<Hide GUID="{BF8DFC80-ACB6-4721-8CE6-A1BC82A8DE34}"/>
+				<Hide GUID="{F94D3816-FD95-40E5-AB4F-E8ABDAD58F9D}"/>
+				<Hide GUID="{50D12582-33E4-4382-A5BA-B95878A12BC7}"/>
+				<Hide GUID="{93C7C185-5408-4691-A327-9FA9EEDB28A5}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
+</TcModuleClass>

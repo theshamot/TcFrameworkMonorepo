@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<TcModuleClass>
+	<Translations>
+		<Text TxtId="DirectoryEventClass">
+			<Text LcId="1029"><![CDATA[Události složky]]></Text>
+			<Text LcId="1033"><![CDATA[Directory events]]></Text>
+		</Text>
+		<Text TxtId="CreateDirectoryError">
+			<Text LcId="1029"><![CDATA[Chyba vytváření složky]]></Text>
+			<Text LcId="1033"><![CDATA[Create directory error]]></Text>
+		</Text>
+		<Text TxtId="RemoveDirectoryError">
+			<Text LcId="1029"><![CDATA[Chyba mazání složky]]></Text>
+			<Text LcId="1033"><![CDATA[Remove directory error]]></Text>
+		</Text>
+		<Text TxtId="ListDirectoryError">
+			<Text LcId="1029"><![CDATA[Chyba čtení seznamu složek]]></Text>
+			<Text LcId="1033"><![CDATA[List directory error]]></Text>
+		</Text>
+	</Translations>
+	<DataTypes>
+		<DataType>
+			<Name GUID="{2001FF5F-4B99-476D-8237-21B2B64D9596}">DirectoryEventClass</Name>
+			<DisplayName TxtId=""><![CDATA[DirectoryEventClass]]></DisplayName>
+			<EventId>
+				<Name Id="1">CreateDirectoryError</Name>
+				<DisplayName TxtId=""><![CDATA[CreateDirectoryError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="2">RemoveDirectoryError</Name>
+				<DisplayName TxtId=""><![CDATA[RemoveDirectoryError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="3">ListDirectoryError</Name>
+				<DisplayName TxtId=""><![CDATA[ListDirectoryError]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{E39D6E74-CED3-4DAA-B6FA-FB139CEF31A9}"/>
+				<Hide GUID="{770CFF3A-2A69-411C-AE05-2A1BD8325FEA}"/>
+				<Hide GUID="{1BBD994C-F94E-4D38-847C-9AE60EB4596B}"/>
+				<Hide GUID="{F1CBE4AB-49D9-48E8-910E-8696BC064B85}"/>
+				<Hide GUID="{C2C9EE5D-486E-490D-A705-84D7301D9407}"/>
+				<Hide GUID="{430B6F36-4153-403C-91D0-02C8BA922228}"/>
+				<Hide GUID="{8E50A880-A2A1-43B5-B0FA-7F38ADA1E1E8}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
+</TcModuleClass>

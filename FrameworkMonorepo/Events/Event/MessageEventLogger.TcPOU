@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MessageEventLogger" Id="{c65b3b8c-cefe-0c69-28d9-e22d6f05aacc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MessageEventLogger IMPLEMENTS Message
+VAR
+	message : FB_TcMessage;
+	_Source : Name;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Arguments" Id="{a4cdc9b9-9175-0235-24d3-9175fa50c141}">
+      <Declaration><![CDATA[PROPERTY Arguments : I_TcArguments]]></Declaration>
+      <Get Name="Get" Id="{0d2cf21f-7a2a-0f95-3410-db23e36240a7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Arguments := message.ipArguments;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_init" Id="{bd18aeaa-a101-03cb-0902-b738f218667a}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	event : TcEventEntry;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[message.CreateEx(stEventEntry := event, ipSourceInfo := 0);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Send" Id="{f0733f31-9e20-025f-2b59-69033ef37c10}">
+      <Declaration><![CDATA[METHOD Send
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (_Source <> 0) THEN
+	message.ipArguments.Clear().AddStringByValue(value := _Source.Name);
+END_IF
+
+message.Send(0);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Source" Id="{85dd2fb6-f7e3-028b-0d93-8fe6326af09f}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Source : Name]]></Declaration>
+      <Get Name="Get" Id="{f3ba702f-40d7-0e55-0ef0-b6d2b973d449}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Source := _Source;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a5a22b04-d5b2-0c00-0bc9-9a1597efe5ae}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Source := Source;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Watch" Id="{56e12bb0-a397-01d5-1032-1331946bc7c3}">
+      <Declaration><![CDATA[METHOD Watch
+VAR_INPUT
+	eventCondition : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (eventCondition) THEN
+	Send();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

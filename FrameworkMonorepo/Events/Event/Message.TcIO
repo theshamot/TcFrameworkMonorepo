@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Itf Name="Message" Id="{43a9cf12-ef21-0d83-2603-50b2d81d5535}">
+    <Declaration><![CDATA[INTERFACE Message
+]]></Declaration>
+    <Method Name="Send" Id="{a97dd082-ac5b-03e1-2dae-4e3bad4af412}">
+      <Declaration><![CDATA[METHOD Send
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Source" Id="{d1c99de6-7f60-06fe-27bf-07c114b4cffe}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Source : Name]]></Declaration>
+      <Get Name="Get" Id="{4b178a5b-1417-088e-3a8c-66902242b841}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b7feb3fa-4042-0a08-33d7-0d7838edc479}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

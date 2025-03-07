@@ -19,6 +19,10 @@
 					<Name>PlcTask2</Name>
 				</Task>
 			</Tasks>
+			<TypeSystem>
+				<AdditionalTmcFile Name="FileEvents" File="FileEvents.tmc"/>
+				<AdditionalTmcFile Name="DirectoryEvents" File="DirectoryEvents.tmc"/>
+			</TypeSystem>
 		</System>
 		<Plc>
 			<Project GUID="{53775AAD-FA08-4440-B0B9-741C387ECAA9}" Name="Types" PrjFilePath="Types\Types.plcproj" TmcFilePath="Types\Types.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
@@ -118,7 +122,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{BF166AC3-50F2-48F3-99F6-10001F994B9E}" Name="Files" PrjFilePath="Files\Files.plcproj" TmcFilePath="Files\Files.tmc" ReloadTmc="true" AmsPort="857" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{3C2EEF27-6E1C-4DF2-ADB6-9E0F87C8B91E}">
+				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{0A708BBE-DC35-93BD-0FD8-5D55BFDDC347}">
 					<Name>Files Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -168,6 +172,18 @@
 			<Project GUID="{6FBF6E92-FB4D-4371-9288-FD05E9AB792A}" Name="Math" PrjFilePath="Math\Math.plcproj" TmcFilePath="Math\Math.tmc" ReloadTmc="true" AmsPort="861" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502280" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Math\Math.tmc" TmcHash="{6C6A85FF-810D-C30A-D51B-5AE807529E6D}">
 					<Name>Math Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
+			<Project GUID="{F13CC73C-ED1E-40B5-9CB0-4C81D85EC09B}" Name="Events" PrjFilePath="Events\Events.plcproj" TmcFilePath="Events\Events.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Events\Events.tmc" TmcHash="{51B07377-9A78-A848-7F62-4C0B8A14128E}">
+					<Name>Events Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>

@@ -18,6 +18,9 @@ _ModuleInstall/
 .vs/
 *.vsm
 
+!DirectoryEvents.tmc
+!FileEvents.tmc
+
 # TwinCAT HMI
 .engineering_servers/
 liveview_*

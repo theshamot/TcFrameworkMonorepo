@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Itf Name="Alarm" Id="{a115ae59-9c39-0ffc-3485-220b1d762515}">
+    <Declaration><![CDATA[INTERFACE Alarm
+]]></Declaration>
+    <Method Name="Clear" Id="{6a5e9cf1-e645-0394-369e-44b9089f83a3}">
+      <Declaration><![CDATA[METHOD Clear
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="IsRaised" Id="{4098fd7e-9c07-0d75-201d-740ac9de4e6b}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsRaised : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a5c5cae1-e0db-0406-1a41-15792b100a52}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Raise" Id="{bd03e23d-0bd6-0593-2919-8f55a4b6e34c}">
+      <Declaration><![CDATA[METHOD Raise
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="Source" Id="{89716997-9da2-0867-13e3-3b1ee50ea82d}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Source : Name]]></Declaration>
+      <Get Name="Get" Id="{82446f50-cc19-008c-2847-ab3ac2c7b4ba}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{eec35149-2350-0873-2647-ad4c4025d295}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

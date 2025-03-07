@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Itf Name="EventManager" Id="{e6aa0918-6d48-0701-2ddd-9942b00b9e2a}">
+    <Declaration><![CDATA[INTERFACE EventManager
+]]></Declaration>
+    <Method Name="ClearAll" Id="{86cd8969-20c0-05a5-2c6f-a7c3cf2340eb}">
+      <Declaration><![CDATA[METHOD ClearAll
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

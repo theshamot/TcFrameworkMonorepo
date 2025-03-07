@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="AlarmEventLogger" Id="{d0e3ccbe-965e-0019-3a52-a4d182233dd4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AlarmEventLogger IMPLEMENTS Alarm
+VAR
+	alarm : FB_TcAlarm;
+	_Source : Name;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Arguments" Id="{345ff380-780b-0dd1-3ebd-e0daa03e2ebb}">
+      <Declaration><![CDATA[PROPERTY Arguments : I_TcArguments]]></Declaration>
+      <Get Name="Get" Id="{2a83c0c1-beb4-08e0-09dd-d2694feb9e33}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Arguments := alarm.ipArguments;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Clear" Id="{5e6685b2-9d9d-0bd6-0b80-36d17ef6c63d}">
+      <Declaration><![CDATA[METHOD Clear
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[alarm.Clear(0, TRUE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{13b93e8d-5b11-0a43-3eea-01e38a3c84d4}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	event : TcEventEntry;
+	autoReset : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[alarm.CreateEx(stEventEntry := event, bWithConfirmation := NOT autoReset, ipSourceInfo := 0);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsRaised" Id="{cc265ab0-9ea0-0c78-2a6a-eea337dd7b8f}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY IsRaised : BOOL]]></Declaration>
+      <Get Name="Get" Id="{fb9a8cac-efab-0b9f-2a41-b0daa8278494}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsRaised := alarm.bRaised;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Raise" Id="{96cfa2a4-23c7-0ebe-0c1d-3f6a3f94f801}">
+      <Declaration><![CDATA[METHOD Raise
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (_Source <> 0) THEN
+	alarm.ipArguments.Clear().AddStringByValue(value := _Source.Name);
+END_IF
+
+alarm.Raise(0);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Source" Id="{9d3b7778-12fd-08b4-0b66-8744cc82ee16}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Source : Name]]></Declaration>
+      <Get Name="Get" Id="{9b6cbf4e-d561-0beb-307f-4e7d663fcad4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Source := _Source;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{519a888e-b735-039a-24b9-068740b93537}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Source := Source;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Watch" Id="{41dfdb64-d522-0299-0c10-fdb0f1d05e9f}">
+      <Declaration><![CDATA[METHOD Watch
+VAR_INPUT
+	eventCondition : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (eventCondition) THEN
+	Raise();
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

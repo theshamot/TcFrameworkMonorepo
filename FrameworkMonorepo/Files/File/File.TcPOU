@@ -27,6 +27,12 @@ VAR
 	readErrorTrigger : R_TRIG;
 	writeErrorTrigger : R_TRIG;
 	closeErrorTrigger : R_TRIG;
+	
+	notFoundError : MessageEventLogger(TC_EVENTS.FileEventClass.InvalidPath);
+	fileOpenError : MessageEventLogger(TC_EVENTS.FileEventClass.OpenFileError);
+	fileReadError : MessageEventLogger(TC_EVENTS.FileEventClass.ReadFileError);
+	fileWriteError : MessageEventLogger(TC_EVENTS.FileEventClass.WriteFileError);
+	fileCloseError : MessageEventLogger(TC_EVENTS.FileEventClass.CloseFileError);
 END_VAR
 VAR CONSTANT
 	NotFoundErrorNumber : UDINT := 16#70C;
@@ -157,6 +163,24 @@ IF (_Error) THEN
 	openRequest := FALSE;
 	readRequest := FALSE;
 	writeRequest := FALSE;
+	
+	IF (openErrorTrigger.Q AND opener.nErrId = NotFoundErrorNumber) THEN
+		notFoundError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		notFoundError.Send();
+	ELSIF (openErrorTrigger.Q) THEN
+		fileOpenError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileOpenError.Send();
+	ELSIF (readErrorTrigger.Q) THEN
+		fileReadError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileReadError.Send();
+	ELSIF (openErrorTrigger.Q) THEN
+		fileWriteError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileWriteError.Send();
+	ELSIF (openErrorTrigger.Q) THEN
+		fileCloseError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileCloseError.Send();
+	END_IF
+	
 	IF (fileState > Waiting AND fileState < Closing) THEN
 		fileState := Closing;
 	END_IF

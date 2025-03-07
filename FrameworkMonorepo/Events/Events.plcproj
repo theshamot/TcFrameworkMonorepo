@@ -3,65 +3,52 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{bf166ac3-50f2-48f3-99f6-10001f994b9e}</ProjectGuid>
+    <ProjectGuid>{f13cc73c-ed1e-40b5-9cb0-4c81d85ec09b}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Files</Name>
+    <Name>Events</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{5bf6b2c6-18f2-4dfb-8ea4-e5d8c28cba88}</Application>
-    <TypeSystem>{f75cd6c7-26d6-416f-9067-30a1ffe64a17}</TypeSystem>
-    <Implicit_Task_Info>{615e5edd-bf6f-4bdb-aea7-5ec9927a0487}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{be0d9b22-7a69-49f3-b218-53cbfc031379}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{39d2cbad-2eff-447c-85c4-c49eb3f25a5a}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{51bdd567-c8b6-4cb3-a17e-43c7366b9f4e}</LibraryReferences>
+    <Application>{66222271-0eb9-4ca7-8550-c5bf6c94ae45}</Application>
+    <TypeSystem>{16e14568-0f72-49fe-9c28-97b314e8bde7}</TypeSystem>
+    <Implicit_Task_Info>{4a8a8825-74c4-41df-849d-9a3806339096}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{83e9375b-e940-443d-b905-d32b7389dd1a}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{214b7c15-1439-4213-a498-8a3960542e2c}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{29446b6a-9c68-44a0-a93a-93be764029a0}</LibraryReferences>
     <Company>TomasRompotl</Company>
     <Released>false</Released>
-    <Title>Files</Title>
+    <Title>Events</Title>
     <ProjectVersion>0.0.1</ProjectVersion>
     <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
-    <PlaceholderReference Include="Events">
-      <DefaultResolution>Events, * (TomasRompotl)</DefaultResolution>
-      <Namespace>Events</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="MachineBase">
-      <DefaultResolution>MachineBase, * (TomasRompotl)</DefaultResolution>
-      <Namespace>MachineBase</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Standard">
-      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Standard</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_System">
-      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_System</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc2_Utilities">
-      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc2_Utilities</Namespace>
-    </PlaceholderReference>
-    <PlaceholderReference Include="Tc3_Module">
-      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
-      <Namespace>Tc3_Module</Namespace>
-    </PlaceholderReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="File" />
+    <Folder Include="EventManager" />
+    <Folder Include="Event" />
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="File\Directory.TcPOU">
+    <Compile Include="EventManager\EventLoggerManager.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="File\File.TcPOU">
+    <Compile Include="EventManager\EventManager.TcIO">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="File\FileRemover.TcPOU">
+    <Compile Include="Event\AlarmEventLogger.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Event\Alarm.TcIO">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Event\Message.TcIO">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Event\MessageEventLogger.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -70,7 +57,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Files.tmc">
+    <PlaceholderReference Include="MachineBase">
+      <DefaultResolution>MachineBase, * (TomasRompotl)</DefaultResolution>
+      <Namespace>MachineBase</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_EventLogger">
+      <DefaultResolution>Tc3_EventLogger, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_EventLogger</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Events.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
