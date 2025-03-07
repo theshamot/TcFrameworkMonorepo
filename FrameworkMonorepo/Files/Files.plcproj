@@ -74,6 +74,10 @@
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <PinnedGlobalDataType Include="ST_DirectoryEventClass" />
+    <PinnedGlobalDataType Include="ST_FileEventClass" />
+  </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
