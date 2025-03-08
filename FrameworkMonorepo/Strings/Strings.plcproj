@@ -92,6 +92,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="Manipulate\RemoveStringFromEnd.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Manipulate\ReplaceString.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="ManipulateFunctionsTest" Id="{8e2fe8b8-5e6f-0d30-1f80-87f977530bb8}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
@@ -7,7 +7,10 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[AddLeadingZerosFunction();
-ReplaceStringFunction();]]></ST>
+GetStringBetweenFunction();
+RemoveStringFromEndFunction();
+ReplaceStringFunction();
+]]></ST>
     </Implementation>
     <Method Name="AddLeadingZerosFunction" Id="{5b38fdb2-8f15-0071-0faa-54d830637f22}">
       <Declaration><![CDATA[METHOD AddLeadingZerosFunction : BOOL
@@ -27,6 +30,46 @@ AssertEquals_STRING(
 	Expected := '555',
 	Actual := AddLeadingZeros(test, 2),
 	Message := 'Should do nothing if formatter string already has more chars');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetStringBetweenFunction" Id="{adc4369a-6eeb-0f97-0df0-a2d6e56b181f}">
+      <Declaration><![CDATA[METHOD GetStringBetweenFunction : BOOL
+VAR
+	test : T_MaxString := '[42]';
+	actual : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Get string between');
+
+actual := GetStringBetween(test, '[', ']');
+
+AssertEquals_STRING(
+	Expected := '42',
+	Actual := actual,
+	Message := 'Should return content of brackets');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveStringFromEndFunction" Id="{3772e17f-2221-0625-2684-3b1eb052ea32}">
+      <Declaration><![CDATA[METHOD RemoveStringFromEndFunction : BOOL
+VAR
+	test : T_MaxString := 'Last word will be removed';
+	actual : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Remove string from end');
+
+actual := RemoveStringFromEnd(test, 'removed');
+
+AssertEquals_STRING(
+	Expected := 'Last word will be ',
+	Actual := actual,
+	Message := 'Should remove last word from test string');
 
 TEST_FINISHED();]]></ST>
       </Implementation>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="RemoveStringFromEnd" Id="{a8d4f214-210e-0ce9-085f-79a2833122eb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION RemoveStringFromEnd : T_MaxString
+VAR_INPUT
+	text : T_MaxString;
+	end : T_MaxString;
+END_VAR
+VAR
+	diff : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[diff := LEN(text) - LEN(end);
+IF (diff < 0) THEN
+	RemoveStringFromEnd := text;
+	RETURN;
+END_IF
+
+IF (StringEndsWith(text, end)) THEN
+	RemoveStringFromEnd := LEFT(text, diff);
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
