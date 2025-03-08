@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="StringBuilderInfinite" Id="{494d6245-e98b-407b-8559-a62542a9481d}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderInfinite
 VAR
@@ -21,9 +21,10 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_Capacity := InitialCapacity;
-p := __NEW(BYTE, (_Capacity + 1));
-MEMSET(destAddr := p, fillByte := 0, n := _Capacity);
-Allocate := p;]]></ST>
+p := __NEW(BYTE, TO_UDINT(_Capacity + 1));
+MEMSET(destAddr := p, fillByte := 0, n := TO_UDINT(_Capacity));
+Allocate := p;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Append" Id="{3f970321-6f9c-4ccc-a49e-0bee078cd44e}">
@@ -42,7 +43,7 @@ EnsureCapacity(_Length + lengthToCopy);
 MEMCPY(
 	destAddr := _Value + _Length,
 	srcAddr := ADR(value),
-	n := lengthToCopy
+	n := TO_UDINT(lengthToCopy)
 );
 
 _Length := _Length + lengthToCopy;
@@ -59,14 +60,14 @@ VAR
 	lengthToCopy : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[lengthToCopy := LEN2(value);
+        <ST><![CDATA[lengthToCopy := TO_DINT(LEN2(value));
 
 EnsureCapacity(_Length + lengthToCopy);
 
 MEMCPY(
-	destAddr := _Value + _Length,
+	destAddr := _Value + TO_LWORD(_Length),
 	srcAddr := value,
-	n := lengthToCopy
+	n := TO_UDINT(lengthToCopy)
 );
 
 _Length := _Length + lengthToCopy;
@@ -93,7 +94,7 @@ END_VAR
         <ST><![CDATA[MEMSET(
 	destAddr := _Value,
 	fillByte := 0,
-	n := _Length
+	n := TO_UDINT(_Length)
 );
 
 _Length := 0;
@@ -155,20 +156,23 @@ END_VAR
       </Get>
     </Property>
     <Method Name="NextPowerOf2" Id="{3b448972-0092-4aa9-ae1a-997eaf88648a}">
-      <Declaration><![CDATA[METHOD PRIVATE NextPowerOf2 : UDINT
+      <Declaration><![CDATA[METHOD PRIVATE NextPowerOf2 : DINT
 VAR_INPUT
-	n : UDINT;
+	number : DINT;
 END_VAR
-]]></Declaration>
+VAR
+	n : UDINT;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[n := n - 1;
+        <ST><![CDATA[n := TO_UDINT(number);
+n := n - 1;
 n := n OR SHR(n, 1);
 n := n OR SHR(n, 2);
 n := n OR SHR(n, 4);
 n := n OR SHR(n, 8);
 n := n OR SHR(n, 16);
 n := n + 1;
-NextPowerOf2 := n;]]></ST>
+NextPowerOf2 := TO_DINT(n);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Reallocate" Id="{8f039273-b116-47dd-bf35-078db7701848}">
@@ -179,11 +183,12 @@ VAR
 	new : POINTER TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[new := __NEW(BYTE, (_Capacity + 1));
-MEMSET(destAddr := new, fillByte := 0, n := _Capacity);
-MEMCPY(new, _Value, _Length);
+        <ST><![CDATA[new := __NEW(BYTE, TO_UDINT(_Capacity + 1));
+MEMSET(destAddr := new, fillByte := 0, n := TO_UDINT(_Capacity));
+MEMCPY(new, _Value, TO_UDINT(_Length));
 __DELETE(_Value);
-_Value := new;]]></ST>
+_Value := new;
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Value" Id="{cfdb86ac-3c93-4424-b346-f83099aa6553}">

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="StringBuilderExtBuffer" Id="{261b6625-c824-4ba7-8b30-9e72c2ea80b1}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderExtBuffer
 VAR
@@ -26,9 +26,9 @@ END_VAR]]></Declaration>
 );
 
 MEMCPY(
-	destAddr := _Buffer.pValue + _Length,
+	destAddr := _Buffer.pValue + TO_DWORD(_Length),
 	srcAddr := ADR(value),
-	n := lengthToCopy
+	n := TO_UDINT(lengthToCopy)
 );
 
 _Length := _Length + lengthToCopy;
@@ -46,7 +46,7 @@ VAR
 	lengthToCopy : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[valueLength := LEN2(value);
+        <ST><![CDATA[valueLength := TO_DINT(LEN2(value));
 
 lengthToCopy := LIMIT(
 	DINT#0, 								// min
@@ -55,9 +55,9 @@ lengthToCopy := LIMIT(
 );
 
 MEMCPY(
-	destAddr := _Buffer.pValue + _Length,
+	destAddr := _Buffer.pValue + TO_DWORD(_Length),
 	srcAddr := value,
-	n := lengthToCopy
+	n := TO_UDINT(lengthToCopy)
 );
 
 _Length := _Length + lengthToCopy;
@@ -66,8 +66,7 @@ AppendByPointer REF= THIS^;]]></ST>
       </Implementation>
     </Method>
     <Property Name="Buffer" Id="{c3578d29-1549-0429-27de-75edb5f9215e}">
-      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY Buffer : __SYSTEM.AnyType]]></Declaration>
+      <Declaration><![CDATA[PROPERTY Buffer : __SYSTEM.AnyType]]></Declaration>
       <Get Name="Get" Id="{e3dd9b57-7e84-075a-26d7-b67560acb852}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -83,7 +82,8 @@ END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[_Buffer := Buffer;
-_Length := LEN2(pSTRING := _Buffer.pValue);]]></ST>
+_Length := TO_DINT(LEN2(pSTRING := _Buffer.pValue));
+]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -106,7 +106,7 @@ END_VAR
         <ST><![CDATA[MEMSET(
 	destAddr := _Buffer.pValue,
 	fillByte := 0,
-	n := _Buffer.diSize
+	n := TO_UDINT(_Buffer.diSize)
 );
 
 _Length := 0;
@@ -153,15 +153,15 @@ END_VAR]]></Declaration>
 );
 
 MEMMOVE(
-	destAddr := _Buffer.pValue + lengthToCopy,
+	destAddr := _Buffer.pValue + TO_DWORD(lengthToCopy),
 	srcAddr := _Buffer.pValue,
-	n := MIN(_Buffer.diSize - lengthToCopy, _Length)
+	n := TO_UDINT(MIN(_Buffer.diSize - lengthToCopy, _Length))
 );
 
 MEMCPY(
 	destAddr := _Buffer.pValue,
 	srcAddr := ADR(value),
-	n := lengthToCopy
+	n := TO_UDINT(lengthToCopy)
 );
 
 _Length := MIN(_Length + lengthToCopy, _Buffer.diSize);
@@ -175,7 +175,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_Length := LEN2(_Buffer.pValue);]]></ST>
+        <ST><![CDATA[_Length := TO_DINT(LEN2(_Buffer.pValue));
+]]></ST>
       </Implementation>
     </Method>
   </POU>

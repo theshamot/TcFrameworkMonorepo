@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="Swap" Id="{ce22f68c-8e35-0101-0495-56324846ee4d}" SpecialFunc="None">
     <Declaration><![CDATA[// Swaps values of two variables
 FUNCTION Swap
@@ -11,11 +11,11 @@ VAR
 	temp : POINTER TO BYTE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[temp := __NEW(BYTE, a.diSize);
+      <ST><![CDATA[temp := __NEW(BYTE, TO_UDINT(a.diSize));
 
-MEMCPY(temp, a.pValue, a.diSize);
-MEMCPY(a.pValue, b.pValue, a.diSize);
-MEMCPY(b.pValue, temp, a.diSize);
+MEMCPY(temp, a.pValue, TO_UDINT(a.diSize));
+MEMCPY(a.pValue, b.pValue, TO_UDINT(a.diSize));
+MEMCPY(b.pValue, temp, TO_UDINT(a.diSize));
 
 __DELETE(temp);
 ]]></ST>

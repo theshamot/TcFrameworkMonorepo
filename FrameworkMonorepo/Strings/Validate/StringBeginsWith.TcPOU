@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="StringBeginsWith" Id="{80260d38-3b40-4b96-b755-073edaa4e021}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION StringBeginsWith : BOOL
 VAR_INPUT
@@ -12,14 +12,15 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[textLength := LEN2(text.pValue);
+      <ST><![CDATA[textLength := TO_DINT(LEN2(text.pValue));
 length := LEN(startsWithString);
 
 IF (textLength < length) THEN
 	RETURN;
 END_IF
 
-StringBeginsWith := MEMCMP(pBuf1 := text.pValue, pBuf2 := ADR(startsWithString), n := length) = 0;]]></ST>
+StringBeginsWith := MEMCMP(pBuf1 := text.pValue, pBuf2 := ADR(startsWithString), n := TO_UDINT(length)) = 0;
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

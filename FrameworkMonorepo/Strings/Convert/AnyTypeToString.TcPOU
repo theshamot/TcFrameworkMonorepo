@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="AnyTypeToString" Id="{9a22c86a-6ea3-4f7a-bbd8-4bbd13dcdc2f}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION AnyTypeToString : T_MaxString
 VAR_INPUT
@@ -10,8 +10,6 @@ END_VAR
       <ST><![CDATA[CASE UDINT_TO_INT(a.TypeClass) OF
     IBaseLibrary.TypeClass.TYPE_BOOL :
         AnyTypeToString := BOOL_TO_STRING(PBOOL_TO_BOOL(a.pValue));
-    IBaseLibrary.TypeClass.TYPE_BIT :
-        AnyTypeToString := BIT_TO_STRING(BYTE_TO_BIT(a.pValue^));
     IBaseLibrary.TypeClass.TYPE_BYTE :
         AnyTypeToString := BYTE_TO_STRING(a.pValue^);
     IBaseLibrary.TypeClass.TYPE_WORD :

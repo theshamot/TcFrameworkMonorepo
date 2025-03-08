@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="DataEquals" Id="{966a9e14-2fe0-04e4-256c-b130f4885b3a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION DataEquals : BOOL
 VAR_INPUT
@@ -14,7 +14,7 @@ END_VAR
 	RETURN;
 END_IF
 
-DataEquals := MEMCMP(pBuf1 := a.pValue, pBuf2 := b.pValue, n := a.diSize) = 0;]]></ST>
+DataEquals := MEMCMP(pBuf1 := a.pValue, pBuf2 := b.pValue, n := TO_UDINT(a.diSize)) = 0;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="StringToAnyType" Id="{a71bb3dc-acda-4ecb-979d-e887a77012fb}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION StringToAnyType
 VAR_INPUT
@@ -13,73 +13,70 @@ END_VAR]]></Declaration>
       <ST><![CDATA[CASE UDINT_TO_INT(output.TypeClass) OF
     IBaseLibrary.TypeClass.TYPE_BOOL :
         conversion.BOOL_ := STRING_TO_BOOL(text);
-        MEMCPY(srcAddr := ADR(conversion.BOOL_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.BOOL_)));
-    IBaseLibrary.TypeClass.TYPE_BIT :
-        conversion.BIT_ := STRING_TO_BIT(text);
-        MEMCPY(srcAddr := ADR(conversion.BIT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.BIT_)));
+        MEMCPY(srcAddr := ADR(conversion.BOOL_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.BOOL_))));
     IBaseLibrary.TypeClass.TYPE_BYTE :
         conversion.BYTE_ := STRING_TO_BYTE(text);
-        MEMCPY(srcAddr := ADR(conversion.BYTE_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.BYTE_)));
+        MEMCPY(srcAddr := ADR(conversion.BYTE_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.BYTE_))));
     IBaseLibrary.TypeClass.TYPE_WORD :
         conversion.WORD_ := STRING_TO_WORD(text);
-        MEMCPY(srcAddr := ADR(conversion.WORD_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.WORD_)));
+        MEMCPY(srcAddr := ADR(conversion.WORD_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.WORD_))));
     IBaseLibrary.TypeClass.TYPE_DWORD :
         conversion.DWORD_ := STRING_TO_DWORD(text);
-        MEMCPY(srcAddr := ADR(conversion.DWORD_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.DWORD_)));
+        MEMCPY(srcAddr := ADR(conversion.DWORD_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.DWORD_))));
     IBaseLibrary.TypeClass.TYPE_LWORD :
         conversion.LWORD_ := STRING_TO_LWORD(text);
-        MEMCPY(srcAddr := ADR(conversion.LWORD_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.LWORD_)));
+        MEMCPY(srcAddr := ADR(conversion.LWORD_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.LWORD_))));
     IBaseLibrary.TypeClass.TYPE_SINT :
         conversion.SINT_ := STRING_TO_SINT(text);
-        MEMCPY(srcAddr := ADR(conversion.SINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.SINT_)));
+        MEMCPY(srcAddr := ADR(conversion.SINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.SINT_))));
     IBaseLibrary.TypeClass.TYPE_INT :
         conversion.INT_ := STRING_TO_INT(text);
-        MEMCPY(srcAddr := ADR(conversion.INT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.INT_)));
+        MEMCPY(srcAddr := ADR(conversion.INT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.INT_))));
     IBaseLibrary.TypeClass.TYPE_DINT :
         conversion.DINT_ := STRING_TO_DINT(text);
-        MEMCPY(srcAddr := ADR(conversion.DINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.DINT_)));
+        MEMCPY(srcAddr := ADR(conversion.DINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.DINT_))));
     IBaseLibrary.TypeClass.TYPE_LINT :
         conversion.LINT_ := STRING_TO_LINT(text);
-        MEMCPY(srcAddr := ADR(conversion.LINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.LINT_)));
+        MEMCPY(srcAddr := ADR(conversion.LINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.LINT_))));
     IBaseLibrary.TypeClass.TYPE_USINT :
         conversion.USINT_ := STRING_TO_USINT(text);
-        MEMCPY(srcAddr := ADR(conversion.USINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.USINT_)));
+        MEMCPY(srcAddr := ADR(conversion.USINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.USINT_))));
     IBaseLibrary.TypeClass.TYPE_UINT :
         conversion.UINT_ := STRING_TO_UINT(text);
-        MEMCPY(srcAddr := ADR(conversion.UINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.UINT_)));
+        MEMCPY(srcAddr := ADR(conversion.UINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.UINT_))));
     IBaseLibrary.TypeClass.TYPE_UDINT :
         conversion.UDINT_ := STRING_TO_UDINT(text);
-        MEMCPY(srcAddr := ADR(conversion.UDINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.UDINT_)));
+        MEMCPY(srcAddr := ADR(conversion.UDINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.UDINT_))));
     IBaseLibrary.TypeClass.TYPE_ULINT :
         conversion.ULINT_ := STRING_TO_ULINT(text);
-        MEMCPY(srcAddr := ADR(conversion.ULINT_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.ULINT_)));
+        MEMCPY(srcAddr := ADR(conversion.ULINT_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.ULINT_))));
     IBaseLibrary.TypeClass.TYPE_REAL :
         conversion.REAL_ := STRING_TO_REAL(text);
-        MEMCPY(srcAddr := ADR(conversion.REAL_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.REAL_)));
+        MEMCPY(srcAddr := ADR(conversion.REAL_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.REAL_))));
     IBaseLibrary.TypeClass.TYPE_LREAL :
         conversion.LREAL_ := STRING_TO_LREAL(text);
-        MEMCPY(srcAddr := ADR(conversion.LREAL_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.LREAL_)));
+        MEMCPY(srcAddr := ADR(conversion.LREAL_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.LREAL_))));
     IBaseLibrary.TypeClass.TYPE_STRING :
         conversion.STRING_ := text;
-        MEMCPY(srcAddr := ADR(conversion.STRING_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.STRING_)));
+        MEMCPY(srcAddr := ADR(conversion.STRING_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.STRING_))));
     IBaseLibrary.TypeClass.TYPE_TIME :
         conversion.TIME_ := STRING_TO_TIME(text);
-        MEMCPY(srcAddr := ADR(conversion.TIME_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.TIME_)));
+        MEMCPY(srcAddr := ADR(conversion.TIME_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.TIME_))));
     IBaseLibrary.TypeClass.TYPE_DATE :
         conversion.DATE_ := STRING_TO_DATE(text);
-        MEMCPY(srcAddr := ADR(conversion.DATE_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.DATE_)));
+        MEMCPY(srcAddr := ADR(conversion.DATE_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.DATE_))));
     IBaseLibrary.TypeClass.TYPE_DATEANDTIME :
         conversion.DATEANDTIME_ := STRING_TO_DT(text);
-        MEMCPY(srcAddr := ADR(conversion.DATEANDTIME_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.DATEANDTIME_)));
+        MEMCPY(srcAddr := ADR(conversion.DATEANDTIME_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.DATEANDTIME_))));
     IBaseLibrary.TypeClass.TYPE_TIMEOFDAY :
         conversion.TIMEOFDAY_ := STRING_TO_TOD(text);
-        MEMCPY(srcAddr := ADR(conversion.TIMEOFDAY_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.TIMEOFDAY_)));
+        MEMCPY(srcAddr := ADR(conversion.TIMEOFDAY_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.TIMEOFDAY_))));
     IBaseLibrary.TypeClass.TYPE_POINTER :
         conversion.POINTER_ := STRING_TO_PVOID(text);
-        MEMCPY(srcAddr := ADR(conversion.POINTER_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.POINTER_)));
+        MEMCPY(srcAddr := ADR(conversion.POINTER_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.POINTER_))));
     IBaseLibrary.TypeClass.TYPE_LTIME :
         conversion.LTIME_ := STRING_TO_LTIME(text);
-        MEMCPY(srcAddr := ADR(conversion.LTIME_), destAddr := output.pValue, n := MIN(output.diSize, SIZEOF(conversion.LTIME_)));
+        MEMCPY(srcAddr := ADR(conversion.LTIME_), destAddr := output.pValue, n := TO_UDINT(MIN(output.diSize, SIZEOF(conversion.LTIME_))));
 END_CASE]]></ST>
     </Implementation>
   </POU>

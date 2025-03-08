@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="TableDeserializer" Id="{ac25e541-c19a-0342-2f23-5f00fecd60cf}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK TableDeserializer
 VAR
@@ -111,7 +111,7 @@ VAR
 	caret : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[dataLength := LEN2(dataString);
+        <ST><![CDATA[dataLength := TO_DINT(LEN2(dataString));
 IF (includingHeader) THEN
 	caret := ReadHeader();
 END_IF
@@ -176,13 +176,13 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[ClearData(_ColumnNameBuffer);
 
-lineEnd := FIND2(pSrcString := _DataString, pFindString := ADR(_NewLine));
+lineEnd := TO_DINT(FIND2(pSrcString := _DataString, pFindString := ADR(_NewLine)));
 IF (lineEnd = 0) THEN
 	lineEnd := dataLength;
 END_IF
 
 FOR i := 0 TO definedColumns - 1 DO
-	cellLength := FIND2(pSrcString := _DataString + caret, pFindString := ADR(_Separator));
+	cellLength := TO_DINT(FIND2(pSrcString := _DataString + TO_DWORD(caret), pFindString := ADR(_Separator)));
 	IF (caret + cellLength > lineEnd) THEN
 		cellLength := lineEnd - caret;
 	END_IF
@@ -191,7 +191,7 @@ FOR i := 0 TO definedColumns - 1 DO
 	END_IF
 
 	MEMSET(destAddr := ADR(cell), fillByte := 0, n := SIZEOF(cell));
-	MEMCPY(destAddr := ADR(cell), srcAddr := _DataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
+	MEMCPY(destAddr := ADR(cell), srcAddr := _DataString + TO_DWORD(caret), n := TO_UDINT(MIN(SIZEOF(cell) - 1, cellLength - 1)));
 	StringToAny(cell, _ColumnNameBuffer[i]);
 	
 	IF (cellLength = dataLength) THEN
@@ -206,7 +206,7 @@ END_FOR
 MEMCPY(
 	destAddr := columnNamesOutput.pValue,
 	srcAddr := ADR(_ColumnNameBuffer),
-	n := MIN(columnNamesOutput.diSize, SIZEOF(_ColumnNameBuffer))
+	n := TO_UDINT(MIN(columnNamesOutput.diSize, SIZEOF(_ColumnNameBuffer)))
 );
 
 ReadHeader := caret;]]></ST>
@@ -232,7 +232,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[caret := startCaret;
 
-lineLength := FIND2(pSrcString := _DataString + caret, pFindString := ADR(_NewLine));
+lineLength := TO_DINT(FIND2(pSrcString := _DataString + TO_DWORD(caret), pFindString := ADR(_NewLine)));
 IF (lineLength = 0) THEN
 	lineLength := dataLength;
 END_IF
@@ -241,7 +241,7 @@ FOR i := 0 TO definedColumns - 1 DO
   IF (caret >= dataLength) THEN
 		EXIT;
 	END_IF
-	cellLength := FIND2(pSrcString := _DataString + caret, pFindString := ADR(_Separator));
+	cellLength := TO_DINT(FIND2(pSrcString := _DataString + TO_DWORD(caret), pFindString := ADR(_Separator)));
 	IF (cellLength = 0 OR caret + cellLength > startCaret + lineLength) THEN
 		cellLength := lineLength + startCaret - caret;
 	END_IF
@@ -251,10 +251,10 @@ FOR i := 0 TO definedColumns - 1 DO
 	END_IF
 
 	ClearData(cell);
-	MEMCPY(destAddr := ADR(cell), srcAddr := _DataString + caret, n := MIN(SIZEOF(cell) - 1, cellLength - 1));
+	MEMCPY(destAddr := ADR(cell), srcAddr := _DataString + TO_DWORD(caret), n := TO_UDINT(MIN(SIZEOF(cell) - 1, cellLength - 1)));
 	tableCell := _ColumnDefinitionBuffer[i];
-	tableCell.pValue := tableCell.pValue + rowDefinition.diSize * row;
-	CASE tableCell.TypeClass OF
+	tableCell.pValue := tableCell.pValue + TO_DWORD(rowDefinition.diSize * row);
+	CASE TO_INT(tableCell.TypeClass) OF
 		TYPE_REAL, TYPE_LREAL:
 			ReplaceString(cell, _DecimalSeparator, DefaultDecimalSeparator);
 	END_CASE

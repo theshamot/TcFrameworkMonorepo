@@ -248,10 +248,10 @@ VAR
 	lineEndLength : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[length := FIND2(
+        <ST><![CDATA[length := TO_DINT(FIND2(
 			pSrcString := ADR(buffer[startCaret]),
 			pFindString := ADR(_NewLine)
-			);
+			));
 IF (length = 0) THEN
 	length := sb.Length - startCaret;
 	lineEndLength := 0;
@@ -267,7 +267,7 @@ MEMSET(
 MEMCPY(
 	srcAddr := ADR(buffer[startCaret]),
 	destAddr := ADR(GetNextLine),
-	n := MIN(length - lineEndLength, SIZEOF(GetNextLine) - 1)
+	n := TO_UDINT(MIN(length - lineEndLength, SIZEOF(GetNextLine) - 1))
 );
 caret := startCaret + length;]]></ST>
       </Implementation>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="TableSerializer" Id="{d72633b8-404b-0f0c-3a80-0e4530f50430}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK TableSerializer
 VAR
@@ -56,14 +56,14 @@ END_VAR
 	END_IF
 	
 	currentData := _ColumnDefinitionBuffer[column];
-	currentData.pValue := rowDefinition.pValue + (rowDefinition.diSize * rowIndex) + (currentData.pValue - rowDefinition.pValue);
+	currentData.pValue := rowDefinition.pValue + TO_DWORD(rowDefinition.diSize * rowIndex) + (currentData.pValue - rowDefinition.pValue);
 	
-	IF (currentData.TypeClass = IBaseLibrary.TypeClass.TYPE_STRING) THEN
+	IF (TO_INT(currentData.TypeClass) = IBaseLibrary.TypeClass.TYPE_STRING) THEN
 		_StringBuilder.AppendByPointer(currentData.pValue);
 	ELSE
 		converted := AnyTypeToString(currentData);
 		
-		CASE currentData.TypeClass OF
+		CASE TO_INT(currentData.TypeClass) OF
 			TYPE_REAL, TYPE_LREAL:
 				ReplaceString(converted, DefaultDecimalSeparator, _DecimalSeparator);
 		END_CASE

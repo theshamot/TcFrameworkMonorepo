@@ -8,8 +8,8 @@ VAR_INPUT
 	byteCount : UDINT; // How far to the left are shifted
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[MEMMOVE(destAddr := data.pValue, srcAddr := data.pValue + byteCount, data.diSize - byteCount);
-MEMSET(destAddr := data.pValue + data.diSize - byteCount, fillByte := 0, n := byteCount);]]></ST>
+      <ST><![CDATA[MEMMOVE(destAddr := data.pValue, srcAddr := data.pValue + byteCount, n := TO_UDINT(data.diSize) - byteCount);
+MEMSET(destAddr := data.pValue + TO_UDINT(data.diSize) - byteCount, fillByte := 0, n := byteCount);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

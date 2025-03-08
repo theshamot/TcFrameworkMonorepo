@@ -4,7 +4,6 @@
     <Declaration><![CDATA[TYPE AnyTypeUnion :
 UNION
 	BOOL_ : BOOL;
-	BIT_ : BIT;
 	BYTE_ : BYTE;
 	WORD_ : WORD;
 	DWORD_ : DWORD;
