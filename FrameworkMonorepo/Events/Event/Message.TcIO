@@ -3,6 +3,10 @@
   <Itf Name="Message" Id="{43a9cf12-ef21-0d83-2603-50b2d81d5535}">
     <Declaration><![CDATA[INTERFACE Message
 ]]></Declaration>
+    <Method Name="ClearArguments" Id="{3179f290-df96-0716-1edb-5f69053637bb}">
+      <Declaration><![CDATA[METHOD ClearArguments : I_TcArguments
+]]></Declaration>
+    </Method>
     <Method Name="Send" Id="{a97dd082-ac5b-03e1-2dae-4e3bad4af412}">
       <Declaration><![CDATA[METHOD Send
 VAR_INPUT

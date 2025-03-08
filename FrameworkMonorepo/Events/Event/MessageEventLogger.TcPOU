@@ -21,6 +21,20 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Method Name="ClearArguments" Id="{572aa0f7-ae4e-0bbe-06b8-619f0b33aaaf}">
+      <Declaration><![CDATA[METHOD ClearArguments : I_TcArguments
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[message.ipArguments.Clear();
+
+IF (_Source <> 0) THEN
+	message.ipArguments.AddStringByValue(value := _Source.Name);
+END_IF
+
+ClearArguments := message.ipArguments;
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_init" Id="{bd18aeaa-a101-03cb-0902-b738f218667a}">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
@@ -40,8 +54,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (_Source <> 0) THEN
-	message.ipArguments.Clear().AddStringByValue(value := _Source.Name);
+        <ST><![CDATA[IF (message.ipArguments.nCount = 0 AND _Source <> 0) THEN
+	message.ipArguments.AddStringByValue(value := _Source.Name);
 END_IF
 
 message.Send(0);]]></ST>

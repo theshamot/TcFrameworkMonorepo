@@ -182,7 +182,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{F13CC73C-ED1E-40B5-9CB0-4C81D85EC09B}" Name="Events" PrjFilePath="Events\Events.plcproj" TmcFilePath="Events\Events.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Events\Events.tmc" TmcHash="{51B07377-9A78-A848-7F62-4C0B8A14128E}">
+				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Events\Events.tmc" TmcHash="{FD1266C5-8201-7BE6-CA96-451F7164640A}">
 					<Name>Events Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

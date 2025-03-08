@@ -27,7 +27,22 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[alarm.Clear(0, TRUE);]]></ST>
+        <ST><![CDATA[alarm.Clear(0, TRUE);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearArguments" Id="{a2932eac-18c7-04df-2451-3e41b4c10e96}">
+      <Declaration><![CDATA[METHOD ClearArguments : I_TcArguments
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[alarm.ipArguments.Clear();
+
+IF (_Source <> 0) THEN
+	alarm.ipArguments.AddStringByValue(value := _Source.Name);
+END_IF
+
+ClearArguments := alarm.ipArguments;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{13b93e8d-5b11-0a43-3eea-01e38a3c84d4}">
@@ -62,11 +77,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF (_Source <> 0) THEN
-	alarm.ipArguments.Clear().AddStringByValue(value := _Source.Name);
+        <ST><![CDATA[IF (alarm.ipArguments.nCount = 0 AND _Source <> 0) THEN
+	alarm.ipArguments.AddStringByValue(value := _Source.Name);
 END_IF
 
-alarm.Raise(0);]]></ST>
+alarm.Raise(0);
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Source" Id="{9d3b7778-12fd-08b4-0b66-8744cc82ee16}">

@@ -9,6 +9,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="ClearArguments" Id="{fb0c6a84-23e5-0d10-2cb4-47a090e3622a}">
+      <Declaration><![CDATA[METHOD ClearArguments : I_TcArguments
+]]></Declaration>
+    </Method>
     <Property Name="IsRaised" Id="{4098fd7e-9c07-0d75-201d-740ac9de4e6b}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY IsRaised : BOOL]]></Declaration>
