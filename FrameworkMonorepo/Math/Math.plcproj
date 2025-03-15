@@ -23,11 +23,36 @@
     <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Point" />
     <Folder Include="Range" />
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Point\Point3D.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Point\Point2D.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Range\IsInRangeInclusive.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Range\IsInRangeInclusive2D.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Range\IsInRangeInclusive3D.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Range\Range2D.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Range\Range3D.TcDUT">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="Point3D" Id="{dde23c33-936e-0ad7-358b-807b7d4e9d3b}">
+    <Declaration><![CDATA[TYPE Point3D :
+STRUCT
+	X : LREAL;
+	Y : LREAL;
+	Z : LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -26,7 +26,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{53775AAD-FA08-4440-B0B9-741C387ECAA9}" Name="Types" PrjFilePath="Types\Types.plcproj" TmcFilePath="Types\Types.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Types\Types.tmc" TmcHash="{C2C07242-53FD-FC44-ABDB-184CFA3333BD}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Types\Types.tmc" TmcHash="{7C9EA3F7-841B-880A-F6CB-5E8B5B99ABEE}">
 					<Name>Types Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

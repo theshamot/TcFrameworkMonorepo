@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="Range3D" Id="{6aa17ecf-d87e-0b8c-1e23-9fee4e322b5b}">
+    <Declaration><![CDATA[TYPE Range3D :
+STRUCT
+	X : Range;
+	Y : Range;
+	Z : Range;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

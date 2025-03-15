@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="IsInRangeInclusive3D" Id="{a7196623-68ee-0cc8-2adb-437e06286091}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsInRangeInclusive3D : BOOL
+VAR_INPUT
+	point : Point3D;
+	range : Range3D;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsInRangeInclusive3D := 
+	IsInRangeInclusive(point.X, range.X)
+	AND IsInRangeInclusive(point.Y, range.Y)
+	AND IsInRangeInclusive(point.Z, range.Z)
+	;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
