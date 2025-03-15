@@ -16,6 +16,7 @@ VAR
 	_FileNameList : ARRAY[0..50 - 1] OF T_MaxString;
 	_FileExists : BOOL;
 	
+	filenameForAlarm : T_MaxString;
 	createDirectoryErrorTrig : R_TRIG;
 	removeDirectoryErrorTrig : R_TRIG;
 	listingDirectoryErrorTrig : R_TRIG;
@@ -97,16 +98,29 @@ END_IF
 createDirectoryErrorTrig(CLK := creator.bError);
 removeDirectoryErrorTrig(CLK := remover.bError);
 listingDirectoryErrorTrig(CLK := listDir.bError);
+
 IF (createDirectoryErrorTrig.Q) THEN
-	createDirectoryError.Arguments.Clear().AddStringByValue(creator.sPathName);
+	filenameForAlarm := creator.sPathName;
+	IF (EventParameters.EscapeBackslash) THEN
+		filenameForAlarm := ReplaceAll(filenameForAlarm, '\', '\\'); // Escape backslash to use with web-based HMIs
+	END_IF
+	createDirectoryError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 	createDirectoryError.Send();
 END_IF
 IF (removeDirectoryErrorTrig.Q) THEN
-	removeDirectoryError.Arguments.Clear().AddStringByValue(remover.sPathName);
+	filenameForAlarm := remover.sPathName;
+	IF (EventParameters.EscapeBackslash) THEN
+		filenameForAlarm := ReplaceAll(filenameForAlarm, '\', '\\'); // Escape backslash to use with web-based HMIs
+	END_IF
+	removeDirectoryError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 	removeDirectoryError.Send();
 END_IF
 IF (listingDirectoryErrorTrig.Q) THEN
-	listingDirectoryError.Arguments.Clear().AddStringByValue(listDir.sPathName);
+	filenameForAlarm := listDir.sPathName;
+	IF (EventParameters.EscapeBackslash) THEN
+		filenameForAlarm := ReplaceAll(filenameForAlarm, '\', '\\'); // Escape backslash to use with web-based HMIs
+	END_IF
+	listingDirectoryError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 	listingDirectoryError.Send();
 END_IF]]></ST>
       </Implementation>

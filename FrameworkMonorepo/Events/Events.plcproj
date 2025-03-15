@@ -36,6 +36,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="EventParameters.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Event\AlarmEventLogger.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

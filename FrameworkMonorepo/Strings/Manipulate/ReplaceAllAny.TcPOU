@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ReplaceAllAny" Id="{4dfe1242-7df8-0cc0-1e8f-c32f9f237b90}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ReplaceAllAny
+VAR_INPUT
+	in : ANY;
+	replaced : T_MaxString;
+	with : T_MaxString;
+END_VAR
+VAR
+	new : POINTER TO BYTE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[new := __NEW(BYTE, in.diSize);
+
+FindAndReplace(
+	pSrcString := in.pValue,
+	pDeleteString := ADR(replaced),
+	pInsertString := ADR(with),
+	pDstString := new,
+	nDstSize := TO_UDINT(in.diSize - 1)
+);
+
+MEMCPY(in.pValue, new, in.diSize);
+__DELETE(new);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

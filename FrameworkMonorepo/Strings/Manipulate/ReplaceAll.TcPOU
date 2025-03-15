@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ReplaceAll" Id="{841fba7c-2f00-0c81-0c21-a166d1fe7ad4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ReplaceAll : T_MaxString
+VAR_INPUT
+	in : T_MaxString;
+	replaced : T_MaxString;
+	with : T_MaxString;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FindAndReplace(
+	pSrcString := ADR(in),
+	pDeleteString := ADR(replaced),
+	pInsertString := ADR(with),
+	pDstString := ADR(ReplaceAll),
+	nDstSize := SIZEOF(ReplaceAll) - 1
+);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

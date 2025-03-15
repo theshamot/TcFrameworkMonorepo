@@ -5,6 +5,7 @@
 VAR
 	remover : FB_FileDelete;
 	
+	filenameForAlarm : T_MaxString;
 	removeErrorTrigger : R_TRIG;
 	notFoundError : MessageEventLogger(TC_EVENTS.FileEventClass.InvalidPath);
 	removeError : MessageEventLogger(TC_EVENTS.FileEventClass.RemoveFileError);
@@ -37,11 +38,17 @@ END_VAR
 
 removeErrorTrigger(CLK := remover.bError);
 IF (removeErrorTrigger.Q) THEN
+	
+	filenameForAlarm := remover.sPathName;
+	IF (EventParameters.EscapeBackslash) THEN
+		filenameForAlarm := ReplaceAll(filenameForAlarm, '\', '\\'); // Escape backslash to use with web-based HMIs
+	END_IF
+	
 	IF (remover.nErrId = NotFoundErrorNumber) THEN
-		notFoundError.Arguments.Clear().AddStringByValue(remover.sPathName);
+		notFoundError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		notFoundError.Send();
 	ELSE
-		removeError.Arguments.Clear().AddStringByValue(remover.sPathName);
+		removeError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		removeError.Send();
 	END_IF
 END_IF

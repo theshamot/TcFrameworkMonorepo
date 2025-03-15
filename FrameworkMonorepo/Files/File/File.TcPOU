@@ -23,11 +23,12 @@ VAR
 	writer : FB_FileWrite;
 	
 	fileState : (Waiting, OpenMode, Opening, Reading, Writing, Closing);
+	
+	filenameForAlarm : T_MaxString;
 	openErrorTrigger : R_TRIG;
 	readErrorTrigger : R_TRIG;
 	writeErrorTrigger : R_TRIG;
 	closeErrorTrigger : R_TRIG;
-	
 	notFoundError : MessageEventLogger(TC_EVENTS.FileEventClass.InvalidPath);
 	fileOpenError : MessageEventLogger(TC_EVENTS.FileEventClass.OpenFileError);
 	fileReadError : MessageEventLogger(TC_EVENTS.FileEventClass.ReadFileError);
@@ -164,20 +165,25 @@ IF (_Error) THEN
 	readRequest := FALSE;
 	writeRequest := FALSE;
 	
+	filenameForAlarm := opener.sPathName;
+	IF (EventParameters.EscapeBackslash) THEN
+		filenameForAlarm := ReplaceAll(filenameForAlarm, '\', '\\'); // Escape backslash to use with web-based HMIs
+	END_IF
+	
 	IF (openErrorTrigger.Q AND opener.nErrId = NotFoundErrorNumber) THEN
-		notFoundError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		notFoundError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		notFoundError.Send();
 	ELSIF (openErrorTrigger.Q) THEN
-		fileOpenError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileOpenError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		fileOpenError.Send();
 	ELSIF (readErrorTrigger.Q) THEN
-		fileReadError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileReadError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		fileReadError.Send();
 	ELSIF (openErrorTrigger.Q) THEN
-		fileWriteError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileWriteError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		fileWriteError.Send();
 	ELSIF (openErrorTrigger.Q) THEN
-		fileCloseError.Arguments.Clear().AddStringByValue(opener.sPathName);
+		fileCloseError.Arguments.Clear().AddStringByValue(filenameForAlarm);
 		fileCloseError.Send();
 	END_IF
 	

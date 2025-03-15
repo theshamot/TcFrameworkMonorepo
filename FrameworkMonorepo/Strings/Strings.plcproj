@@ -96,6 +96,14 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="Manipulate\ReplaceAllAny.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Manipulate\ReplaceAll.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Manipulate\ReplaceString.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

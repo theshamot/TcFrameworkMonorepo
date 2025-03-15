@@ -94,7 +94,7 @@ END_VAR
       </Set>
     </Property>
     <Method Name="BuildValueString" Id="{f214b55b-5050-0596-38a7-7e0d32dc8021}">
-      <Declaration><![CDATA[METHOD BuildValueString : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE BuildValueString : BOOL
 VAR
 	i : INT;
 END_VAR
@@ -399,7 +399,7 @@ END_VAR
       </Set>
     </Property>
     <Method Name="ParseValueString" Id="{f8989f6e-d562-0c64-0845-3edcee6fa0d9}">
-      <Declaration><![CDATA[METHOD ParseValueString
+      <Declaration><![CDATA[METHOD PRIVATE ParseValueString
 VAR
 	caret : DINT;
 	lines : ARRAY[0..MaxLines - 1] OF T_MaxString;
@@ -486,6 +486,40 @@ FOR i := 0 TO assignmentCount - 1 DO
 		CONTINUE;
 	END_IF
 END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RecipeExists" Id="{362dcd42-3486-0c62-11af-643746cf951e}">
+      <Declaration><![CDATA[METHOD RecipeExists : BOOL
+VAR_INPUT
+	name : T_MaxString;
+END_VAR
+VAR
+	fileName : T_MaxString;
+	i : INT;
+	list : REFERENCE TO ARRAY[0..49] OF T_MaxString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (name = '') THEN
+	RETURN;
+END_IF
+
+IF (StringEndsWith(name, _Extension)) THEN
+	fileName := name;
+ELSE
+	fileName := CONCAT(name, _Extension);
+END_IF
+
+list := RecipeList;
+FOR i := 0 TO 49 DO
+	IF (list[i] = '') THEN
+		RETURN;
+	END_IF
+	IF (list[i] = fileName) THEN
+		RecipeExists := TRUE;
+		RETURN;
+	END_IF
+END_FOR
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="RecipeList" Id="{53671a00-5ebb-040a-0250-856488ee25e9}">
