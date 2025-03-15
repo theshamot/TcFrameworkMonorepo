@@ -19,6 +19,7 @@ VAR
 	
 	_JustLoaded : BOOL;
 	_JustSaved : BOOL;
+	recipesLoaded : BOOL;
 
 	_NewLine : STRING := '$N';
 	_Assignment : STRING := ':=';
@@ -135,6 +136,7 @@ IF (savingFile AND file.Done) THEN
 	savingFile := FALSE;
 	_JustSaved := TRUE;
 	sb.Clear();
+	ListRecipes();
 END_IF
 
 IF (loadingFile AND file.Done) THEN
@@ -142,6 +144,11 @@ IF (loadingFile AND file.Done) THEN
 	_JustLoaded := TRUE;
 	ParseValueString();
 	sb.Clear();
+END_IF
+
+IF (NOT recipesLoaded) THEN
+	ListRecipes();
+	recipesLoaded := TRUE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -509,7 +516,7 @@ ELSE
 	fileName := CONCAT(name, _Extension);
 END_IF
 
-list := RecipeList;
+list REF= RecipeList;
 FOR i := 0 TO 49 DO
 	IF (list[i] = '') THEN
 		RETURN;
