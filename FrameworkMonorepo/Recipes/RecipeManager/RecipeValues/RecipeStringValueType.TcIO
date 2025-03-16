@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <Itf Name="RecipeStringValueType" Id="{bc2726b3-c042-0db5-27a6-bc2ddbfc3f14}">
+    <Declaration><![CDATA[INTERFACE RecipeStringValueType EXTENDS RecipeValue
+]]></Declaration>
+    <Method Name="ParseAndAssignValue" Id="{838f099f-ad86-04c7-241d-4a2cb15b2afb}">
+      <Declaration><![CDATA[METHOD ParseAndAssignValue
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

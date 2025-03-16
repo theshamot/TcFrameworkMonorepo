@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
-  <POU Name="RecipeSingleValue" Id="{942ad2e3-e169-0d10-23b7-39164624dfb7}" SpecialFunc="None">
+  <POU Name="RecipeStringValue" Id="{43392db2-3186-0f20-0440-012ad562e1ba}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
-FUNCTION_BLOCK RecipeSingleValue IMPLEMENTS RecipeSingleValueType
+FUNCTION_BLOCK RecipeStringValue IMPLEMENTS RecipeStringValueType
 VAR
 	_Name : T_MaxString;
 	_Value : __SYSTEM.AnyType;
 	_Assignment : STRING := ':=';
-	_AssignmentString : T_MaxString;
+	_StringBoundary : STRING := '$'';
+	
+	sb : StringBuilderExtBuffer;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="Assignment" Id="{f2e379a6-6acc-0cb4-3f61-526d7942b9e8}">
+    <Property Name="Assignment" Id="{2806e733-14e8-0b63-24e2-541ced433e0c}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY Assignment : STRING]]></Declaration>
-      <Get Name="Get" Id="{803a6e83-74e6-0f1e-00a3-e65750706004}">
+      <Get Name="Get" Id="{bafcbdb4-2285-0133-2a2d-a43de1b22af5}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -23,7 +25,7 @@ END_VAR
           <ST><![CDATA[Assignment := _Assignment;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{3ddf8cbe-8880-015e-2b54-049636be31d7}">
+      <Set Name="Set" Id="{82ded797-581e-0bb8-10f2-781d42f935ae}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -32,7 +34,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Bind" Id="{53f3350b-066f-0459-2828-74755586ae97}">
+    <Method Name="Bind" Id="{951222a6-3de3-0ef0-3691-d46d19023f8b}">
       <Declaration><![CDATA[METHOD Bind
 VAR_INPUT
 	value : ANY;
@@ -42,23 +44,46 @@ END_VAR
         <ST><![CDATA[_Value := value;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="BuildAndGetAssignmentString" Id="{f950f745-9204-0d83-0156-682978ab7e06}">
+    <Property Name="Buffer" Id="{a0a63aa0-e81a-097a-37c1-f9f141841650}">
+      <Declaration><![CDATA[PROPERTY Buffer : __SYSTEM.AnyType]]></Declaration>
+      <Get Name="Get" Id="{0264b3de-f633-0087-0acc-47000fdd0dad}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Buffer := sb.Buffer;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6e95e0f7-0f8b-02e4-19ca-17859d37edde}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sb.Buffer := Buffer;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="BuildAndGetAssignmentString" Id="{52adad33-eaab-0122-1b47-ee42c7f83c26}">
       <Declaration><![CDATA[METHOD BuildAndGetAssignmentString : POINTER TO STRING
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_AssignmentString := 
+        <ST><![CDATA[sb.Clear();
+sb.Append(
 	BuildStringInline(_Name)
 	.Append(' ')
 	.Append(_Assignment)
 	.Append(' ')
-	.Append(ValueString)
-	.GetString();
-BuildAndGetAssignmentString := ADR(_AssignmentString);]]></ST>
+	.Append(_StringBoundary)
+	.GetString()
+);
+sb.AppendByPointer(_Value.pValue);
+sb.Append(_StringBoundary);
+BuildAndGetAssignmentString := sb.BufferRef.pValue;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Dispose" Id="{20effca3-ad4b-0592-28db-63b359f9939a}">
+    <Method Name="Dispose" Id="{bb685d27-573d-06ee-22f0-673d4b91a5e7}">
       <Declaration><![CDATA[METHOD Dispose
 VAR_INPUT
 END_VAR
@@ -67,10 +92,10 @@ END_VAR
         <ST><![CDATA[__DELETE(THIS);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Name" Id="{f5f59799-4de8-0350-1461-82001d0fab6e}">
+    <Property Name="Name" Id="{81d82b19-7c47-08a8-1737-8d4a4ebabf36}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY Name : T_MaxString]]></Declaration>
-      <Get Name="Get" Id="{2277b73e-3ebe-0763-348b-5c19875b9a80}">
+      <Get Name="Get" Id="{9599f689-243d-0fe0-25ba-9b2a71610801}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -78,7 +103,7 @@ END_VAR
           <ST><![CDATA[Name := _Name;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{d054d088-4dc5-003f-34b6-72da849ecf8e}">
+      <Set Name="Set" Id="{08db63f8-ae4c-0185-0e00-fbdf30a1f508}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -87,19 +112,19 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="ParseAndAssignValue" Id="{ba3fab94-a61b-0cea-03fa-c1d2fb0eef56}">
+    <Method Name="ParseAndAssignValue" Id="{427b66df-02cd-019e-2798-ca99d2de8b7e}">
       <Declaration><![CDATA[METHOD ParseAndAssignValue
 VAR_INPUT
-	value : T_MaxString;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[StringToAnyType(value, _Value);]]></ST>
+        <ST><![CDATA[ClearData(_Value);
+MEMCPY(destAddr := _Value.pValue, srcAddr := sb.BufferRef.pValue, n := MIN(DINT_TO_UDINT(_Value.diSize - 1), LEN2(sb.BufferRef.pValue)));]]></ST>
       </Implementation>
     </Method>
-    <Property Name="ValueString" Id="{e677d293-dd1f-0c68-237c-9798e0861df8}">
+    <Property Name="ValueString" Id="{56c8276b-9df7-0124-31aa-00ecd70e1926}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY ValueString : T_MaxString]]></Declaration>
-      <Get Name="Get" Id="{1735fe82-6618-0f32-1e2b-d212e7d4fb07}">
+      <Get Name="Get" Id="{c9d99e8d-b3b0-0707-1c78-97db7e41be46}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>

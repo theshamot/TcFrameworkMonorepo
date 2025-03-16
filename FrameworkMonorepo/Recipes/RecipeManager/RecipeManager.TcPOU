@@ -24,6 +24,9 @@ VAR
 	_NewLine : STRING := '$N';
 	_Assignment : STRING := ':=';
 	_Extension : STRING := '.txt';
+	
+	continuingStringMarker : STRING(1) := '$$';
+	continuingStringMarkerLength : UDINT := TO_UDINT(LEN(ContinuingStringMarker));
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -41,6 +44,27 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF (valueCount < RecipeParameters.ValueCountLimit) THEN
 	newValue := __NEW(RecipeSingleValue);
 	newValue^.Bind(value);
+	newValue^.Name := name;
+	values[valueCount] := newValue^;
+	
+	valueCount := valueCount + 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddStringValue" Id="{189baf3e-2ee6-0ea2-308a-17fa4409fecf}">
+      <Declaration><![CDATA[METHOD AddStringValue
+VAR_INPUT
+	value : ANY;
+	name : T_MaxString;
+END_VAR
+VAR
+	newValue : POINTER TO RecipeStringValue;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (valueCount < RecipeParameters.ValueCountLimit) THEN
+	newValue := __NEW(RecipeStringValue);
+	newValue^.Bind(value);
+	newValue^.Buffer := ToAnyType(tableBuffer);
 	newValue^.Name := name;
 	values[valueCount] := newValue^;
 	
@@ -242,23 +266,31 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="GetNextLine" Id="{eefc1513-9dc1-006f-1ceb-593db6ad3425}">
-      <Declaration><![CDATA[METHOD PRIVATE GetNextLine : T_MaxString
+    <Method Name="GetNextLineOrPartialString" Id="{eefc1513-9dc1-006f-1ceb-593db6ad3425}">
+      <Declaration><![CDATA[METHOD PRIVATE GetNextLineOrPartialString : T_MaxString
 VAR_INPUT
 	startCaret : DINT;
+	isContinuationOfPreviousLine : BOOL;
 END_VAR
 VAR_OUTPUT
 	caret : DINT;
+	stringWillContinueOnNextLine : BOOL;
 END_VAR
 VAR
 	length : DINT;
 	lineEndLength : DINT;
+	continuationOffset : DINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[length := TO_DINT(FIND2(
 			pSrcString := ADR(buffer[startCaret]),
 			pFindString := ADR(_NewLine)
 			));
+IF (isContinuationOfPreviousLine) THEN
+	continuationOffset := TO_DINT(continuingStringMarkerLength);
+END_IF
+length := length - continuationOffset;
+
 IF (length = 0) THEN
 	length := sb.Length - startCaret;
 	lineEndLength := 0;
@@ -266,17 +298,28 @@ ELSE
 	lineEndLength := LEN(_NewLine);
 END_IF
 
-MEMSET(
-	destAddr := ADR(GetNextLine),
-	fillByte := 0,
-	n := SIZEOF(GetNextLine)
-);
-MEMCPY(
-	srcAddr := ADR(buffer[startCaret]),
-	destAddr := ADR(GetNextLine),
-	n := TO_UDINT(MIN(length - lineEndLength, SIZEOF(GetNextLine) - 1))
-);
-caret := startCaret + length;]]></ST>
+ClearData(GetNextLineOrPartialString);
+
+IF (isContinuationOfPreviousLine) THEN
+	GetNextLineOrPartialString := continuingStringMarker;
+END_IF
+
+IF (length <= SIZEOF(GetNextLineOrPartialString) - 1) THEN
+	MEMCPY(
+		srcAddr := ADR(buffer[startCaret]),
+		destAddr := ADR(GetNextLineOrPartialString),
+		n := TO_UDINT(length - lineEndLength - continuationOffset)
+	);
+	caret := startCaret + length;
+ELSE
+	MEMCPY(
+		srcAddr := ADR(buffer[startCaret]),
+		destAddr := ADR(GetNextLineOrPartialString),
+		n := SIZEOF(GetNextLineOrPartialString) - 1 - TO_UDINT(continuationOffset)
+	);
+	caret := startCaret + SIZEOF(GetNextLineOrPartialString) - 1 - continuationOffset;
+	stringWillContinueOnNextLine := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="GetRecipePath" Id="{aa927626-c3f3-0065-0867-fe8915b16b40}">
@@ -411,6 +454,7 @@ VAR
 	caret : DINT;
 	lines : ARRAY[0..MaxLines - 1] OF T_MaxString;
 	lineCount : INT;
+	stringWillContinueOnNextLine : BOOL;
 	
 	isAssignment : BOOL;
 	assignments : ARRAY[0..RecipeParameters.ValueCountLimit - 1] OF RecipeAssignment;
@@ -418,6 +462,7 @@ VAR
 	
 	value : RecipeValue;
 	singleValue : RecipeSingleValueType;
+	stringValue : RecipeStringValueType;
 	tableValue : RecipeTableValueType;
 	
 	row : INT;
@@ -433,7 +478,12 @@ END_VAR]]></Declaration>
         <ST><![CDATA[sb.UpdateBufferLength();
 
 WHILE caret < sb.Length DO
-	lines[lineCount] := GetNextLine(startCaret := caret, caret => caret);
+	lines[lineCount] := GetNextLineOrPartialString(
+		startCaret := caret,
+		isContinuationOfPreviousLine := stringWillContinueOnNextLine,
+		caret => caret,
+		stringWillContinueOnNextLine => stringWillContinueOnNextLine
+	);
 	lineCount := lineCount + 1;
 END_WHILE
 
@@ -478,6 +528,13 @@ FOR i := 0 TO assignmentCount - 1 DO
 	
 	IF (__QUERYINTERFACE(value, singleValue)) THEN
 		singleValue.ParseAndAssignValue(assignments[i].Value);
+		CONTINUE;
+	END_IF
+	
+	IF (__QUERYINTERFACE(value, stringValue)) THEN
+		sbTable.Clear();
+		sbTable.Append(assignments[i].Value);
+		stringValue.ParseAndAssignValue();
 		CONTINUE;
 	END_IF
 	
