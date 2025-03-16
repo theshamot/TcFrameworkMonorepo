@@ -39,7 +39,7 @@ END_VAR
     IBaseLibrary.TypeClass.TYPE_LREAL :
         AnyTypeToString := LREAL_TO_STRING(PLREAL_TO_LREAL(a.pValue));
     IBaseLibrary.TypeClass.TYPE_STRING :
-        AnyTypeToString := PSTRING_TO_STRING(a.pValue);
+		AnyTypeToString := PMAXSTRING_TO_MAXSTRING(a.pValue);
     IBaseLibrary.TypeClass.TYPE_TIME :
         AnyTypeToString := TIME_TO_STRING(PTIME_TO_TIME(a.pValue));
     IBaseLibrary.TypeClass.TYPE_DATE :
@@ -54,7 +54,8 @@ END_VAR
         AnyTypeToString := LTIME_TO_STRING(PLTIME_TO_LTIME(a.pValue));
     ELSE
         AnyTypeToString := 'ERROR: UNSUPPORTED DATA TYPE';
-END_CASE]]></ST>
+END_CASE
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

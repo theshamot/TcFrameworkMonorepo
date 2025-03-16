@@ -48,6 +48,7 @@
     <Folder Include="Build" />
     <Folder Include="Convert" />
     <Folder Include="Manipulate" />
+    <Folder Include="Utf8" />
     <Folder Include="Validate" />
     <Folder Include="Version" />
   </ItemGroup>
@@ -105,6 +106,10 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Manipulate\ReplaceString.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Utf8\Utf8String.TcDUT">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
