@@ -3,7 +3,7 @@
   <GVL Name="EventParameters" Id="{cf789bca-2ae3-0a18-3e0d-8421419e656f}" ParameterList="True">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	EscapeBackslash : BOOL;
+	EscapeBackslash : BOOL := FALSE;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>
