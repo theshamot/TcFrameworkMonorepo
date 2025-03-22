@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <Itf Name="RecipeSingleValueType" Id="{93d5db6c-5dfd-0676-16b7-7ee123452bed}">
     <Declaration><![CDATA[INTERFACE RecipeSingleValueType EXTENDS RecipeValue
 ]]></Declaration>

@@ -65,6 +65,37 @@ _Length := _Length + lengthToCopy;
 AppendByPointer REF= THIS^;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="AppendSubString" Id="{6ee8bed9-0717-0402-2479-653b46156e03}">
+      <Declaration><![CDATA[METHOD AppendSubString : REFERENCE TO StringBuilderExtBuffer
+VAR_INPUT
+	value : ANY;
+	startIndex : DINT;
+	length : DINT;
+END_VAR
+VAR
+	valueLength : DINT;
+	lengthToCopy : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[valueLength := length;
+
+lengthToCopy := LIMIT(
+	DINT#0, 								// min
+	valueLength, 							// value
+	(_Buffer.diSize - TO_DINT(_Length) - 1) // max
+);
+
+MEMCPY(
+	destAddr := _Buffer.pValue + TO_DWORD(_Length),
+	srcAddr := value.pValue + TO_DWORD(startIndex),
+	n := TO_UDINT(lengthToCopy)
+);
+
+_Length := _Length + lengthToCopy;
+
+AppendSubString REF= THIS^;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="Buffer" Id="{c3578d29-1549-0429-27de-75edb5f9215e}">
       <Declaration><![CDATA[PROPERTY Buffer : __SYSTEM.AnyType]]></Declaration>
       <Get Name="Get" Id="{e3dd9b57-7e84-075a-26d7-b67560acb852}">

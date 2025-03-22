@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="SubString" Id="{24db83fa-d3af-045a-176e-feaf2ee63db3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION SubString
+VAR_INPUT
+	source : ANY;
+	destination : ANY;
+	startIndex : DINT;
+	length : DINT;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF (startIndex >= source.diSize) THEN
+	RETURN;
+END_IF
+
+MEMCPY(
+	destAddr := destination.pValue,
+	srcAddr := source.pValue + TO_DWORD(startIndex),
+	n := TO_UDINT(MIN(length, MIN(source.diSize - startIndex, destination.diSize)))
+);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

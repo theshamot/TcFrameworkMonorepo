@@ -6,7 +6,7 @@ VAR
 	values : ARRAY[0..RecipeParameters.ValueCountLimit - 1] OF RecipeValue;
 	valueCount : INT;
 
-	tableBuffer : STRING(RecipeParameters.TableBufferSize);
+	valueStringBuffer : STRING(RecipeParameters.TableBufferSize);
 	buffer : STRING(RecipeParameters.BufferSize);
 	sb : StringBuilderExtBuffer := (Buffer := ToAnyType(Buffer));
 
@@ -24,9 +24,7 @@ VAR
 	_NewLine : STRING := '$N';
 	_Assignment : STRING := ':=';
 	_Extension : STRING := '.txt';
-	
-	continuingStringMarker : STRING(1) := '$$';
-	continuingStringMarkerLength : UDINT := TO_UDINT(LEN(ContinuingStringMarker));
+	_StringBoundary : STRING := '$'';
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -64,7 +62,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF (valueCount < RecipeParameters.ValueCountLimit) THEN
 	newValue := __NEW(RecipeStringValue);
 	newValue^.Bind(value);
-	newValue^.Buffer := ToAnyType(tableBuffer);
+	newValue^.Buffer := ToAnyType(valueStringBuffer);
 	newValue^.Name := name;
 	values[valueCount] := newValue^;
 	
@@ -84,7 +82,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF (valueCount < RecipeParameters.ValueCountLimit) THEN
 	newValue := __NEW(RecipeTableValue);
-	newValue^.Buffer := ToAnyType(tableBuffer);
+	newValue^.Buffer := ToAnyType(valueStringBuffer);
 	newValue^.DefineRow(firstRow);
 	newValue^.Name := name;
 	values[valueCount] := newValue^;
@@ -266,62 +264,6 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="GetNextLineOrPartialString" Id="{eefc1513-9dc1-006f-1ceb-593db6ad3425}">
-      <Declaration><![CDATA[METHOD PRIVATE GetNextLineOrPartialString : T_MaxString
-VAR_INPUT
-	startCaret : DINT;
-	isContinuationOfPreviousLine : BOOL;
-END_VAR
-VAR_OUTPUT
-	caret : DINT;
-	stringWillContinueOnNextLine : BOOL;
-END_VAR
-VAR
-	length : DINT;
-	lineEndLength : DINT;
-	continuationOffset : DINT;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[length := TO_DINT(FIND2(
-			pSrcString := ADR(buffer[startCaret]),
-			pFindString := ADR(_NewLine)
-			));
-IF (isContinuationOfPreviousLine) THEN
-	continuationOffset := TO_DINT(continuingStringMarkerLength);
-END_IF
-length := length - continuationOffset;
-
-IF (length = 0) THEN
-	length := sb.Length - startCaret;
-	lineEndLength := 0;
-ELSE
-	lineEndLength := LEN(_NewLine);
-END_IF
-
-ClearData(GetNextLineOrPartialString);
-
-IF (isContinuationOfPreviousLine) THEN
-	GetNextLineOrPartialString := continuingStringMarker;
-END_IF
-
-IF (length <= SIZEOF(GetNextLineOrPartialString) - 1) THEN
-	MEMCPY(
-		srcAddr := ADR(buffer[startCaret]),
-		destAddr := ADR(GetNextLineOrPartialString),
-		n := TO_UDINT(length - lineEndLength - continuationOffset)
-	);
-	caret := startCaret + length;
-ELSE
-	MEMCPY(
-		srcAddr := ADR(buffer[startCaret]),
-		destAddr := ADR(GetNextLineOrPartialString),
-		n := SIZEOF(GetNextLineOrPartialString) - 1 - TO_UDINT(continuationOffset)
-	);
-	caret := startCaret + SIZEOF(GetNextLineOrPartialString) - 1 - continuationOffset;
-	stringWillContinueOnNextLine := TRUE;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="GetRecipePath" Id="{aa927626-c3f3-0065-0867-fe8915b16b40}">
       <Declaration><![CDATA[METHOD PRIVATE GetRecipePath : T_MaxString
 ]]></Declaration>
@@ -452,104 +394,110 @@ END_VAR
       <Declaration><![CDATA[METHOD PRIVATE ParseValueString
 VAR
 	caret : DINT;
-	lines : ARRAY[0..MaxLines - 1] OF T_MaxString;
-	lineCount : INT;
-	stringWillContinueOnNextLine : BOOL;
-	
-	isAssignment : BOOL;
-	assignments : ARRAY[0..RecipeParameters.ValueCountLimit - 1] OF RecipeAssignment;
-	assignmentCount : INT;
+	assignmentIndex : DINT;
+	assignmentLength : DINT;
+	newLineLength : DINT;
+	variableName : T_MaxString;
+	tableRowCountString : STRING;
+	tableRowCount : INT;
+	singleValueString : T_MaxString;
+	valueStart : DINT;
+	valueLength : DINT;
+	newLineIndex : DINT;
+	stringBoundaryLength : DINT;
 	
 	value : RecipeValue;
 	singleValue : RecipeSingleValueType;
 	stringValue : RecipeStringValueType;
 	tableValue : RecipeTableValueType;
 	
-	row : INT;
-	sbTable : StringBuilderExtBuffer := (Buffer := ToAnyType(tableBuffer));
+	sbValueBuffer : StringBuilderExtBuffer := (Buffer := ToAnyType(valueStringBuffer));
 
 	i : INT;
-	
-END_VAR
-VAR CONSTANT
-	MaxLines : INT := 50;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[sb.UpdateBufferLength();
 
+assignmentLength := LEN(_Assignment);
+newLineLength := LEN(_NewLine);
+stringBoundaryLength := LEN(_StringBoundary);
 WHILE caret < sb.Length DO
-	lines[lineCount] := GetNextLineOrPartialString(
-		startCaret := caret,
-		isContinuationOfPreviousLine := stringWillContinueOnNextLine,
-		caret => caret,
-		stringWillContinueOnNextLine => stringWillContinueOnNextLine
-	);
-	lineCount := lineCount + 1;
-END_WHILE
-
-FOR i := 0 TO lineCount - 1 DO
-	isAssignment := FindAndSplit(
-		pSeparator := ADR(_Assignment),
-		pSrcString := ADR(lines[i]),
-		pLeftString := ADR(assignments[assignmentCount].Name),
-		nLeftSize := SIZEOF(RecipeAssignment.Name) - 1,
-		pRightString := ADR(assignments[assignmentCount].Value),
-		nRightSize := SIZEOF(RecipeAssignment.Value) - 1,
-		bSearchFromRight := FALSE
-	);
-	IF (isAssignment) THEN
-		assignments[assignmentCount].Name := F_LTrim(F_RTrim(assignments[assignmentCount].Name));
-		assignments[assignmentCount].Value := F_LTrim(F_RTrim(assignments[assignmentCount].Value));
-		assignments[assignmentCount].LineIndex := i;
-		StringToAny(
-			GetStringBetween(assignments[assignmentCount].Name, '[', ']'),
-			assignments[assignmentCount].TableRows
-		);
-		IF (assignments[assignmentCount].TableRows > 0) THEN
-			assignments[assignmentCount].Name := 
-				LEFT(assignments[assignmentCount].Name,
-					FIND(assignments[assignmentCount].Name, '[') - 1
-				);
-		END_IF
 	
-		assignmentCount := assignmentCount + 1;
-		
-		IF (assignmentCount = RecipeParameters.ValueCountLimit) THEN
-			EXIT;
-		END_IF
+	// Search for assignment string
+	assignmentIndex := TO_DINT(FIND2(ADR(buffer[caret]), ADR(_Assignment)));
+	IF (assignmentIndex = 0 OR assignmentLength > SIZEOF(T_MaxString) - 1) THEN
+		CONTINUE;
 	END_IF
-END_FOR
-
-FOR i := 0 TO assignmentCount - 1 DO
-	value := GetValue(assignments[i].Name);
+	
+	// Get variable name
+	SubString(buffer, variableName, caret, assignmentIndex);
+	variableName := F_LTrim(F_RTrim(variableName));
+	tableRowCountString := F_LTrim(F_RTrim(GetStringBetween(variableName, '[', ']')));
+	IF (LEN(tableRowCountString) > 0) THEN
+		tableRowCount := STRING_TO_INT(tableRowCountString);
+		variableName := LEFT(variableName, LEN(variableName) - LEN(tableRowCountString) - 2);
+	ELSE
+		tableRowCount := 0;
+	END_IF
+	
+	// Find value by name
+	value := GetValue(variableName);
 	IF (value = 0) THEN
 		CONTINUE;
 	END_IF
 	
+	// Get value string
+	// Parse and assign value
+	// Update caret
 	IF (__QUERYINTERFACE(value, singleValue)) THEN
-		singleValue.ParseAndAssignValue(assignments[i].Value);
+		valueStart := assignmentIndex + assignmentLength;
+		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret + valueStart]), pFindString := ADR(_NewLine)));
+		IF (valueLength = 0) THEN
+			valueLength := sb.Length - valueStart;
+		END_IF
+		SubString(buffer, singleValueString, valueStart, valueLength);
+		singleValueString := F_LTrim(F_RTrim(singleValueString));
+		singleValue.ParseAndAssignValue(singleValueString);
+		caret := caret + valueStart + valueLength + newLineLength;
 		CONTINUE;
 	END_IF
-	
 	IF (__QUERYINTERFACE(value, stringValue)) THEN
-		sbTable.Clear();
-		sbTable.Append(assignments[i].Value);
+		valueStart := TO_DINT(FIND2(
+								pSrcString := ADR(buffer[caret + assignmentIndex + assignmentLength]),
+								pFindString := ADR(_StringBoundary)
+						)) + stringBoundaryLength;
+		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret + valueStart]), pFindString := ADR(_StringBoundary)));
+		sbValueBuffer.Clear().AppendSubString(buffer, valueStart, valueLength);
 		stringValue.ParseAndAssignValue();
+		newLineIndex := TO_DINT(FIND2(
+									pSrcString := ADR(buffer[caret + valueStart]),
+									pFindString := ADR(_NewLine)
+							)) + newLineLength;
+		caret := caret + valueStart + valueLength + stringBoundaryLength + newLineIndex + newLineLength;
 		CONTINUE;
 	END_IF
-	
 	IF (__QUERYINTERFACE(value, tableValue)) THEN
-		sbTable.Clear();
-		FOR row := assignments[i].LineIndex + 2 // Without assignment and header
-		TO assignments[i].LineIndex + assignments[i].TableRows + 1 DO // Header shifts table one line lower
-			sbTable.Append(lines[row]).Append(_NewLine);
+		valueStart := assignmentIndex + assignmentLength;
+		FOR i := 0 TO 1 DO
+			valueStart := valueStart + TO_DINT(FIND2(
+									pSrcString := ADR(buffer[caret + valueStart]),
+									pFindString := ADR(_NewLine)
+							)) + newLineLength;
 		END_FOR
-		tableValue.ParseAndAssignValues(
-			assignments[i].TableRows
-		);
+		valueLength := 0;
+		FOR i := 0 TO tableRowCount DO
+			valueLength := valueLength + TO_DINT(FIND2(
+									pSrcString := ADR(buffer[caret + valueStart + valueLength]),
+									pFindString := ADR(_NewLine)
+							)) + newLineLength;
+		END_FOR
+		sbValueBuffer.Clear().AppendSubString(buffer, valueStart, valueLength);
+		tableValue.ParseAndAssignValues(tableRowCount);
+		caret := caret + valueStart + valueLength + newLineLength;
 		CONTINUE;
 	END_IF
-END_FOR]]></ST>
+END_WHILE
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="RecipeExists" Id="{362dcd42-3486-0c62-11af-643746cf951e}">
