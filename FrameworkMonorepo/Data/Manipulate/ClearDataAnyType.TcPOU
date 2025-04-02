@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ClearDataAnyType" Id="{a0da5692-442f-0663-2df4-db9eda984823}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ClearDataAnyType : BOOL
+VAR_INPUT
+	data : __SYSTEM.AnyType;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MEMSET(destAddr := data.pValue, fillByte := 0, n := TO_UDINT(data.diSize));
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

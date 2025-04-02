@@ -394,15 +394,15 @@ END_VAR
       <Declaration><![CDATA[METHOD PRIVATE ParseValueString
 VAR
 	caret : DINT;
-	assignmentIndex : DINT;
 	assignmentLength : DINT;
 	newLineLength : DINT;
+	variableNameLength : DINT;
 	variableName : T_MaxString;
 	tableRowCountString : STRING;
 	tableRowCount : INT;
 	singleValueString : T_MaxString;
-	valueStart : DINT;
 	valueLength : DINT;
+	tableLineLength : DINT;
 	newLineIndex : DINT;
 	stringBoundaryLength : DINT;
 	
@@ -422,15 +422,15 @@ assignmentLength := LEN(_Assignment);
 newLineLength := LEN(_NewLine);
 stringBoundaryLength := LEN(_StringBoundary);
 WHILE caret < sb.Length DO
-	
 	// Search for assignment string
-	assignmentIndex := TO_DINT(FIND2(ADR(buffer[caret]), ADR(_Assignment)));
-	IF (assignmentIndex = 0 OR assignmentLength > SIZEOF(T_MaxString) - 1) THEN
-		CONTINUE;
+	variableNameLength := TO_DINT(FIND2(ADR(buffer[caret]), ADR(_Assignment))) - 1;
+	IF (variableNameLength <= 0 OR variableNameLength > SIZEOF(T_MaxString) - 1) THEN
+		EXIT;
 	END_IF
 	
 	// Get variable name
-	SubString(buffer, variableName, caret, assignmentIndex);
+	ClearData(variableName);
+	SubString(buffer, variableName, caret, variableNameLength);
 	variableName := F_LTrim(F_RTrim(variableName));
 	tableRowCountString := F_LTrim(F_RTrim(GetStringBetween(variableName, '[', ']')));
 	IF (LEN(tableRowCountString) > 0) THEN
@@ -439,6 +439,8 @@ WHILE caret < sb.Length DO
 	ELSE
 		tableRowCount := 0;
 	END_IF
+	
+	caret := caret + variableNameLength + assignmentLength;
 	
 	// Find value by name
 	value := GetValue(variableName);
@@ -449,52 +451,52 @@ WHILE caret < sb.Length DO
 	// Get value string
 	// Parse and assign value
 	// Update caret
+	ClearData(singleValueString);
 	IF (__QUERYINTERFACE(value, singleValue)) THEN
-		valueStart := assignmentIndex + assignmentLength;
-		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret + valueStart]), pFindString := ADR(_NewLine)));
-		IF (valueLength = 0) THEN
-			valueLength := sb.Length - valueStart;
+		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret]), pFindString := ADR(_NewLine))) - 1;
+		IF (valueLength <= 0) THEN
+			valueLength := sb.Length - caret;
+		ELSIF (valueLength > SIZEOF(T_MaxString) - 1) THEN
+			EXIT;
 		END_IF
-		SubString(buffer, singleValueString, valueStart, valueLength);
+		SubString(buffer, singleValueString, caret, valueLength);
 		singleValueString := F_LTrim(F_RTrim(singleValueString));
 		singleValue.ParseAndAssignValue(singleValueString);
-		caret := caret + valueStart + valueLength + newLineLength;
-		CONTINUE;
-	END_IF
-	IF (__QUERYINTERFACE(value, stringValue)) THEN
-		valueStart := TO_DINT(FIND2(
-								pSrcString := ADR(buffer[caret + assignmentIndex + assignmentLength]),
+		caret := caret + valueLength + newLineLength;
+	ELSIF (__QUERYINTERFACE(value, stringValue)) THEN
+		caret := caret + TO_DINT(FIND2(
+								pSrcString := ADR(buffer[caret]),
 								pFindString := ADR(_StringBoundary)
-						)) + stringBoundaryLength;
-		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret + valueStart]), pFindString := ADR(_StringBoundary)));
-		sbValueBuffer.Clear().AppendSubString(buffer, valueStart, valueLength);
+						)) - 1 + stringBoundaryLength;
+		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret]), pFindString := ADR(_StringBoundary))) - 1;
+		sbValueBuffer.Clear().AppendSubString(buffer, caret, valueLength);
 		stringValue.ParseAndAssignValue();
 		newLineIndex := TO_DINT(FIND2(
-									pSrcString := ADR(buffer[caret + valueStart]),
+									pSrcString := ADR(buffer[caret + valueLength + stringBoundaryLength]),
 									pFindString := ADR(_NewLine)
-							)) + newLineLength;
-		caret := caret + valueStart + valueLength + stringBoundaryLength + newLineIndex + newLineLength;
-		CONTINUE;
-	END_IF
-	IF (__QUERYINTERFACE(value, tableValue)) THEN
-		valueStart := assignmentIndex + assignmentLength;
+							)) - 1;
+		caret := caret + valueLength + stringBoundaryLength + newLineIndex + newLineLength;
+	ELSIF (__QUERYINTERFACE(value, tableValue)) THEN
 		FOR i := 0 TO 1 DO
-			valueStart := valueStart + TO_DINT(FIND2(
-									pSrcString := ADR(buffer[caret + valueStart]),
+			caret := caret + TO_DINT(FIND2(
+									pSrcString := ADR(buffer[caret]),
 									pFindString := ADR(_NewLine)
-							)) + newLineLength;
+							)) - 1 + newLineLength;
 		END_FOR
 		valueLength := 0;
-		FOR i := 0 TO tableRowCount DO
-			valueLength := valueLength + TO_DINT(FIND2(
-									pSrcString := ADR(buffer[caret + valueStart + valueLength]),
+		FOR i := 0 TO tableRowCount - 1 DO
+			tableLineLength := TO_DINT(FIND2(
+									pSrcString := ADR(buffer[caret + valueLength]),
 									pFindString := ADR(_NewLine)
-							)) + newLineLength;
+							)) - 1 + newLineLength;
+			IF (tableLineLength = 0) THEN
+				tableLineLength := sb.Length - (caret + valueLength);
+			END_IF
+			valueLength := valueLength + tableLineLength;
 		END_FOR
-		sbValueBuffer.Clear().AppendSubString(buffer, valueStart, valueLength);
+		sbValueBuffer.Clear().AppendSubString(buffer, caret, valueLength);
 		tableValue.ParseAndAssignValues(tableRowCount);
-		caret := caret + valueStart + valueLength + newLineLength;
-		CONTINUE;
+		caret := caret + valueLength; // Newline is already included in table row search
 	END_IF
 END_WHILE
 ]]></ST>

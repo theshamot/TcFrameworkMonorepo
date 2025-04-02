@@ -11,7 +11,7 @@ VAR
 	new : POINTER TO BYTE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[new := __NEW(BYTE, in.diSize);
+      <ST><![CDATA[new := __NEW(BYTE, TO_UDINT(in.diSize));
 
 FindAndReplace(
 	pSrcString := in.pValue,
@@ -21,7 +21,7 @@ FindAndReplace(
 	nDstSize := TO_UDINT(in.diSize - 1)
 );
 
-MEMCPY(in.pValue, new, in.diSize);
+MEMCPY(in.pValue, new, TO_UDINT(in.diSize));
 __DELETE(new);
 ]]></ST>
     </Implementation>

@@ -117,8 +117,12 @@ END_VAR
 VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[ClearData(_Value);
-MEMCPY(destAddr := _Value.pValue, srcAddr := sb.BufferRef.pValue, n := MIN(DINT_TO_UDINT(_Value.diSize - 1), LEN2(sb.BufferRef.pValue)));]]></ST>
+        <ST><![CDATA[ClearDataAnyType(_Value);
+MEMCPY(
+	destAddr := _Value.pValue,
+	srcAddr := sb.BufferRef.pValue,
+	n := MIN(DINT_TO_UDINT(_Value.diSize - 1), LEN2(sb.BufferRef.pValue))
+);]]></ST>
       </Implementation>
     </Method>
     <Property Name="ValueString" Id="{56c8276b-9df7-0124-31aa-00ecd70e1926}">
