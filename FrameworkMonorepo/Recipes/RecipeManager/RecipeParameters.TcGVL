@@ -3,7 +3,7 @@
   <GVL Name="RecipeParameters" Id="{d9be3204-2b08-0ff7-0d69-0af1093d67f3}" ParameterList="True">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	ValueCountLimit : INT := 20;
+	ValueCountLimit : INT := 30;
 	TableColumnLimit : INT := 10;
 	
 	BufferSize : INT := 1500;

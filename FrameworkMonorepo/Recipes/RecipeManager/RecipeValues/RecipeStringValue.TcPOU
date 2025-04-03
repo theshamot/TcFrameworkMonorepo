@@ -65,9 +65,9 @@ END_VAR
     </Property>
     <Method Name="BuildAndGetAssignmentString" Id="{52adad33-eaab-0122-1b47-ee42c7f83c26}">
       <Declaration><![CDATA[METHOD BuildAndGetAssignmentString : POINTER TO STRING
-VAR_INPUT
-END_VAR
-]]></Declaration>
+VAR
+	anyToWrite : __SYSTEM.AnyType;
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[sb.Clear();
 sb.Append(
@@ -78,9 +78,19 @@ sb.Append(
 	.Append(_StringBoundary)
 	.GetString()
 );
-sb.AppendByPointer(_Value.pValue);
+
+anyToWrite.pValue := __NEW(BYTE, TO_UDINT(_Value.diSize));
+anyToWrite.diSize := _Value.diSize;
+MEMSET(anyToWrite.pValue, 0, TO_UDINT(_Value.diSize));
+MEMCPY(anyToWrite.pValue, _Value.pValue, TO_UDINT(_Value.diSize));
+ReplaceAllAnyType(anyToWrite, _StringBoundary, CONCAT(_StringBoundary, _StringBoundary));
+
+sb.AppendByPointer(anyToWrite.pValue);
+__DELETE(anyToWrite.pValue);
+
 sb.Append(_StringBoundary);
-BuildAndGetAssignmentString := sb.BufferRef.pValue;]]></ST>
+BuildAndGetAssignmentString := sb.BufferRef.pValue;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Dispose" Id="{bb685d27-573d-06ee-22f0-673d4b91a5e7}">
@@ -118,6 +128,7 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[ClearDataAnyType(_Value);
+ReplaceAllAnyType(sb.BufferRef, CONCAT(_StringBoundary, _StringBoundary), _StringBoundary);
 MEMCPY(
 	destAddr := _Value.pValue,
 	srcAddr := sb.BufferRef.pValue,

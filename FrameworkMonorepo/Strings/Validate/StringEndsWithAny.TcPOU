@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
-  <POU Name="StringEndsWith" Id="{16faa171-6f34-01d0-1d79-268489938df3}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION StringEndsWith : BOOL
+  <POU Name="StringEndsWithAny" Id="{1da7b29d-83d2-4a04-bb87-63be8b0e6185}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION StringEndsWithAny : BOOL
 VAR_INPUT
-	text : T_MaxString;
+	text : ANY;
 	endsWithString : T_MaxString;
 END_VAR
 VAR
@@ -12,14 +12,14 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[textLength := LEN(text);
+      <ST><![CDATA[textLength := TO_DINT(LEN2(text.pValue));
 length := LEN(endsWithString);
 
 IF (textLength < length) THEN
 	RETURN;
 END_IF
 
-StringEndsWith := MEMCMP(pBuf1 := ADR(text) + TO_DWORD(textLength - length), pBuf2 := ADR(endsWithString), n := TO_UDINT(length)) = 0;
+StringEndsWithAny := MEMCMP(pBuf1 := text.pValue + TO_DWORD(textLength - length), pBuf2 := ADR(endsWithString), n := TO_UDINT(length)) = 0;
 ]]></ST>
     </Implementation>
   </POU>

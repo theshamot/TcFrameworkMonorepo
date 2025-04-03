@@ -6,11 +6,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[StringBeginsWithFunction();
-StringEndsWithFunction();]]></ST>
+      <ST><![CDATA[StringBeginsWithAnyFunction();
+StringEndsWithAnyFunction();]]></ST>
     </Implementation>
-    <Method Name="StringBeginsWithFunction" Id="{e513f70c-a34b-048a-001b-48c3a603580b}">
-      <Declaration><![CDATA[METHOD StringBeginsWithFunction : BOOL
+    <Method Name="StringBeginsWithAnyFunction" Id="{e513f70c-a34b-048a-001b-48c3a603580b}">
+      <Declaration><![CDATA[METHOD StringBeginsWithAnyFunction : BOOL
 VAR
 	test : T_MaxString := 'this is test string';
 END_VAR
@@ -20,19 +20,19 @@ END_VAR
 
 AssertEquals_BOOL(
 	Expected := FALSE,
-	Actual := StringBeginsWith(test, 'nothing'),
+	Actual := StringBeginsWithAny(test, 'nothing'),
 	Message := 'Should return FALSE because string does not begin with checked value');
 
 AssertEquals_BOOL(
 	Expected := TRUE,
-	Actual := StringBeginsWith(test, 'this'),
+	Actual := StringBeginsWithAny(test, 'this'),
 	Message := 'Should return TRUE because string begins with checked value');
 
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StringEndsWithFunction" Id="{022e8947-c002-0f07-3f8f-01e15902521a}">
-      <Declaration><![CDATA[METHOD StringEndsWithFunction : BOOL
+    <Method Name="StringEndsWithAnyFunction" Id="{022e8947-c002-0f07-3f8f-01e15902521a}">
+      <Declaration><![CDATA[METHOD StringEndsWithAnyFunction : BOOL
 VAR
 	test : T_MaxString := 'this is test string';
 END_VAR
@@ -42,12 +42,12 @@ END_VAR
 
 AssertEquals_BOOL(
 	Expected := FALSE,
-	Actual := StringBeginsWith(test, 'nothing'),
+	Actual := StringBeginsWithAny(test, 'nothing'),
 	Message := 'Should return FALSE because string does not end with checked value');
 
 AssertEquals_BOOL(
 	Expected := TRUE,
-	Actual := StringEndsWith(test, 'string'),
+	Actual := StringEndsWithAny(test, 'string'),
 	Message := 'Should return TRUE because string ends with checked value');
 
 TEST_FINISHED();]]></ST>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ReplaceAllAnyType" Id="{ffe00a63-4417-0bb0-0fa2-20669c64c2f4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ReplaceAllAnyType
+VAR_INPUT
+	in : __SYSTEM.AnyType;
+	replaced : T_MaxString;
+	with : T_MaxString;
+END_VAR
+VAR
+	new : POINTER TO BYTE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF (FIND2(in.pValue, ADR(replaced)) = 0) THEN
+	RETURN;
+END_IF
+
+new := __NEW(BYTE, TO_UDINT(in.diSize));
+
+FindAndReplace(
+	pSrcString := in.pValue,
+	pDeleteString := ADR(replaced),
+	pInsertString := ADR(with),
+	pDstString := new,
+	nDstSize := TO_UDINT(in.diSize - 1)
+);
+
+MEMCPY(in.pValue, new, TO_UDINT(in.diSize));
+__DELETE(new);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

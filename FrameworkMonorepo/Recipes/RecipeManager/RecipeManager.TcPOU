@@ -270,7 +270,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[GetRecipePath := CONCAT(_FolderPath, _FileName);
 
-IF (NOT StringEndsWith(_FileName, _Extension)) THEN
+IF (NOT StringEndsWithAny(_FileName, _Extension)) THEN
 	GetRecipePath := CONCAT(GetRecipePath, _Extension);
 END_IF]]></ST>
       </Implementation>
@@ -468,7 +468,24 @@ WHILE caret < sb.Length DO
 								pSrcString := ADR(buffer[caret]),
 								pFindString := ADR(_StringBoundary)
 						)) - 1 + stringBoundaryLength;
-		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret]), pFindString := ADR(_StringBoundary))) - 1;
+		valueLength := 0;
+		WHILE TRUE DO
+			valueLength := valueLength + TO_DINT(FIND2(
+											pSrcString := ADR(buffer[caret + valueLength]),
+											pFindString := ADR(_StringBoundary))
+										) - 1;
+			IF (valueLength = -1) THEN
+				EXIT;
+			ELSIF (caret + valueLength + 2 * stringBoundaryLength < sb.Length) THEN
+				IF (StringBeginsWith(PSTRING_TO_STRING(ADR(buffer) + TO_DWORD(caret + valueLength + stringBoundaryLength)), _StringBoundary)) THEN
+					valueLength := valueLength + 2 * stringBoundaryLength;
+				ELSE 
+					EXIT;
+				END_IF 
+			ELSE
+				EXIT;
+			END_IF
+		END_WHILE
 		sbValueBuffer.Clear().AppendSubString(buffer, caret, valueLength);
 		stringValue.ParseAndAssignValue();
 		newLineIndex := TO_DINT(FIND2(
@@ -517,7 +534,7 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
-IF (StringEndsWith(name, _Extension)) THEN
+IF (StringEndsWithAny(name, _Extension)) THEN
 	fileName := name;
 ELSE
 	fileName := CONCAT(name, _Extension);

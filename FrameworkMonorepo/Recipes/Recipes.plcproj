@@ -53,11 +53,11 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeStringValueType.TcIO">
+    <Compile Include="RecipeManager\RecipeValues\RecipeStringValue.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="RecipeManager\RecipeValues\RecipeStringValue.TcPOU">
+    <Compile Include="RecipeManager\RecipeValues\RecipeStringValueType.TcIO">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>

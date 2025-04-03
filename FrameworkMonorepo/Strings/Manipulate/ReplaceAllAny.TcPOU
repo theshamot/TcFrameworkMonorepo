@@ -7,22 +7,9 @@ VAR_INPUT
 	replaced : T_MaxString;
 	with : T_MaxString;
 END_VAR
-VAR
-	new : POINTER TO BYTE;
-END_VAR]]></Declaration>
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[new := __NEW(BYTE, TO_UDINT(in.diSize));
-
-FindAndReplace(
-	pSrcString := in.pValue,
-	pDeleteString := ADR(replaced),
-	pInsertString := ADR(with),
-	pDstString := new,
-	nDstSize := TO_UDINT(in.diSize - 1)
-);
-
-MEMCPY(in.pValue, new, TO_UDINT(in.diSize));
-__DELETE(new);
+      <ST><![CDATA[ReplaceAllAnyType(in, replaced, with);
 ]]></ST>
     </Implementation>
   </POU>

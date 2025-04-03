@@ -8,7 +8,12 @@ VAR_INPUT
 	with : T_MaxString;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[FindAndReplace(
+      <ST><![CDATA[IF (FIND(in, replaced) = 0) THEN
+	ReplaceAll := in;
+	RETURN;
+END_IF
+
+FindAndReplace(
 	pSrcString := ADR(in),
 	pDeleteString := ADR(replaced),
 	pInsertString := ADR(with),

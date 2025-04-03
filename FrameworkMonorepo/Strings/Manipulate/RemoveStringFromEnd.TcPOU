@@ -17,7 +17,7 @@ IF (diff < 0) THEN
 	RETURN;
 END_IF
 
-IF (StringEndsWith(text, end)) THEN
+IF (StringEndsWithAny(text, end)) THEN
 	RemoveStringFromEnd := LEFT(text, diff);
 END_IF]]></ST>
     </Implementation>
