@@ -7,8 +7,8 @@ VAR
 	valueCount : INT;
 
 	valueStringBuffer : STRING(RecipeParameters.TableBufferSize);
-	buffer : STRING(RecipeParameters.BufferSize);
-	sb : StringBuilderExtBuffer := (Buffer := ToAnyType(Buffer));
+	_Buffer : STRING(RecipeParameters.BufferSize);
+	sb : StringBuilderExtBuffer := (Buffer := ToAnyType(_Buffer));
 
 	_FolderPath : T_MaxString;
 	_FileName : T_MaxString;
@@ -116,8 +116,19 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
+    <Property Name="BuildParseBuffer" Id="{7764e3fa-19ce-0603-390f-e7376cb3160f}">
+      <Declaration><![CDATA[PROPERTY BuildParseBuffer : REFERENCE TO StringBuilderExtBuffer]]></Declaration>
+      <Get Name="Get" Id="{04b38d0d-2de1-0215-0560-02a87dcdea3e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BuildParseBuffer REF= sb;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="BuildValueString" Id="{f214b55b-5050-0596-38a7-7e0d32dc8021}">
-      <Declaration><![CDATA[METHOD PRIVATE BuildValueString : BOOL
+      <Declaration><![CDATA[METHOD BuildValueString : BOOL
 VAR
 	i : INT;
 END_VAR
@@ -358,8 +369,8 @@ END_IF
 sb.Clear();
 
 file.Read(
-	buffer := ADR(buffer),
-	bufferLength := SIZEOF(buffer) - 1,
+	buffer := ADR(_Buffer),
+	bufferLength := SIZEOF(_Buffer) - 1,
 	filePath := GetRecipePath()
 );
 
@@ -423,14 +434,14 @@ newLineLength := LEN(_NewLine);
 stringBoundaryLength := LEN(_StringBoundary);
 WHILE caret < sb.Length DO
 	// Search for assignment string
-	variableNameLength := TO_DINT(FIND2(ADR(buffer[caret]), ADR(_Assignment))) - 1;
+	variableNameLength := TO_DINT(FIND2(ADR(_Buffer[caret]), ADR(_Assignment))) - 1;
 	IF (variableNameLength <= 0 OR variableNameLength > SIZEOF(T_MaxString) - 1) THEN
 		EXIT;
 	END_IF
 	
 	// Get variable name
 	ClearData(variableName);
-	SubString(buffer, variableName, caret, variableNameLength);
+	SubString(_Buffer, variableName, caret, variableNameLength);
 	variableName := F_LTrim(F_RTrim(variableName));
 	tableRowCountString := F_LTrim(F_RTrim(GetStringBetween(variableName, '[', ']')));
 	IF (LEN(tableRowCountString) > 0) THEN
@@ -453,31 +464,31 @@ WHILE caret < sb.Length DO
 	// Update caret
 	ClearData(singleValueString);
 	IF (__QUERYINTERFACE(value, singleValue)) THEN
-		valueLength := TO_DINT(FIND2(pSrcString := ADR(buffer[caret]), pFindString := ADR(_NewLine))) - 1;
+		valueLength := TO_DINT(FIND2(pSrcString := ADR(_Buffer[caret]), pFindString := ADR(_NewLine))) - 1;
 		IF (valueLength <= 0) THEN
 			valueLength := sb.Length - caret;
 		ELSIF (valueLength > SIZEOF(T_MaxString) - 1) THEN
 			EXIT;
 		END_IF
-		SubString(buffer, singleValueString, caret, valueLength);
+		SubString(_Buffer, singleValueString, caret, valueLength);
 		singleValueString := F_LTrim(F_RTrim(singleValueString));
 		singleValue.ParseAndAssignValue(singleValueString);
 		caret := caret + valueLength + newLineLength;
 	ELSIF (__QUERYINTERFACE(value, stringValue)) THEN
 		caret := caret + TO_DINT(FIND2(
-								pSrcString := ADR(buffer[caret]),
+								pSrcString := ADR(_Buffer[caret]),
 								pFindString := ADR(_StringBoundary)
 						)) - 1 + stringBoundaryLength;
 		valueLength := 0;
 		WHILE TRUE DO
 			valueLength := valueLength + TO_DINT(FIND2(
-											pSrcString := ADR(buffer[caret + valueLength]),
+											pSrcString := ADR(_Buffer[caret + valueLength]),
 											pFindString := ADR(_StringBoundary))
 										) - 1;
 			IF (valueLength = -1) THEN
 				EXIT;
 			ELSIF (caret + valueLength + 2 * stringBoundaryLength < sb.Length) THEN
-				IF (StringBeginsWith(PSTRING_TO_STRING(ADR(buffer) + TO_DWORD(caret + valueLength + stringBoundaryLength)), _StringBoundary)) THEN
+				IF (StringBeginsWith(PSTRING_TO_STRING(ADR(_Buffer) + TO_DWORD(caret + valueLength + stringBoundaryLength)), _StringBoundary)) THEN
 					valueLength := valueLength + 2 * stringBoundaryLength;
 				ELSE 
 					EXIT;
@@ -486,24 +497,24 @@ WHILE caret < sb.Length DO
 				EXIT;
 			END_IF
 		END_WHILE
-		sbValueBuffer.Clear().AppendSubString(buffer, caret, valueLength);
+		sbValueBuffer.Clear().AppendSubString(_Buffer, caret, valueLength);
 		stringValue.ParseAndAssignValue();
 		newLineIndex := TO_DINT(FIND2(
-									pSrcString := ADR(buffer[caret + valueLength + stringBoundaryLength]),
+									pSrcString := ADR(_Buffer[caret + valueLength + stringBoundaryLength]),
 									pFindString := ADR(_NewLine)
 							)) - 1;
 		caret := caret + valueLength + stringBoundaryLength + newLineIndex + newLineLength;
 	ELSIF (__QUERYINTERFACE(value, tableValue)) THEN
 		FOR i := 0 TO 1 DO
 			caret := caret + TO_DINT(FIND2(
-									pSrcString := ADR(buffer[caret]),
+									pSrcString := ADR(_Buffer[caret]),
 									pFindString := ADR(_NewLine)
 							)) - 1 + newLineLength;
 		END_FOR
 		valueLength := 0;
 		FOR i := 0 TO tableRowCount - 1 DO
 			tableLineLength := TO_DINT(FIND2(
-									pSrcString := ADR(buffer[caret + valueLength]),
+									pSrcString := ADR(_Buffer[caret + valueLength]),
 									pFindString := ADR(_NewLine)
 							)) - 1 + newLineLength;
 			IF (tableLineLength = 0) THEN
@@ -511,7 +522,7 @@ WHILE caret < sb.Length DO
 			END_IF
 			valueLength := valueLength + tableLineLength;
 		END_FOR
-		sbValueBuffer.Clear().AppendSubString(buffer, caret, valueLength);
+		sbValueBuffer.Clear().AppendSubString(_Buffer, caret, valueLength);
 		tableValue.ParseAndAssignValues(tableRowCount);
 		caret := caret + valueLength; // Newline is already included in table row search
 	END_IF
@@ -576,8 +587,8 @@ END_IF
 BuildValueString();
 
 file.Write(
-	buffer := ADR(buffer),
-	bufferLength := LEN2(ADR(buffer)),
+	buffer := ADR(_Buffer),
+	bufferLength := LEN2(ADR(_Buffer)),
 	filePath := GetRecipePath(),
 	append := FALSE
 );
