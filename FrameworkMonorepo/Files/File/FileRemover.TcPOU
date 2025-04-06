@@ -9,6 +9,9 @@ VAR
 	removeErrorTrigger : R_TRIG;
 	notFoundError : MessageEventLogger(TC_EVENTS.FileEventClass.InvalidPath);
 	removeError : MessageEventLogger(TC_EVENTS.FileEventClass.RemoveFileError);
+	
+	removing : BOOL;
+	_Done : BOOL;
 END_VAR
 VAR CONSTANT
 	NotFoundErrorNumber : UDINT := 16#70C;
@@ -35,6 +38,13 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[remover(bExecute := FALSE);
+
+IF (NOT remover.bBusy) THEN
+	IF (NOT remover.bError AND removing) THEN
+		_Done := TRUE;
+	END_IF
+	removing := FALSE;
+END_IF
 
 removeErrorTrigger(CLK := remover.bError);
 IF (removeErrorTrigger.Q) THEN
@@ -63,7 +73,7 @@ PROPERTY Done : BOOL]]></Declaration>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[Done := NOT remover.bBusy;
+          <ST><![CDATA[Done := _Done;
 ]]></ST>
         </Implementation>
       </Get>
@@ -88,7 +98,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[remover(
+        <ST><![CDATA[removing := TRUE;
+_Done := FALSE;
+
+remover(
 	sPathName := filePath,
 	bExecute := TRUE
 );]]></ST>

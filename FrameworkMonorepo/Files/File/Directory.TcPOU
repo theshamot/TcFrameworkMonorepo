@@ -7,8 +7,8 @@ VAR
 	remover : FB_RemoveDir; // can only remove topmost folder. Not folder with folders.
 
 	listDir : FB_EnumFindFileList;	
-	listingFinishedTrigger : F_TRIG;
-	fileListDone : BOOL;
+	listing : BOOL;
+	_ListDone : BOOL;
 	checkingFolder : BOOL;
 	checkingFileExistence : BOOL;
 
@@ -73,11 +73,11 @@ listDir(
 	cbFindList := SIZEOF(page)
 );
 
-listingFinishedTrigger(CLK := listDir.bBusy);
-IF (listingFinishedTrigger.Q AND listDir.eCmd <> E_EnumCmdType.eEnumCmd_Abort) THEN
+IF (NOT listDir.bBusy AND listing AND NOT _ListDone AND listDir.eCmd <> E_EnumCmdType.eEnumCmd_Abort) THEN
 
 	listDir(bExecute := FALSE);
-	fileListDone := TRUE;
+	listing := FALSE;
+	_ListDone := TRUE;
 	
 	FOR i := 0 TO EntriesPerPage - 1 DO
 		_FileNameList[i] := page[i].sFileName;
@@ -179,7 +179,8 @@ END_VAR
         <ST><![CDATA[IF (NOT listDir.bBusy) THEN
 	
 	checkingFileExistence := FALSE;
-	fileListDone := FALSE;
+	listing := TRUE;
+	_ListDone := FALSE;
 	
 	listDir(bExecute := FALSE);
 	listDir(
@@ -190,6 +191,17 @@ END_VAR
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Property Name="ListDone" Id="{7006c4b6-25d5-066e-1b80-6c013ae90025}">
+      <Declaration><![CDATA[PROPERTY ListDone : BOOL]]></Declaration>
+      <Get Name="Get" Id="{8009f287-0df4-0188-3f27-da69582ad8e8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ListDone := _ListDone;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="Remove" Id="{1bc872e8-0a59-0cee-2768-74b2c8c4a37c}">
       <Declaration><![CDATA[METHOD Remove
 VAR_INPUT

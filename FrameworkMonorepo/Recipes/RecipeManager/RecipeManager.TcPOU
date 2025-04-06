@@ -19,7 +19,6 @@ VAR
 	
 	_JustLoaded : BOOL;
 	_JustSaved : BOOL;
-	recipesLoaded : BOOL;
 
 	_NewLine : STRING := '$N';
 	_Assignment : STRING := ':=';
@@ -179,10 +178,10 @@ IF (loadingFile AND file.Done) THEN
 	sb.Clear();
 END_IF
 
-IF (NOT recipesLoaded) THEN
+IF (NOT directory.ListDone) THEN
 	ListRecipes();
-	recipesLoaded := TRUE;
-END_IF]]></ST>
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Property Name="Extension" Id="{b2ad55aa-52f2-0956-066e-a1a2576c9f56}">
@@ -344,6 +343,18 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="ListLoaded" Id="{56b2a616-06f4-01b1-10be-4d33872b8012}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY ListLoaded : BOOL]]></Declaration>
+      <Get Name="Get" Id="{0718b734-43a3-0db1-36cd-88083ba12ec5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ListLoaded := directory.ListDone;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="ListRecipes" Id="{06b24d78-54a3-0fd9-025f-f678dfd8873d}">
       <Declaration><![CDATA[METHOD ListRecipes
 VAR_INPUT
@@ -355,7 +366,8 @@ END_VAR
 		.Append('*')
 		.Append(_Extension)
 		.GetString()
-);]]></ST>
+);
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Load" Id="{e13ba227-265c-003c-16a9-027fd14cba33}">
