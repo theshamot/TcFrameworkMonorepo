@@ -5,6 +5,7 @@
 VAR
 	alarm : FB_TcAlarm;
 	_Source : Name;
+	autoReset : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -56,7 +57,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[alarm.CreateEx(stEventEntry := event, bWithConfirmation := NOT autoReset, ipSourceInfo := 0);]]></ST>
+        <ST><![CDATA[THIS^.autoReset := autoReset;
+alarm.CreateEx(stEventEntry := event, bWithConfirmation := NOT autoReset, ipSourceInfo := 0);]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsRaised" Id="{cc265ab0-9ea0-0c78-2a6a-eea337dd7b8f}">
@@ -114,6 +116,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[IF (eventCondition) THEN
 	Raise();
+ELSIF (autoReset AND IsRaised) THEN
+	Clear();
 END_IF]]></ST>
       </Implementation>
     </Method>

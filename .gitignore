@@ -3,7 +3,7 @@
 *.tclrs
 #*.compiled-library
 *.compileinfo
-*.tmc
+*/*/**.tmc
 *.tmcRefac
 #*.library
 *.project.~u
@@ -17,9 +17,6 @@ _Libraries/
 _ModuleInstall/
 .vs/
 *.vsm
-
-!DirectoryEvents.tmc
-!FileEvents.tmc
 
 # TwinCAT HMI
 .engineering_servers/

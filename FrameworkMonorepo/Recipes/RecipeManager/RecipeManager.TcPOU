@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
   <POU Name="RecipeManager" Id="{77c5c610-1c81-0616-06a3-6337e886bd1e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK RecipeManager
+    <Declaration><![CDATA[FUNCTION_BLOCK RecipeManager IMPLEMENTS Cyclic, Name
 VAR
 	values : ARRAY[0..RecipeParameters.ValueCountLimit - 1] OF RecipeValue;
 	valueCount : INT;
@@ -24,6 +24,11 @@ VAR
 	_Assignment : STRING := ':=';
 	_Extension : STRING := '.txt';
 	_StringBoundary : STRING := '$'';
+	
+	_Name : T_MaxString;
+	
+	savedMessage : MessageEventLogger(TC_EVENTS.RecipeManagerEventClass.RecipeManagerSavedRecipe) := (Source := THIS^);
+	loadedMessage : MessageEventLogger(TC_EVENTS.RecipeManagerEventClass.RecipeManagerLoadedRecipe) := (Source := THIS^);
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -169,6 +174,8 @@ IF (savingFile AND file.Done) THEN
 	_JustSaved := TRUE;
 	sb.Clear();
 	ListRecipes();
+	savedMessage.ClearArguments().AddStringByValue(_FileName);
+	savedMessage.Send();
 END_IF
 
 IF (loadingFile AND file.Done) THEN
@@ -176,6 +183,8 @@ IF (loadingFile AND file.Done) THEN
 	_JustLoaded := TRUE;
 	ParseValueString();
 	sb.Clear();
+	loadedMessage.ClearArguments().AddStringByValue(_FileName);
+	loadedMessage.Send();
 END_IF
 
 IF (NOT directory.ListDone) THEN
@@ -390,6 +399,26 @@ loadingFile := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="Name" Id="{01bb3166-5490-0205-2121-3fe3bb87d958}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Name : T_MaxString]]></Declaration>
+      <Get Name="Get" Id="{0dacc52b-4c63-03e6-08ca-dc2fabd0f5cb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Name := _Name;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{c104e843-fcb5-02c5-00b8-f062a5fd3fb3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Name := Name;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <Property Name="NewLine" Id="{5e9e4f96-dcb0-0eff-0f4b-96624bfd49c8}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
 PROPERTY NewLine : STRING]]></Declaration>

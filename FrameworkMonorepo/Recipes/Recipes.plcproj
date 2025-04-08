@@ -82,9 +82,17 @@
       <DefaultResolution>Data, * (TomasRompotl)</DefaultResolution>
       <Namespace>Data</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="Events">
+      <DefaultResolution>Events, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Events</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="Files">
       <DefaultResolution>Files, * (TomasRompotl)</DefaultResolution>
       <Namespace>Files</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="MachineBase">
+      <DefaultResolution>MachineBase, * (TomasRompotl)</DefaultResolution>
+      <Namespace>MachineBase</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Strings">
       <DefaultResolution>Strings, * (TomasRompotl)</DefaultResolution>
@@ -106,6 +114,9 @@
       <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
       <Namespace>Types</Namespace>
     </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PinnedGlobalDataType Include="ST_RecipeManagerEventClass" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

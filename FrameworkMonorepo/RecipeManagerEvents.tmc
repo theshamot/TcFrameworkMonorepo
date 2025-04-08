@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<TcModuleClass>
+	<Translations>
+		<Text TxtId="RecipeManagerEventClass">
+			<Text LcId="1029"><![CDATA[Události manažeru receptů]]></Text>
+			<Text LcId="1033"><![CDATA[Recipe manager events]]></Text>
+		</Text>
+		<Text TxtId="RecipeManagerSavedRecipe">
+			<Text LcId="1029"><![CDATA[Manažer receptů "{0}" uložil recept "{1}".]]></Text>
+			<Text LcId="1033"><![CDATA[Recipe manager "{0}" saved recipe "{1}".]]></Text>
+		</Text>
+		<Text TxtId="RecipeManagerLoadedRecipe">
+			<Text LcId="1029"><![CDATA[Manažer receptů "{0}" načetl recept "{1}".]]></Text>
+			<Text LcId="1033"><![CDATA[Recipe manager "{0}" loaded recipe "{1}".]]></Text>
+		</Text>
+		<Text TxtId="RecipeManagerRemovedRecipe">
+			<Text LcId="1029"><![CDATA[Manažer receptů "{0}" odstranil recept "{1}".]]></Text>
+			<Text LcId="1033"><![CDATA[Recipe manager "{0}" removed recipe "{1}".]]></Text>
+		</Text>
+	</Translations>
+	<DataTypes>
+		<DataType>
+			<Name GUID="{F5EEDC5F-95D2-4B68-A209-B065A48C81DC}">RecipeManagerEventClass</Name>
+			<DisplayName TxtId=""><![CDATA[RecipeManagerEventClass]]></DisplayName>
+			<EventId>
+				<Name Id="1">RecipeManagerSavedRecipe</Name>
+				<DisplayName TxtId=""><![CDATA[RecipeManagerSavedRecipe]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="2">RecipeManagerLoadedRecipe</Name>
+				<DisplayName TxtId=""><![CDATA[RecipeManagerLoadedRecipe]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<EventId>
+				<Name Id="3">RecipeManagerRemovedRecipe</Name>
+				<DisplayName TxtId=""><![CDATA[RecipeManagerRemovedRecipe]]></DisplayName>
+				<Severity>Info</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{2D4B7AC0-D7B8-4639-9AEA-C9974C5B43BD}"/>
+				<Hide GUID="{1AA865B3-4950-4160-8A6B-A876762F89B4}"/>
+				<Hide GUID="{7B8DFAB3-486B-4F50-82A3-15BE3C209A7F}"/>
+				<Hide GUID="{BB369D34-E01D-4788-9E49-215E51E50098}"/>
+				<Hide GUID="{83B79F20-321A-48CE-955C-53389831FDF0}"/>
+				<Hide GUID="{D8EE74EE-6F4A-4819-B7C8-B770869DD4E4}"/>
+				<Hide GUID="{940F718C-3A9E-4952-A400-F1AF555A323F}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
+</TcModuleClass>
