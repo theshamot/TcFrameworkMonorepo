@@ -37,17 +37,33 @@ TEST_FINISHED();]]></ST>
     <Method Name="GetStringBetweenFunction" Id="{adc4369a-6eeb-0f97-0df0-a2d6e56b181f}">
       <Declaration><![CDATA[METHOD GetStringBetweenFunction : BOOL
 VAR
-	test : T_MaxString := '[42]';
+	test0 : T_MaxString := '1';
+	test1 : T_MaxString := '[2]';
+	test2 : T_MaxString := 'TestValue[3]rest';
 	actual : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Get string between');
 
-actual := GetStringBetween(test, '[', ']');
+actual := GetStringBetween(test0, '[', ']');
 
 AssertEquals_STRING(
-	Expected := '42',
+	Expected := '',
+	Actual := actual,
+	Message := 'Should return nothing');
+
+actual := GetStringBetween(test1, '[', ']');
+
+AssertEquals_STRING(
+	Expected := '2',
+	Actual := actual,
+	Message := 'Should return content of brackets');
+
+actual := GetStringBetween(test2, '[', ']');
+
+AssertEquals_STRING(
+	Expected := '3',
 	Actual := actual,
 	Message := 'Should return content of brackets');
 
