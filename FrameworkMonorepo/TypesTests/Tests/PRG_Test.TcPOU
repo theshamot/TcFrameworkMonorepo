@@ -3,6 +3,7 @@
   <POU Name="PRG_Test" Id="{59fba049-dffd-419e-9eb9-7a7800aaf4f4}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM PRG_Test
 VAR
+	anyTypeBindedTest : AnyTypeTest;
 	boolBindingReadOnlyTest : BoolBindingReadOnlyTest;
 	bindTest : BindTest;
 	notBindTest : NotBindTest;
@@ -18,5 +19,9 @@ END_VAR
       <ST><![CDATA[TcUnit.RUN();
 ]]></ST>
     </Implementation>
+    <LineIds Name="PRG_Test">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ManipulateFunctionsTest" Id="{8e2fe8b8-5e6f-0d30-1f80-87f977530bb8}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
@@ -10,7 +10,10 @@ END_VAR
 GetStringBetweenFunction();
 RemoveStringFromEndFunction();
 ReplaceStringFunction();
-]]></ST>
+ReplaceAllFunction();
+ReplaceAllAnyFunction();
+ReplaceAllAnyTypeFunction();
+SubstringFunction();]]></ST>
     </Implementation>
     <Method Name="AddLeadingZerosFunction" Id="{5b38fdb2-8f15-0071-0faa-54d830637f22}">
       <Declaration><![CDATA[METHOD AddLeadingZerosFunction : BOOL
@@ -90,6 +93,125 @@ AssertEquals_STRING(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="ReplaceAllAnyFunction" Id="{b0638fe4-fb86-0b5b-2035-c1a68e913d99}">
+      <Declaration><![CDATA[METHOD ReplaceAllAnyFunction
+VAR  
+	inputString : T_MaxString;
+	substringToReplace : T_MaxString;
+	replacementSubstring : T_MaxString;
+	inputAny, expectedAny : __SYSTEM.AnyType;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('ReplaceAllAny Replaces Target Substring Correctly');
+ 
+inputString  := 'Valve1 is open'; 
+substringToReplace := 'Valve1';
+replacementSubstring  := 'Valve2';
+inputAny.diSize := SIZEOF(inputString);
+inputAny.pValue := ADR(inputString); 
+StringToAny('Valve2 is open',expectedAny);
+
+ReplaceAllAny(inputAny,substringToReplace,replacementSubstring); 
+
+AssertEquals_STRING(
+	Expected := AnyToString(expectedAny),
+	Actual := AnyToString(inputAny),
+	Message := 'Should delete the substring if replacement is empty');
+
+TEST_FINISHED();
+
+//TcUnit.TEST('ReplaceAllAny Replaces Target Substring Correctly');
+ 
+//inputString := 'Valve1 is open'; 
+//substringToReplace := 'Valve1';
+//replacementSubstring := 'Valve2';
+//_toAnyType := ToAnyType(inputString);
+//inputAny.diSize := SIZEOF(inputString);
+//inputAny.pValue := ADR(inputString);
+
+//ReplaceAllAny(inputAny,substringToReplace,replacementSubstring); 
+
+//AssertEquals_STRING(
+//	Expected := 'Valve2 is open',
+//	Actual   := inputString,
+//	Message  := 'Should delete the substring if replacement is empty');
+
+//TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceAllAnyTypeFunction" Id="{89eacb8d-99ad-053a-0232-ab4ea4fe81d2}">
+      <Declaration><![CDATA[METHOD ReplaceAllAnyTypeFunction
+VAR  
+	inputString  : T_MaxString;
+	_toAnyType : __SYSTEM.AnyType;
+	substringToReplace : T_MaxString;
+	replacementSubstring : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('ReplaceAllAnyType Replaces Target Substring Correctly');
+ 
+inputString  := 'Valve1 is open'; 
+substringToReplace := 'Valve1';
+replacementSubstring  := 'Valve2';
+_toAnyType := ToAnyType(inputString);
+
+ReplaceAllAnyType(_toAnyType,substringToReplace,replacementSubstring); 
+
+AssertEquals_STRING(
+	Expected := 'Valve2 is open',
+	Actual := AnyTypeToString(_toAnyType),
+	Message := 'Should delete the substring if replacement is empty');
+
+TEST_FINISHED();
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceAllFunction" Id="{5c618a13-ecfa-0a46-0059-a8989e9615de}">
+      <Declaration><![CDATA[METHOD ReplaceAllFunction
+VAR
+	inputString  : T_MaxString;
+	substringToReplace : T_MaxString;
+	replacementSubstring  : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('ReplaceAll Replaces Target Substring Correctly');
+
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'Valve2';
+ 
+
+AssertEquals_STRING(
+	Expected := 'Valve2 is open',
+	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Message := 'ReplaceAll should correctly replace the target substring in the input string');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve4';
+replacementSubstring  := 'Valve2';
+
+AssertEquals_STRING(
+	Expected := 'Valve1 is open',
+	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Message := 'Should not modify the string if no match is found');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := '';
+
+AssertEquals_STRING(
+	Expected := ' is open',
+	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Message := 'Should delete the substring if replacement is empty');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="ReplaceStringFunction" Id="{1ccb17b8-aa17-00ee-1667-3fe3bf06c9ae}">
       <Declaration><![CDATA[METHOD ReplaceStringFunction : BOOL
 VAR
@@ -116,5 +238,113 @@ AssertEquals_STRING(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="SubstringFunction" Id="{ca36775e-eb93-0de9-16dc-c9e64461a584}">
+      <Declaration><![CDATA[METHOD SubstringFunction
+VAR
+	source : T_MaxString :=  'ABCDEF123456789';
+	destination : T_MaxString;
+	anySource : __SYSTEM.AnyType;
+    anyDest : __SYSTEM.AnyType;
+	startIndex : DINT := 3; 
+    length : DINT := 5;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('SubString Test');
+
+
+anySource.pValue := ADR(source);
+anySource.diSize := SIZEOF(source);
+	
+anyDest.pValue := ADR(destination);
+anyDest.diSize := SIZEOF(destination);
+	
+SubString(source,destination,startIndex,length);
+destination[LEN(destination)] := TO_BYTE(0);
+
+//------------------EXP: DEF12, ACT: DEF12¨ÿÿ°----------------------
+
+AssertEquals_STRING(Expected := 'DEF12',
+					Actual :=  destination, 
+					Message := 'Substring result incorrect');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ManipulateFunctionsTest">
+      <LineId Id="3" Count="3" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.AddLeadingZerosFunction">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.GetStringBetweenFunction">
+      <LineId Id="3" Count="22" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.RemoveStringFromEndFunction">
+      <LineId Id="3" Count="8" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ReplaceAllAnyFunction">
+      <LineId Id="10" Count="0" />
+      <LineId Id="58" Count="2" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="35" Count="4" />
+      <LineId Id="99" Count="18" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ReplaceAllAnyTypeFunction">
+      <LineId Id="13" Count="14" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ReplaceAllFunction">
+      <LineId Id="22" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="15" Count="5" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="29" Count="3" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="6" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ReplaceStringFunction">
+      <LineId Id="3" Count="15" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.SubstringFunction">
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="46" Count="3" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="56" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

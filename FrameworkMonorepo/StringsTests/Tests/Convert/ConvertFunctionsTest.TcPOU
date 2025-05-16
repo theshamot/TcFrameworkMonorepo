@@ -6,11 +6,13 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[AnyTypeToStringFunction();
-StringToAnyFunction();]]></ST>
+      <ST><![CDATA[AnyToStringFunction();
+StringToAnyFunction();
+AnyTypeToStringFunction();
+StringToAnyTypeFunction();]]></ST>
     </Implementation>
-    <Method Name="AnyTypeToStringFunction" Id="{88310384-b69f-02db-2220-3da8999f0eeb}">
-      <Declaration><![CDATA[METHOD AnyTypeToStringFunction : BOOL
+    <Method Name="AnyToStringFunction" Id="{88310384-b69f-02db-2220-3da8999f0eeb}">
+      <Declaration><![CDATA[METHOD AnyToStringFunction : BOOL
 VAR
 	stringVar : T_MaxString := 'test';
 	intVar : INT := 42;
@@ -33,6 +35,38 @@ AssertEquals_STRING(
 AssertEquals_STRING(
 	Expected := '3.14',
 	Actual := AnyToString(realVar),
+	Message := 'Should convert REAL var to STRING');
+	
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AnyTypeToStringFunction" Id="{42f37d30-c9fb-033d-046c-0a523908b466}">
+      <Declaration><![CDATA[METHOD AnyTypeToStringFunction
+VAR 
+	stringVar : T_MaxString := 'test';
+	intVar : INT := 42;
+	realVar : REAL := 3.14;
+	result  : T_MaxString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('ANYTYPE to STRING');
+ 
+ 
+AssertEquals_STRING(
+	Expected := 'test',
+	Actual := AnyTypeToString(ToAnyType(stringVar)),
+	Message := 'Should convert STRING var to STRING');
+
+  
+AssertEquals_STRING(
+	Expected := '42',
+	Actual := AnyTypeToString(ToAnyType(intVar)),
+	Message := 'Should convert INT var to STRING');
+ 
+
+AssertEquals_STRING(
+	Expected := '3.14',
+	Actual := AnyTypeToString(ToAnyType(realVar)),
 	Message := 'Should convert REAL var to STRING');
 	
 TEST_FINISHED();]]></ST>
@@ -72,5 +106,80 @@ AssertEquals_REAL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="StringToAnyTypeFunction" Id="{f87bd476-b999-0a0a-1296-affc546dc15a}">
+      <Declaration><![CDATA[METHOD StringToAnyTypeFunction
+VAR
+	stringVar : T_MaxString;
+	stringVar1 : __SYSTEM.AnyType;
+	stringVar2 : __SYSTEM.AnyType;
+	intVar : __SYSTEM.AnyType;
+	realVar : __SYSTEM.AnyType; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('STRING to ANYTYPE');
+
+stringVar := 'this is test';
+stringVar1.diSize := SIZEOF(stringVar);
+stringVar1.pValue := ADR(stringVar);
+stringVar1.TypeClass := IBaseLibrary.TypeClass.TYPE_STRING;
+
+StringToAnyType(stringVar, stringVar2);
+ 
+ 
+
+AssertEquals(
+	Expected := stringVar1,
+	Actual := stringVar2,
+	Message := 'Should return correct STRING value');
+
+//AssertEquals_STRING(
+//	Expected := '42',
+//	Actual := AnyTypeToString(intVar),
+//	Message := 'Should return correct INT value');
+
+//AssertEquals_STRING(
+//	Expected := '3.14',
+//	Actual := AnyTypeToString(realVar),
+//	Message := 'Should return correct REAL value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ConvertFunctionsTest">
+      <LineId Id="7" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="8" Count="1" />
+    </LineIds>
+    <LineIds Name="ConvertFunctionsTest.AnyToStringFunction">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ConvertFunctionsTest.AnyTypeToStringFunction">
+      <LineId Id="6" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="8" Count="3" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="13" Count="3" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="18" Count="4" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ConvertFunctionsTest.StringToAnyFunction">
+      <LineId Id="3" Count="21" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ConvertFunctionsTest.StringToAnyTypeFunction">
+      <LineId Id="40" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="41" Count="8" />
+      <LineId Id="64" Count="8" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

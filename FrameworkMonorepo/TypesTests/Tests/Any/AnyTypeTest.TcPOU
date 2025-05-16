@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="AnyTypeTest" Id="{98942519-e7b3-00c7-39b8-4b53b9a409c5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AnyTypeTest EXTENDS TcUnit.FB_TestSuite
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CheckIsAnyTypeBinded();
+ReturnsValidAnyType();]]></ST>
+    </Implementation>
+    <Method Name="CheckIsAnyTypeBinded" Id="{63f30f07-1320-0063-3593-046d0d959e15}">
+      <Declaration><![CDATA[METHOD CheckIsAnyTypeBinded 
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	isOpen : BOOL;
+	anyBound : __SYSTEM.AnyType; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('isAnyTypeBinded should correctly detect binding state of ANYTYPE');
+
+// --- Case 1: Unbound ANYTYPE ---
+anyBound.diSize :=0;
+anyBound.pValue :=0;
+  
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual   := isAnyTypeBinded(anyType := anyBound),
+	Message  := 'Expected FALSE when ANYTYPE.pValue = 0 and diSize = 0 (unbound)');
+	
+// --- Case 2: Bound ANYTYPE ---
+anyBound.pValue :=	ADR(isOpen);
+anyBound.diSize := SIZEOF(isOpen);
+  
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual   := isAnyTypeBinded(anyType := anyBound),
+	Message  := 'Expected TRUE when ANYTYPE.pValue is valid and diSize > 0 (bound)');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReturnsValidAnyType" Id="{f0d6fb56-3d24-0d3d-291b-e7133c3a727c}">
+      <Declaration><![CDATA[METHOD ReturnsValidAnyType
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	
+	intValue : INT;
+	returnOfAnyType : __SYSTEM.AnyType;
+	ptrOk  : BOOL;
+	sizeOk : BOOL;  
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('ToAnyType should return a valid __SYSTEM.AnyType when passed an INT value');
+
+returnOfAnyType := ToAnyType(intValue);
+
+ptrOk := returnOfAnyType.pValue<>0;
+sizeOk := returnOfAnyType.diSize = SIZEOF(intValue);
+
+expected := TRUE;
+actual := ptrOk AND sizeOk;
+
+AssertEquals(
+	Expected := expected,
+	Actual   := actual,
+	Message  := 'ToAnyType() failed: pValue was 0 or diSize was incorrect for INT input.');
+	
+TEST_FINISHED();	]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="AnyTypeTest">
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="AnyTypeTest.CheckIsAnyTypeBinded">
+      <LineId Id="5" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="32" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="AnyTypeTest.ReturnsValidAnyType">
+      <LineId Id="10" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="20" Count="6" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="27" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

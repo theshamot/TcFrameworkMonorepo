@@ -9,5 +9,8 @@ END_VAR
     <Implementation>
       <ST><![CDATA[IsAnyTypeBinded := anytype.pValue <> 0 AND anytype.diSize > 0;]]></ST>
     </Implementation>
+    <LineIds Name="IsAnyTypeBinded">
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

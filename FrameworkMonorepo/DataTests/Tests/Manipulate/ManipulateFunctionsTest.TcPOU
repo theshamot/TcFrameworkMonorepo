@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ManipulateFunctionsTest" Id="{14169c0f-5a0f-0126-0137-c92919737a12}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
@@ -10,8 +10,45 @@ END_VAR
 ShiftDataLeftFunction();
 ShiftDataRightFunction();
 SwapFunction();
-SwapByPointerFunction();]]></ST>
+SwapByPointerFunction();
+ClearDataAnyTypeFunction();]]></ST>
     </Implementation>
+    <Method Name="ClearDataAnyTypeFunction" Id="{a4331508-017e-0412-33eb-281b9f774e40}">
+      <Declaration><![CDATA[METHOD ClearDataAnyTypeFunction
+VAR
+	data : __SYSTEM.AnyType;
+	intValue : INT;
+	stringValue : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('ClearDataAnyTypeFunction');
+
+intValue := 42;
+data.diSize := SIZEOF(intValue);
+data.pValue := ADR(intValue);
+
+ClearDataAnyType(data);
+
+AssertEquals_INT(
+	Expected := 0,
+	Actual := intValue,
+	Message := 'Data memory of int type should be all set to 0');
+	
+stringValue := '42';
+data.diSize := SIZEOF(stringValue);
+data.pValue := ADR(stringValue);
+
+ClearDataAnyType(data);
+	
+AssertEquals_STRING(
+	Expected := '',
+	Actual := stringValue,
+	Message := 'Data memory of string type should be all set to 0');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="ClearDataFunction" Id="{8bab33b3-023a-0211-1df9-0f38203bac79}">
       <Declaration><![CDATA[METHOD ClearDataFunction : BOOL
 VAR
@@ -140,5 +177,48 @@ AssertEquals_BOOL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="ManipulateFunctionsTest">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ClearDataAnyTypeFunction">
+      <LineId Id="6" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="9" Count="5" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="2" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ClearDataFunction">
+      <LineId Id="3" Count="9" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ShiftDataLeftFunction">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.ShiftDataRightFunction">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.SwapByPointerFunction">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="ManipulateFunctionsTest.SwapFunction">
+      <LineId Id="3" Count="11" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>
