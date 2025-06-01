@@ -23,9 +23,5 @@ END_VAR]]></Declaration>
 		CompareAnyType := IsGreaterThanOrEqualAnyType(a, b);
 END_CASE]]></ST>
     </Implementation>
-    <LineIds Name="CompareAnyType">
-      <LineId Id="3" Count="12" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

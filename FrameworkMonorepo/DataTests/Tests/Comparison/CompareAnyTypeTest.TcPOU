@@ -17,58 +17,53 @@ CompareAnyTypeFunction();]]></ST>
     <Method Name="CompareAnyTypeFunction" Id="{ea0a221f-c114-0b4a-006b-8724add9b1db}">
       <Declaration><![CDATA[METHOD CompareAnyTypeFunction
 VAR  
-	intValue1 : INT;
-	intValue2 : INT; 
+	data1 : INT := 11;
+	data2 : INT := 20; 
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('Compare INT values using compareAnyType');
-
-// Arrange
-intValue1 := 11;
-intValue2 := 20;
+        <ST><![CDATA[TcUnit.TEST('Compare any type function');
  
-
 // Equal
 AssertEquals_BOOL(
     Expected := FALSE,
-    Actual := compareAnyType(ToAnyType(intValue1), ComparisonOperator.Equal, ToAnyType(intValue2)),
-    Message := 'Expected 11 to be less than 20'
+    Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.Equal, ToAnyType(data2)),
+    Message := 'Expected data1 to be less than data2'
 );
 
 // NotEqual
 AssertEquals_BOOL(
     Expected := TRUE,
-    Actual := compareAnyType(ToAnyType(intValue1), ComparisonOperator.NotEqual, ToAnyType(intValue2)),
-    Message := 'Expected NOT equal = TRUE'
+    Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.NotEqual, ToAnyType(data2)),
+    Message := 'Expected the two values to be different'
 );
 
 // LessThan
 AssertEquals_BOOL(
     Expected := TRUE,
-    Actual := compareAnyType(ToAnyType(intValue1), ComparisonOperator.LessThan, ToAnyType(intValue2)),
-    Message := 'Expected LessThan = TRUE'
+    Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThan, ToAnyType(data2)),
+    Message := 'Expected data1 to be less than data2'
 );
 
 // LessThanOrEqual
 AssertEquals_BOOL(
     Expected := TRUE,
-    Actual := compareAnyType(ToAnyType(intValue1), ComparisonOperator.LessThanOrEqual, ToAnyType(intValue2)),
-    Message := 'Expected LessThan = TRUE'
+    Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThanOrEqual, ToAnyType(data2)),
+    Message := 'Expected data1 to be less than or equal to data2'
 );
 
 // GreaterThan
 AssertEquals_BOOL(
     Expected := FALSE,
-    Actual := compareAnyType(ToAnyType(intValue1), ComparisonOperator.GreaterThan, ToAnyType(intValue2)),
-    Message := 'Expected GreaterThan = FALSE'
+    Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThan, ToAnyType(data2)),
+    Message := 'Expected data1 to be greater than data2'
 );
 
 // GreaterThanOrEqual
 AssertEquals_BOOL(
     Expected := FALSE,
-    Actual := compareAnyType(ToAnyType(intValue1), ComparisonOperator.GreaterThanOrEqual, ToAnyType(intValue2)),
-    Message := 'Expected GreaterThanOrEqual = FALSE'
+    Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThanOrEqual, ToAnyType(data2)),
+    Message := 'Expected data1 to be greater than or equal to data2'
 );
 
 TEST_FINISHED();]]></ST>
@@ -260,40 +255,5 @@ AssertEquals_BOOL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="CompareAnyTypeTest">
-      <LineId Id="3" Count="4" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="11" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.CompareAnyTypeFunction">
-      <LineId Id="44" Count="2" />
-      <LineId Id="48" Count="1" />
-      <LineId Id="52" Count="43" />
-      <LineId Id="30" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.IsEqualAnyTypeFunction">
-      <LineId Id="3" Count="18" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.IsGreaterThanAnyTypeFunction">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.IsGreaterThanOrEqualAnyTypeFunction">
-      <LineId Id="3" Count="23" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.IsLessThanAnyTypeFunction">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.IsLessThanOrEqualAnyTypeFunction">
-      <LineId Id="3" Count="23" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="CompareAnyTypeTest.IsNotEqualAnyTypeFunction">
-      <LineId Id="3" Count="18" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

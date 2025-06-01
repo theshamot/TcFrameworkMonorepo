@@ -13,9 +13,5 @@ END_IF
 
 IsEqualAnyType := MEMCMP(a.pValue, b.pValue, TO_UDINT(a.diSize)) = 0;]]></ST>
     </Implementation>
-    <LineIds Name="IsEqualAnyType">
-      <LineId Id="3" Count="3" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

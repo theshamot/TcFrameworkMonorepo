@@ -39,7 +39,7 @@ VAR
 	test : T_MaxString := 'this is test string';
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('String begins with Function');
+        <ST><![CDATA[TcUnit.TEST('String begins with function');
 
 AssertEquals_BOOL(
 	Expected := FALSE,
@@ -84,7 +84,7 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('String ends with Function');
+        <ST><![CDATA[TcUnit.TEST('String ends with function');
 
 AssertEquals_BOOL(
 	Expected := FALSE,
@@ -99,26 +99,5 @@ AssertEquals_BOOL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ValidateFunctionsTest">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="7" Count="1" />
-    </LineIds>
-    <LineIds Name="ValidateFunctionsTest.StringBeginsWithAnyFunction">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ValidateFunctionsTest.StringBeginsWithFunction">
-      <LineId Id="6" Count="11" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ValidateFunctionsTest.StringEndsWithAnyFunction">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ValidateFunctionsTest.StringEndsWithFunction">
-      <LineId Id="6" Count="11" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -22,24 +22,18 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('ClearDataAnyTypeFunction');
+        <ST><![CDATA[TcUnit.TEST('Clear data any type function');
 
-intValue := 42;
-data.diSize := SIZEOF(intValue);
-data.pValue := ADR(intValue);
-
-ClearDataAnyType(data);
+intValue := 42; 
+ClearDataAnyType(ToAnyType(intValue));
 
 AssertEquals_INT(
 	Expected := 0,
 	Actual := intValue,
 	Message := 'Data memory of int type should be all set to 0');
 	
-stringValue := '42';
-data.diSize := SIZEOF(stringValue);
-data.pValue := ADR(stringValue);
-
-ClearDataAnyType(data);
+stringValue := '42'; 
+ClearDataAnyType(ToAnyType(stringValue));
 	
 AssertEquals_STRING(
 	Expected := '',
@@ -177,48 +171,5 @@ AssertEquals_BOOL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="ManipulateFunctionsTest">
-      <LineId Id="3" Count="3" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="10" Count="0" />
-    </LineIds>
-    <LineIds Name="ManipulateFunctionsTest.ClearDataAnyTypeFunction">
-      <LineId Id="6" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="7" Count="1" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="9" Count="5" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="26" Count="2" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="ManipulateFunctionsTest.ClearDataFunction">
-      <LineId Id="3" Count="9" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ManipulateFunctionsTest.ShiftDataLeftFunction">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ManipulateFunctionsTest.ShiftDataRightFunction">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ManipulateFunctionsTest.SwapByPointerFunction">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="ManipulateFunctionsTest.SwapFunction">
-      <LineId Id="3" Count="11" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

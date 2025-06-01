@@ -22,25 +22,20 @@ VAR
 	anyBound : __SYSTEM.AnyType; 
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('isAnyTypeBinded should correctly detect binding state of ANYTYPE');
+        <ST><![CDATA[TcUnit.TEST('Check is any type bounded');
 
-// --- Case 1: Unbound ANYTYPE ---
-anyBound.diSize :=0;
-anyBound.pValue :=0;
-  
+// --- Case 1: Unbound ---
+
 AssertEquals_BOOL(
 	Expected := FALSE,
 	Actual   := isAnyTypeBinded(anyType := anyBound),
-	Message  := 'Expected FALSE when ANYTYPE.pValue = 0 and diSize = 0 (unbound)');
+	Message  := 'Expected FALSE when anyType is not bounded');
 	
-// --- Case 2: Bound ANYTYPE ---
-anyBound.pValue :=	ADR(isOpen);
-anyBound.diSize := SIZEOF(isOpen);
-  
+// --- Case 2: Bound --- 
 AssertEquals_BOOL(
 	Expected := TRUE,
-	Actual   := isAnyTypeBinded(anyType := anyBound),
-	Message  := 'Expected TRUE when ANYTYPE.pValue is valid and diSize > 0 (bound)');
+	Actual   := isAnyTypeBinded(anyType := ToAnyType(isOpen)),
+	Message  := 'Expected TRUE when anyType is bounded');
 
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -58,7 +53,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('ToAnyType should return a valid __SYSTEM.AnyType when passed an INT value');
+        <ST><![CDATA[TcUnit.TEST('Returns valid any type');
 
 returnOfAnyType := ToAnyType(intValue);
 
@@ -71,44 +66,10 @@ actual := ptrOk AND sizeOk;
 AssertEquals(
 	Expected := expected,
 	Actual   := actual,
-	Message  := 'ToAnyType() failed: pValue was 0 or diSize was incorrect for INT input.');
+	Message  := 'ToAnyType() failed: pValue was 0 or diSize was incorrect for int input.');
 	
 TEST_FINISHED();	]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="AnyTypeTest">
-      <LineId Id="9" Count="0" />
-      <LineId Id="17" Count="0" />
-    </LineIds>
-    <LineIds Name="AnyTypeTest.CheckIsAnyTypeBinded">
-      <LineId Id="5" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="23" Count="2" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="32" Count="2" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="AnyTypeTest.ReturnsValidAnyType">
-      <LineId Id="10" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="20" Count="6" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="27" Count="1" />
-    </LineIds>
   </POU>
 </TcPlcObject>

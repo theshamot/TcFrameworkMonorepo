@@ -29,9 +29,5 @@ MEMCPY(in.pValue, new, TO_UDINT(in.diSize));
 __DELETE(new);
 ]]></ST>
     </Implementation>
-    <LineIds Name="ReplaceAllAnyType">
-      <LineId Id="3" Count="15" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
