@@ -72,9 +72,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[sb.Clear();
 sb.Append(
 	BuildStringInline(_Name)
-	.Append(' ')
 	.Append(_Assignment)
-	.Append(' ')
 	.Append(_StringBoundary)
 	.GetString()
 );

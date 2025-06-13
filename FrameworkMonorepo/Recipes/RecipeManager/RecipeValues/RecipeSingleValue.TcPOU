@@ -50,9 +50,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[_AssignmentString := 
 	BuildStringInline(_Name)
-	.Append(' ')
 	.Append(_Assignment)
-	.Append(' ')
 	.Append(ValueString)
 	.GetString();
 BuildAndGetAssignmentString := ADR(_AssignmentString);]]></ST>

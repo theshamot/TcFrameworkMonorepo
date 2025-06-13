@@ -47,6 +47,7 @@ END_VAR]]></Declaration>
 	newValue := __NEW(RecipeSingleValue);
 	newValue^.Bind(value);
 	newValue^.Name := name;
+	newValue^.Assignment := _Assignment;
 	values[valueCount] := newValue^;
 	
 	valueCount := valueCount + 1;
@@ -68,6 +69,7 @@ END_VAR]]></Declaration>
 	newValue^.Bind(value);
 	newValue^.Buffer := ToAnyType(valueStringBuffer);
 	newValue^.Name := name;
+	newValue^.Assignment := _Assignment;
 	values[valueCount] := newValue^;
 	
 	valueCount := valueCount + 1;
@@ -89,6 +91,7 @@ END_VAR]]></Declaration>
 	newValue^.Buffer := ToAnyType(valueStringBuffer);
 	newValue^.DefineRow(firstRow);
 	newValue^.Name := name;
+	newValue^.Assignment := _Assignment;
 	values[valueCount] := newValue^;
 	
 	valueCount := valueCount + 1;
@@ -113,10 +116,7 @@ END_VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_Assignment := Assignment;
-
-//serializer.Assignment := _Assignment;
-//deserializer.Assignment := _Assignment;]]></ST>
+          <ST><![CDATA[_Assignment := Assignment;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -236,11 +236,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//serializer.NewLine := _NewLine;
-//serializer.Assignment := _Assignment;
-
-//deserializer.NewLine := _NewLine;
-//deserializer.Assignment := _Assignment;]]></ST>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="FileName" Id="{122af664-9e40-0299-141f-ec89317ca077}">
@@ -506,7 +502,7 @@ WHILE caret < sb.Length DO
 	ClearData(singleValueString);
 	IF (__QUERYINTERFACE(value, singleValue)) THEN
 		valueLength := TO_DINT(FIND2(pSrcString := ADR(_Buffer[caret]), pFindString := ADR(_NewLine))) - 1;
-		IF (valueLength <= 0) THEN
+		IF (valueLength < 0) THEN
 			valueLength := sb.Length - caret;
 		ELSIF (valueLength > SIZEOF(T_MaxString) - 1) THEN
 			EXIT;
