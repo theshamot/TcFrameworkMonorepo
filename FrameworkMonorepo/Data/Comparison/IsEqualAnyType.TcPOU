@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="IsEqualAnyType" Id="{306151ac-6fe4-0968-06fe-fd616840ca54}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION IsEqualAnyType : BOOL
 VAR_INPUT
