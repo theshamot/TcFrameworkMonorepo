@@ -3,69 +3,57 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6fbf6e92-fb4d-4371-9288-fd05e9ab792a}</ProjectGuid>
+    <ProjectGuid>{decb8290-75b5-4eb2-b8d8-a8957f281eca}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>Math</Name>
+    <Name>MathTests</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{4815fa5f-5aec-4287-a922-09225a3c62ca}</Application>
-    <TypeSystem>{fde93696-f009-4c45-affa-dd3c7749ef12}</TypeSystem>
-    <Implicit_Task_Info>{7f80ce9a-858c-4cb5-b5e8-6282df2d6281}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{a9e9ceb8-08e9-4010-afa3-294c06e71687}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{810f5472-e6e5-49c0-99c3-7a49a6ee2321}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{6f1536b5-7139-46d0-aff4-ff20a6ba2e4b}</LibraryReferences>
-    <Company>TomasRompotl</Company>
-    <Released>false</Released>
-    <Title>Math</Title>
-    <ProjectVersion>0.0.2</ProjectVersion>
-    <CombineIds>true</CombineIds>
+    <Application>{1f5b06e1-9dec-480f-b0e6-0ac539a7b2f1}</Application>
+    <TypeSystem>{9d3d5d7d-b0f0-493a-a5b6-1b3fc72a96f6}</TypeSystem>
+    <Implicit_Task_Info>{8124a811-9f5e-4ebf-9c7f-74f684df8a0c}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{e53f1f7d-9c73-4558-a76f-5f58777c1465}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{c0e64f05-064b-40ee-87ff-e468b5eac853}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{5525ee65-d391-459b-8ae4-39a8e3200bdc}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Point" />
+    <Compile Include="MathTestTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PRG_Test.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Range\IsInRangeInclusiveFunctionsTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Range" />
-    <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Point\Point3D.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Point\Point2D.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Range\IsInRangeInclusive.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Range\IsInRangeInclusive2D.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Range\IsInRangeInclusive3D.TcPOU">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Range\Range2D.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Range\Range3D.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Range\Range.TcDUT">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="Version\Global_Version.TcGVL">
-      <SubType>Code</SubType>
-    </Compile>
+    <PlaceholderReference Include="Math">
+      <DefaultResolution>Math, * (TomasRompotl)</DefaultResolution>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Math.tmc">
+    <None Include="MathTests.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>

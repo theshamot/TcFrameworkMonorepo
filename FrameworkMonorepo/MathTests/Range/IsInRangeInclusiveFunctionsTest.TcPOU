@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="IsInRangeInclusiveFunctionsTest" Id="{414eaca2-58fa-0abe-2455-863f39d419ce}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK IsInRangeInclusiveFunctionsTest EXTENDS FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsInRangeInclusiveFunction();
+IsInRangeInclusive2DFunction();
+IsInRangeInclusive3DFunction();
+]]></ST>
+    </Implementation>
+    <Method Name="IsInRangeInclusive2DFunction" Id="{34cdcf29-c561-0aff-3875-1bc77a9a21ea}">
+      <Declaration><![CDATA[METHOD IsInRangeInclusive2DFunction
+VAR
+	point : Point2D;
+	range : Range2D;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('IsInRangeInclusive2D tests');
+
+// Point inside range (nominal)
+point.X := 5;
+point.Y := 5;
+range.X.Bottom := 0;
+range.X.Top := 10;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive2D(point, range),
+	Message := 'Point inside 2D range should return TRUE');
+
+// Point on boundary
+point.X := 0;
+point.Y := 10;
+range.X.Bottom := 0;
+range.X.Top := 10;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive2D(point, range),
+	Message := 'Point on boundary should return TRUE');
+
+// Point outside in one dimension
+point.X := 5;
+point.Y := 11;
+range.X.Bottom := 0;
+range.X.Top := 10;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive2D(point, range),
+	Message := 'Point outside one dimension should return FALSE');
+
+// Invalid range in one dimension
+point.X := 5;
+point.Y := 5;
+range.X.Bottom := 10;
+range.X.Top := 0;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive2D(point, range),
+	Message := 'Invalid range in one dimension should return FALSE');
+
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsInRangeInclusive3DFunction" Id="{e17ddf24-d3a1-0d7d-2d7c-4fbaeaa42856}">
+      <Declaration><![CDATA[METHOD IsInRangeInclusive3DFunction
+VAR
+	point : Point3D;
+	range : Range3D;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('IsInRangeInclusive3D tests');
+
+// Point inside range (nominal)
+point.X := 5;
+point.Y := 5;
+point.Z := 5;
+range.X.Bottom := 0;
+range.X.Top := 10;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+range.Z.Bottom := 0;
+range.Z.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive3D(point, range),
+	Message := 'Point inside 3D range should return TRUE');
+
+// Point on boundary
+point.X := 0;
+point.Y := 10;
+point.Z := 0;
+range.X.Bottom := 0;
+range.X.Top := 10;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+range.Z.Bottom := 0;
+range.Z.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive3D(point, range),
+	Message := 'Point on boundary should return TRUE');
+
+// Point outside in one dimension
+point.X := 5;
+point.Y := 5;
+point.Z := 11;
+range.X.Bottom := 0;
+range.X.Top := 10;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+range.Z.Bottom := 0;
+range.Z.Top := 10;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive3D(point, range),
+	Message := 'Point outside one dimension should return FALSE');
+
+// Invalid range in one dimension
+point.X := 5;
+point.Y := 5;
+point.Z := 5;
+range.X.Bottom := 10;
+range.X.Top := 0;
+range.Y.Bottom := 0;
+range.Y.Top := 10;
+range.Z.Bottom := 0;
+range.Z.Top := 10;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive3D(point, range),
+	Message := 'Invalid range in one dimension should return FALSE');
+
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsInRangeInclusiveFunction" Id="{954c94e1-f49b-03db-0008-c28065ee8fb1}">
+      <Declaration><![CDATA[METHOD IsInRangeInclusiveFunction
+VAR
+	range : Range;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('IsInRangeInclusive tests');
+
+// Value inside range
+range.Bottom := 0;
+range.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive(5, range),
+	Message := 'Value inside range should return TRUE');
+
+// Value equal to Bottom
+range.Bottom := 0;
+range.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive(0, range),
+	Message := 'Value equal to Bottom should return TRUE');
+
+// Value equal to Top
+range.Bottom := 0;
+range.Top := 10;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive(10, range),
+	Message := 'Value equal to Top should return TRUE');
+
+// Value below Bottom
+range.Bottom := 0;
+range.Top := 10;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive(-1, range),
+	Message := 'Value below Bottom should return FALSE');
+
+// Value above Top
+range.Bottom := 0;
+range.Top := 10;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive(11, range),
+	Message := 'Value above Top should return FALSE');
+
+// Invalid range (Bottom > Top)
+range.Bottom := 10;
+range.Top := 0;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive(5, range),
+	Message := 'Invalid range (Bottom > Top) should return FALSE');
+
+// Zero-width range (Bottom = Top), value matches
+range.Bottom := 0;
+range.Top := 0;
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := IsInRangeInclusive(0, range),
+	Message := 'Value equal to zero-range should return TRUE');
+
+// Zero-width range (Bottom = Top), value does not match
+range.Bottom := 0;
+range.Top := 0;
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := IsInRangeInclusive(0.1, range),
+	Message := 'Value outside zero-range should return FALSE');
+
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
