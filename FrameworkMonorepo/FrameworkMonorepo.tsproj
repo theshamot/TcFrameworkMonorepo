@@ -6,20 +6,23 @@
 				<Cpu CpuId="23"/>
 			</Settings>
 			<Tasks>
-				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">
 					<Name>BindingTestTask</Name>
 				</Task>
-				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
+				<Task Id="4" Priority="21" CycleTime="10000" AmsPort="351" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
-				<Task Id="5" Priority="22" CycleTime="100000" AmsPort="352" AdtTasks="true">
+				<Task Id="5" Priority="22" CycleTime="10000" AmsPort="352" AdtTasks="true">
 					<Name>PlcTask1</Name>
 				</Task>
-				<Task Id="6" Priority="23" CycleTime="100000" AmsPort="353" AdtTasks="true">
+				<Task Id="6" Priority="23" CycleTime="10000" AmsPort="353" AdtTasks="true">
 					<Name>PlcTask2</Name>
 				</Task>
-				<Task Id="7" Priority="24" CycleTime="100000" AmsPort="354" AdtTasks="true">
+				<Task Id="7" Priority="24" CycleTime="10000" AmsPort="354" AdtTasks="true">
 					<Name>MathTestTask</Name>
+				</Task>
+				<Task Id="8" Priority="25" CycleTime="10000" AmsPort="355" AdtTasks="true">
+					<Name>TimesTestsTask</Name>
 				</Task>
 			</Tasks>
 			<TypeSystem>
@@ -30,7 +33,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{53775AAD-FA08-4440-B0B9-741C387ECAA9}" Name="Types" PrjFilePath="Types\Types.plcproj" TmcFilePath="Types\Types.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Types\Types.tmc" TmcHash="{56468AA9-84FA-97AD-EAA6-5349F4DEC061}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Types\Types.tmc" TmcHash="{FFB89D97-984A-2D44-7F8A-5EB6A553C814}">
 					<Name>Types Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -66,7 +69,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{87D178AF-7190-4F0D-A7DE-F0410BF98981}" Name="TypesTests" PrjFilePath="TypesTests\TypesTests.plcproj" TmcFilePath="TypesTests\TypesTests.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TypesTests\TypesTests.tmc" TmcHash="{A981575C-FB66-0CCC-A7AE-EF09028E0FD2}">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TypesTests\TypesTests.tmc" TmcHash="{CD186517-AE65-BE7A-66BF-FDCACDDE7698}">
 					<Name>TypesTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -77,7 +80,7 @@
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
 							<Priority>20</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
@@ -86,7 +89,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{5FA3E815-F79F-4B58-9FE0-6C55EEF9EE97}" Name="StringsTests" PrjFilePath="StringsTests\StringsTests.plcproj" TmcFilePath="StringsTests\StringsTests.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="StringsTests\StringsTests.tmc" TmcHash="{FBAF00B0-51A0-C0B3-E770-249EB336E4B3}">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="StringsTests\StringsTests.tmc" TmcHash="{25FDC2CF-AE32-B889-44E6-C581C425E058}">
 					<Name>StringsTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -97,7 +100,7 @@
 								<OTCID>#x02010040</OTCID>
 							</ManualConfig>
 							<Priority>21</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
@@ -106,7 +109,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{449DA929-D2D0-4EC9-9052-EADDE666E8FE}" Name="DataTests" PrjFilePath="DataTests\DataTests.plcproj" TmcFilePath="DataTests\DataTests.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{72067CE6-B13C-0D4F-EFD5-7D544936EAE0}">
+				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{100B6291-5F5F-B01B-9365-2E41EA90AE4E}">
 					<Name>DataTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -117,7 +120,7 @@
 								<OTCID>#x02010050</OTCID>
 							</ManualConfig>
 							<Priority>22</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
@@ -126,7 +129,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{BF166AC3-50F2-48F3-99F6-10001F994B9E}" Name="Files" PrjFilePath="Files\Files.plcproj" TmcFilePath="Files\Files.tmc" ReloadTmc="true" AmsPort="857" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{86F805A5-EE2D-C73E-130A-F382DD7A2579}">
+				<Instance Id="#x08502180" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Files\Files.tmc" TmcHash="{07D142A7-C419-BC96-E524-6E3AD15C7913}">
 					<Name>Files Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -138,7 +141,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{8CC7B01A-23A8-4E47-8E43-E4DD75371101}" Name="Recipes" PrjFilePath="Recipes\Recipes.plcproj" TmcFilePath="Recipes\Recipes.tmc" ReloadTmc="true" AmsPort="858" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Recipes\Recipes.tmc" TmcHash="{D172272B-F368-F20D-48CD-1D9785AA5991}">
+				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Recipes\Recipes.tmc" TmcHash="{C3F1E77E-0CB3-2F13-619F-5A0A54710884}">
 					<Name>Recipes Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -198,7 +201,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{DECB8290-75B5-4EB2-B8D8-A8957F281ECA}" Name="MathTests" PrjFilePath="MathTests\MathTests.plcproj" TmcFilePath="MathTests\MathTests.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MathTests\MathTests.tmc" TmcHash="{36E0035D-C590-AF3E-9E69-BC36D92D72BF}">
+				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MathTests\MathTests.tmc" TmcHash="{13DAFDEA-D4E2-1453-C01F-6B45A2D303D5}">
 					<Name>MathTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -209,11 +212,31 @@
 								<OTCID>#x02010070</OTCID>
 							</ManualConfig>
 							<Priority>24</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="24" OTCID="#x08502301"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{B2EED482-DD5D-4FE7-B28C-21A696F98455}" Name="TimesTests" PrjFilePath="TimesTests\TimesTests.plcproj" TmcFilePath="TimesTests\TimesTests.tmc" ReloadTmc="true" AmsPort="864" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502340" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{8F1643EB-B205-AEBB-FB4B-F1DC4BCA7FCD}">
+					<Name>TimesTests Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010080</OTCID>
+							</ManualConfig>
+							<Priority>25</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="25" OTCID="#x08502341"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>

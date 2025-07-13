@@ -3,38 +3,39 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{decb8290-75b5-4eb2-b8d8-a8957f281eca}</ProjectGuid>
+    <ProjectGuid>{b2eed482-dd5d-4fe7-b28c-21a696f98455}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
-    <Name>MathTests</Name>
+    <Name>TimesTests</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
-    <Application>{1f5b06e1-9dec-480f-b0e6-0ac539a7b2f1}</Application>
-    <TypeSystem>{9d3d5d7d-b0f0-493a-a5b6-1b3fc72a96f6}</TypeSystem>
-    <Implicit_Task_Info>{8124a811-9f5e-4ebf-9c7f-74f684df8a0c}</Implicit_Task_Info>
-    <Implicit_KindOfTask>{e53f1f7d-9c73-4558-a76f-5f58777c1465}</Implicit_KindOfTask>
-    <Implicit_Jitter_Distribution>{c0e64f05-064b-40ee-87ff-e468b5eac853}</Implicit_Jitter_Distribution>
-    <LibraryReferences>{5525ee65-d391-459b-8ae4-39a8e3200bdc}</LibraryReferences>
+    <Application>{306b8c5b-fc8b-4617-b1c4-0cd957c7c274}</Application>
+    <TypeSystem>{80116c13-645b-48ae-a963-30381220cd11}</TypeSystem>
+    <Implicit_Task_Info>{76fbdb90-4681-4025-bbf6-eac49dd2647e}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{145d541a-ea92-4ec2-8e27-6f847257446e}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{11a45727-d896-4d71-b539-2abdfebeaeac}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{ffee7358-d66b-4a14-8f50-05c7a1455adb}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PlcTask.TcTTO">
+    <Compile Include="Clocks\PeriodicTriggerTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Convert\ConvertFunctionsTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PRG_Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Range\IsInRangeInclusiveFunctionsTest.TcPOU">
+    <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Range" />
+    <Folder Include="Convert" />
+    <Folder Include="Clocks" />
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="Math">
-      <DefaultResolution>Math, * (TomasRompotl)</DefaultResolution>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -51,9 +52,12 @@
       <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
       <Namespace>TcUnit</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="Times">
+      <DefaultResolution>Times, * (TomasRompotl)</DefaultResolution>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MathTests.tmc">
+    <None Include="TimesTests.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
