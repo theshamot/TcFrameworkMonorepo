@@ -63,7 +63,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{87D178AF-7190-4F0D-A7DE-F0410BF98981}" Name="TypesTests" PrjFilePath="TypesTests\TypesTests.plcproj" TmcFilePath="TypesTests\TypesTests.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e">
-				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TypesTests\TypesTests.tmc" TmcHash="{5EBB3B7B-F38E-BA14-07B9-5268AF191467}">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TypesTests\TypesTests.tmc" TmcHash="{726E291E-B3BB-7856-5C66-DCF53282DE2A}">
 					<Name>TypesTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -83,7 +83,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{5FA3E815-F79F-4B58-9FE0-6C55EEF9EE97}" Name="StringsTests" PrjFilePath="StringsTests\StringsTests.plcproj" TmcFilePath="StringsTests\StringsTests.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e">
-				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="StringsTests\StringsTests.tmc" TmcHash="{017D05CD-7F60-1908-C271-BDFF432AFDD5}">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="StringsTests\StringsTests.tmc" TmcHash="{C06DAB8F-8CD0-9936-D9C5-CFD8A5AA4196}">
 					<Name>StringsTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -103,7 +103,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{449DA929-D2D0-4EC9-9052-EADDE666E8FE}" Name="DataTests" PrjFilePath="DataTests\DataTests.plcproj" TmcFilePath="DataTests\DataTests.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{BA36AF45-40E7-DC65-E6FF-6CDF704B0E13}">
+				<Instance Id="#x08502140" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="DataTests\DataTests.tmc" TmcHash="{3507FA55-01D3-A9C5-84FD-64136CA83FCA}">
 					<Name>DataTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

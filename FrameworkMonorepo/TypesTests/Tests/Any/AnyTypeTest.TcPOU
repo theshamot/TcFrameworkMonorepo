@@ -1,37 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="AnyTypeTest" Id="{98942519-e7b3-00c7-39b8-4b53b9a409c5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK AnyTypeTest EXTENDS TcUnit.FB_TestSuite
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
-VAR
-END_VAR
-]]></Declaration>
+    <Declaration><![CDATA[FUNCTION_BLOCK AnyTypeTest EXTENDS TcUnit.FB_TestSuite]]></Declaration>
     <Implementation>
       <ST><![CDATA[CheckIsAnyTypeBinded();
-ReturnsValidAnyType();]]></ST>
+ToAnyTypeFunction();]]></ST>
     </Implementation>
     <Method Name="CheckIsAnyTypeBinded" Id="{63f30f07-1320-0063-3593-046d0d959e15}">
       <Declaration><![CDATA[METHOD CheckIsAnyTypeBinded 
 VAR
-	expected : BOOL;
-	actual : BOOL;
 	isOpen : BOOL;
-	anyBound : __SYSTEM.AnyType; 
+	nonBound : __SYSTEM.AnyType; 
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Check is any type bounded');
 
-// --- Case 1: Unbound ---
-
 AssertEquals_BOOL(
 	Expected := FALSE,
-	Actual   := isAnyTypeBinded(anyType := anyBound),
+	Actual   := isAnyTypeBinded(anyType := nonBound),
 	Message  := 'Expected FALSE when anyType is not bounded');
-	
-// --- Case 2: Bound --- 
+
 AssertEquals_BOOL(
 	Expected := TRUE,
 	Actual   := isAnyTypeBinded(anyType := ToAnyType(isOpen)),
@@ -40,35 +28,26 @@ AssertEquals_BOOL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ReturnsValidAnyType" Id="{f0d6fb56-3d24-0d3d-291b-e7133c3a727c}">
-      <Declaration><![CDATA[METHOD ReturnsValidAnyType
-VAR
-	expected : BOOL;
-	actual : BOOL;
-	
+    <Method Name="ToAnyTypeFunction" Id="{f0d6fb56-3d24-0d3d-291b-e7133c3a727c}">
+      <Declaration><![CDATA[METHOD ToAnyTypeFunction
+VAR  
 	intValue : INT;
 	returnOfAnyType : __SYSTEM.AnyType;
-	ptrOk  : BOOL;
-	sizeOk : BOOL;  
+	pIntValue : POINTER TO INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('Returns valid any type');
+        <ST><![CDATA[TcUnit.TEST('To AnyType Function');
 
 returnOfAnyType := ToAnyType(intValue);
-
-ptrOk := returnOfAnyType.pValue<>0;
-sizeOk := returnOfAnyType.diSize = SIZEOF(intValue);
-
-expected := TRUE;
-actual := ptrOk AND sizeOk;
+pIntValue := ADR(intValue);
 
 AssertEquals(
-	Expected := expected,
-	Actual   := actual,
+	Expected := pIntValue,
+	Actual   := returnOfAnyType.pValue,
 	Message  := 'ToAnyType() failed: pValue was 0 or diSize was incorrect for int input.');
-	
-TEST_FINISHED();	]]></ST>
+
+TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
   </POU>

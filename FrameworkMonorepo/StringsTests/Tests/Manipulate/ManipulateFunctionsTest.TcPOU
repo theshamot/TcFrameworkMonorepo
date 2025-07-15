@@ -105,7 +105,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Replace all any function');  
 
-ReplaceAllAny(inputString,substringToReplace,replacementSubstring); 
+ReplaceAllAny(inputString, substringToReplace, replacementSubstring); 
 
 AssertEquals_STRING(
 	Expected := 'Valve2 is open',
@@ -121,20 +121,57 @@ TEST_FINISHED();
     <Method Name="ReplaceAllAnyTypeFunction" Id="{89eacb8d-99ad-053a-0232-ab4ea4fe81d2}">
       <Declaration><![CDATA[METHOD ReplaceAllAnyTypeFunction
 VAR  
-	inputString  : T_MaxString := 'Valve1 is open'; 
-	substringToReplace : T_MaxString := 'Valve1';
-	replacementSubstring : T_MaxString := 'Valve2';
+	inputString  : T_MaxString; 
+	substringToReplace : T_MaxString;
+	replacementSubstring : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('Replace all any type function');
 
-ReplaceAllAnyType(ToAnyType(inputString),substringToReplace,replacementSubstring); 
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'Valve2';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring); 
 
 AssertEquals_STRING(
 	Expected := 'Valve2 is open',
 	Actual := inputString,
-	Message := 'Should delete the substring if replacement is empty');
+	Message := 'ReplaceAllAnyType should delete the substring if replacement is empty');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve4';
+replacementSubstring  := 'Valve2';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring); 
+
+AssertEquals_STRING(
+	Expected := 'Valve1 is open',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should not modify the string if no match is found');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := '';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring);
+
+AssertEquals_STRING(
+	Expected := ' is open',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should delete the substring if replacement is empty');
+	
+inputString  := 'Valve1 is open. Valve1 is closed';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'V1';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring);
+
+AssertEquals_STRING(
+	Expected := 'V1 is open. V1 is closed',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should replace all occurrences of the target text');
 
 TEST_FINISHED();
 
@@ -158,7 +195,7 @@ replacementSubstring  := 'Valve2';
  
 AssertEquals_STRING(
 	Expected := 'Valve2 is open',
-	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
 	Message := 'ReplaceAll should correctly replace the target substring in the input string');
 	
 inputString  := 'Valve1 is open';
@@ -167,7 +204,7 @@ replacementSubstring  := 'Valve2';
 
 AssertEquals_STRING(
 	Expected := 'Valve1 is open',
-	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
 	Message := 'Should not modify the string if no match is found');
 	
 inputString  := 'Valve1 is open';
@@ -176,7 +213,7 @@ replacementSubstring  := '';
 
 AssertEquals_STRING(
 	Expected := ' is open',
-	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
 	Message := 'Should delete the substring if replacement is empty');
 	
 inputString  := 'Valve1 is open. Valve1 is closed';
@@ -185,7 +222,7 @@ replacementSubstring  := 'V1';
 
 AssertEquals_STRING(
 	Expected := 'V1 is open. V1 is closed',
-	Actual := ReplaceAll(inputString,substringToReplace,replacementSubstring),
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
 	Message := 'ReplaceAll should replace all occurrences of the target text');
 
 TEST_FINISHED();]]></ST>
@@ -229,7 +266,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[TcUnit.TEST('SubString function');
 
-SubString(source,destination,startIndex,length);
+SubString(source, destination, startIndex, length);
 AssertEquals_STRING(Expected := 'DEF12',
 					Actual :=  destination, 
 					Message := 'Substring result incorrect');

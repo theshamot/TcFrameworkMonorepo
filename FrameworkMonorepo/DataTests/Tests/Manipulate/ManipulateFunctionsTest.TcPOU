@@ -15,8 +15,7 @@ ClearDataAnyTypeFunction();]]></ST>
     </Implementation>
     <Method Name="ClearDataAnyTypeFunction" Id="{a4331508-017e-0412-33eb-281b9f774e40}">
       <Declaration><![CDATA[METHOD ClearDataAnyTypeFunction
-VAR
-	data : __SYSTEM.AnyType;
+VAR 
 	intValue : INT;
 	stringValue : STRING;
 END_VAR

@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="BooleanExpressionTest" Id="{5b87abb7-c6fd-0ff0-380b-88fecdbe8cd3}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK BooleanExpressionTest EXTENDS TcUnit.FB_TestSuite
-VAR
-END_VAR
-]]></Declaration>
+    <Declaration><![CDATA[FUNCTION_BLOCK BooleanExpressionTest EXTENDS TcUnit.FB_TestSuite]]></Declaration>
     <Implementation>
       <ST><![CDATA[Bind2Operands();]]></ST>
     </Implementation>

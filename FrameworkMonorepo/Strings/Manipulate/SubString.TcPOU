@@ -9,7 +9,8 @@ VAR_INPUT
 	length : DINT;
 END_VAR
 VAR
-	pByte : POINTER TO BYTE;
+	pTerminator : POINTER TO BYTE;
+	numberOfBytes : UDINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -17,15 +18,16 @@ END_VAR
 	RETURN;
 END_IF
 
+numberOfBytes := TO_UDINT(MIN(length, MIN(source.diSize - startIndex, destination.diSize))); 
+
 MEMCPY(
 	destAddr := destination.pValue,
 	srcAddr := source.pValue + TO_DWORD(startIndex),
-	n := TO_UDINT(MIN(length, MIN(source.diSize - startIndex, destination.diSize)))
+	n := numberOfBytes
 ); 
  
-pByte := destination.pValue+TO_DWORD(length);
-pByte^ := 0;
-]]></ST>
+pTerminator := destination.pValue + TO_DWORD(numberOfBytes);
+pTerminator^ := 0;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
