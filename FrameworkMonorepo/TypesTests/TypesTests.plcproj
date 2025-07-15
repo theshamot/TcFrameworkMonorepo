@@ -21,6 +21,9 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tests\Any\AnyTypeTest.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests\Binding\BindTest.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +55,7 @@
   <ItemGroup>
     <Folder Include="Tests" />
     <Folder Include="Tests\Binding" />
+    <Folder Include="Tests\Any" />
     <Folder Include="Tests\Values\BooleanExpression" />
     <Folder Include="Tests\_TemplateTest" />
     <Folder Include="Tests\Reflection" />

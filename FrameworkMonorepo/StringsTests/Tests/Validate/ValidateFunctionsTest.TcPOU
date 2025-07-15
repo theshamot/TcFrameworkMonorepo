@@ -7,7 +7,9 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[StringBeginsWithAnyFunction();
-StringEndsWithAnyFunction();]]></ST>
+StringEndsWithAnyFunction();
+StringBeginsWithFunction();
+StringEndsWithFunction();]]></ST>
     </Implementation>
     <Method Name="StringBeginsWithAnyFunction" Id="{e513f70c-a34b-048a-001b-48c3a603580b}">
       <Declaration><![CDATA[METHOD StringBeginsWithAnyFunction : BOOL
@@ -31,6 +33,27 @@ AssertEquals_BOOL(
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
+    <Method Name="StringBeginsWithFunction" Id="{c5106f1a-78ce-0509-007c-c7e3b24fc43b}">
+      <Declaration><![CDATA[METHOD StringBeginsWithFunction
+VAR
+	test : T_MaxString := 'this is test string';
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('String begins with function');
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := StringBeginsWith(test, 'nothing'),
+	Message := 'Should return FALSE because string does not begin with checked value');
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := StringBeginsWith(test, 'this'),
+	Message := 'Should return TRUE because string begins with checked value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="StringEndsWithAnyFunction" Id="{022e8947-c002-0f07-3f8f-01e15902521a}">
       <Declaration><![CDATA[METHOD StringEndsWithAnyFunction : BOOL
 VAR
@@ -48,6 +71,29 @@ AssertEquals_BOOL(
 AssertEquals_BOOL(
 	Expected := TRUE,
 	Actual := StringEndsWithAny(test, 'string'),
+	Message := 'Should return TRUE because string ends with checked value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StringEndsWithFunction" Id="{f4e86b06-ab4c-0da3-339d-d3d3932cf0fc}">
+      <Declaration><![CDATA[METHOD StringEndsWithFunction
+VAR
+	test : T_MaxString := 'this is test string';
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('String ends with function');
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := StringBeginsWith(test, 'nothing'),
+	Message := 'Should return FALSE because string does not end with checked value');
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := StringEndsWith(test, 'string'),
 	Message := 'Should return TRUE because string ends with checked value');
 
 TEST_FINISHED();]]></ST>

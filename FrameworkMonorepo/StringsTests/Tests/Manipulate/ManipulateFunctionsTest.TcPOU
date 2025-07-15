@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ManipulateFunctionsTest" Id="{8e2fe8b8-5e6f-0d30-1f80-87f977530bb8}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
@@ -10,7 +10,10 @@ END_VAR
 GetStringBetweenFunction();
 RemoveStringFromEndFunction();
 ReplaceStringFunction();
-]]></ST>
+ReplaceAllFunction();
+ReplaceAllAnyFunction();
+ReplaceAllAnyTypeFunction();
+SubstringFunction();]]></ST>
     </Implementation>
     <Method Name="AddLeadingZerosFunction" Id="{5b38fdb2-8f15-0071-0faa-54d830637f22}">
       <Declaration><![CDATA[METHOD AddLeadingZerosFunction : BOOL
@@ -78,7 +81,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('Remove string from end');
+        <ST><![CDATA[TcUnit.TEST('Remove string from end function');
 
 actual := RemoveStringFromEnd(test, 'removed');
 
@@ -86,6 +89,141 @@ AssertEquals_STRING(
 	Expected := 'Last word will be ',
 	Actual := actual,
 	Message := 'Should remove last word from test string');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceAllAnyFunction" Id="{b0638fe4-fb86-0b5b-2035-c1a68e913d99}">
+      <Declaration><![CDATA[METHOD ReplaceAllAnyFunction
+VAR  
+	inputString : T_MaxString := 'Valve1 is open';
+	substringToReplace : T_MaxString := 'Valve1'; 
+	replacementSubstring : T_MaxString := 'Valve2';
+ 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Replace all any function');  
+
+ReplaceAllAny(inputString, substringToReplace, replacementSubstring); 
+
+AssertEquals_STRING(
+	Expected := 'Valve2 is open',
+	Actual := inputString,
+	Message := 'Should delete the substring if replacement is empty');
+	
+TEST_FINISHED();
+
+ 
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceAllAnyTypeFunction" Id="{89eacb8d-99ad-053a-0232-ab4ea4fe81d2}">
+      <Declaration><![CDATA[METHOD ReplaceAllAnyTypeFunction
+VAR  
+	inputString  : T_MaxString; 
+	substringToReplace : T_MaxString;
+	replacementSubstring : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Replace all any type function');
+
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'Valve2';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring); 
+
+AssertEquals_STRING(
+	Expected := 'Valve2 is open',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should delete the substring if replacement is empty');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve4';
+replacementSubstring  := 'Valve2';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring); 
+
+AssertEquals_STRING(
+	Expected := 'Valve1 is open',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should not modify the string if no match is found');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := '';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring);
+
+AssertEquals_STRING(
+	Expected := ' is open',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should delete the substring if replacement is empty');
+	
+inputString  := 'Valve1 is open. Valve1 is closed';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'V1';
+
+ReplaceAllAnyType(ToAnyType(inputString), substringToReplace, replacementSubstring);
+
+AssertEquals_STRING(
+	Expected := 'V1 is open. V1 is closed',
+	Actual := inputString,
+	Message := 'ReplaceAllAnyType should replace all occurrences of the target text');
+
+TEST_FINISHED();
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceAllFunction" Id="{5c618a13-ecfa-0a46-0059-a8989e9615de}">
+      <Declaration><![CDATA[METHOD ReplaceAllFunction
+VAR
+	inputString  : T_MaxString;
+	substringToReplace : T_MaxString;
+	replacementSubstring  : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Replace all function');
+
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'Valve2';
+ 
+AssertEquals_STRING(
+	Expected := 'Valve2 is open',
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
+	Message := 'ReplaceAll should correctly replace the target substring in the input string');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve4';
+replacementSubstring  := 'Valve2';
+
+AssertEquals_STRING(
+	Expected := 'Valve1 is open',
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
+	Message := 'Should not modify the string if no match is found');
+	
+inputString  := 'Valve1 is open';
+substringToReplace := 'Valve1';
+replacementSubstring  := '';
+
+AssertEquals_STRING(
+	Expected := ' is open',
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
+	Message := 'Should delete the substring if replacement is empty');
+	
+inputString  := 'Valve1 is open. Valve1 is closed';
+substringToReplace := 'Valve1';
+replacementSubstring  := 'V1';
+
+AssertEquals_STRING(
+	Expected := 'V1 is open. V1 is closed',
+	Actual := ReplaceAll(inputString, substringToReplace, replacementSubstring),
+	Message := 'ReplaceAll should replace all occurrences of the target text');
 
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -112,6 +250,26 @@ AssertEquals_STRING(
 	Expected := 'this is replaced string',
 	Actual := test,
 	Message := 'Should replace found string');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SubstringFunction" Id="{ca36775e-eb93-0de9-16dc-c9e64461a584}">
+      <Declaration><![CDATA[METHOD SubstringFunction
+VAR
+	source : T_MaxString :=  'ABCDEF123456789';
+	destination : T_MaxString;
+	startIndex : DINT := 3; 
+    length : DINT := 5;	  
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('SubString function');
+
+SubString(source, destination, startIndex, length);
+AssertEquals_STRING(Expected := 'DEF12',
+					Actual :=  destination, 
+					Message := 'Substring result incorrect');
 
 TEST_FINISHED();]]></ST>
       </Implementation>

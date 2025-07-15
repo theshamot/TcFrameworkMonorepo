@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="ManipulateFunctionsTest" Id="{14169c0f-5a0f-0126-0137-c92919737a12}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
 VAR
@@ -10,8 +10,38 @@ END_VAR
 ShiftDataLeftFunction();
 ShiftDataRightFunction();
 SwapFunction();
-SwapByPointerFunction();]]></ST>
+SwapByPointerFunction();
+ClearDataAnyTypeFunction();]]></ST>
     </Implementation>
+    <Method Name="ClearDataAnyTypeFunction" Id="{a4331508-017e-0412-33eb-281b9f774e40}">
+      <Declaration><![CDATA[METHOD ClearDataAnyTypeFunction
+VAR 
+	intValue : INT;
+	stringValue : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Clear data any type function');
+
+intValue := 42; 
+ClearDataAnyType(ToAnyType(intValue));
+
+AssertEquals_INT(
+	Expected := 0,
+	Actual := intValue,
+	Message := 'Data memory of int type should be all set to 0');
+	
+stringValue := '42'; 
+ClearDataAnyType(ToAnyType(stringValue));
+	
+AssertEquals_STRING(
+	Expected := '',
+	Actual := stringValue,
+	Message := 'Data memory of string type should be all set to 0');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="ClearDataFunction" Id="{8bab33b3-023a-0211-1df9-0f38203bac79}">
       <Declaration><![CDATA[METHOD ClearDataFunction : BOOL
 VAR

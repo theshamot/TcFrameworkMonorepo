@@ -2,8 +2,6 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="NotBindTest" Id="{fe96cbef-b99a-0478-3f0f-27ee3f2d8f78}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK NotBindTest EXTENDS TcUnit.FB_TestSuite
-VAR
-END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[BindAndTestBinding();]]></ST>

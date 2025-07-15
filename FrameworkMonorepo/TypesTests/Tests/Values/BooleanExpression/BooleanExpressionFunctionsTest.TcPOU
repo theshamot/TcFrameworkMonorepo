@@ -2,8 +2,6 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="BooleanExpressionFunctionsTest" Id="{08c31312-6fc2-0947-20dd-b3a488df2c89}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK BooleanExpressionFunctionsTest EXTENDS TcUnit.FB_TestSuite
-VAR
-END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[And234();

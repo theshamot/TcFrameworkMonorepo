@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="StringToAnyType" Id="{a71bb3dc-acda-4ecb-979d-e887a77012fb}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION StringToAnyType
 VAR_INPUT

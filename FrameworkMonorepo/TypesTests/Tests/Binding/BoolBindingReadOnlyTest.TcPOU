@@ -2,8 +2,6 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="BoolBindingReadOnlyTest" Id="{5ec9cc84-43d1-04b3-01a2-75e05e6f1483}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK BoolBindingReadOnlyTest EXTENDS TcUnit.FB_TestSuite
-VAR
-END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[CheckIsBinded();
