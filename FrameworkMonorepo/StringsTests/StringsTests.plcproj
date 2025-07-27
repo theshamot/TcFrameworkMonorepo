@@ -72,6 +72,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="Types">
       <DefaultResolution>Types, * (TomasRompotl)</DefaultResolution>
+      <Namespace>Types</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

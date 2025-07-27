@@ -2,8 +2,6 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="BoolValuesTest" Id="{191f85c8-662c-078c-39b8-d20047e840af}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK BoolValuesTest EXTENDS TcUnit.FB_TestSuite
-VAR
-END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[FalseBoolValue();

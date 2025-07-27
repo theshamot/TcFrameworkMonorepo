@@ -6,11 +6,11 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[AnyTypeToStringFunction();
+      <ST><![CDATA[AnyToStringFunction();
 StringToAnyFunction();]]></ST>
     </Implementation>
-    <Method Name="AnyTypeToStringFunction" Id="{88310384-b69f-02db-2220-3da8999f0eeb}">
-      <Declaration><![CDATA[METHOD AnyTypeToStringFunction : BOOL
+    <Method Name="AnyToStringFunction" Id="{88310384-b69f-02db-2220-3da8999f0eeb}">
+      <Declaration><![CDATA[METHOD AnyToStringFunction : BOOL
 VAR
 	stringVar : T_MaxString := 'test';
 	intVar : INT := 42;
@@ -18,7 +18,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('ANY to STRING');
+        <ST><![CDATA[TcUnit.TEST('ANY to STRING function');
 
 AssertEquals_STRING(
 	Expected := 'test',
@@ -47,7 +47,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('STRING to ANY');
+        <ST><![CDATA[TcUnit.TEST('STRING to ANY function');
 
 StringToAny('this is test', stringVar);
 StringToAny('42', intVar);
