@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="BoolValuesTest" Id="{47c75fac-3a1d-091a-21c9-fa02f37d83cd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BoolValuesTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FalseBoolValue();
+TrueBoolValue();]]></ST>
+    </Implementation>
+    <Method Name="FalseBoolValue" Id="{1f3a4816-c10a-0590-30cb-e56e765cdb99}">
+      <Declaration><![CDATA[METHOD FalseBoolValue : BOOL
+VAR
+	value : FalseBoolValue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Get false bool value');
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := value.Value,
+	Message := 'FalseBoolValue should return FALSE value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TrueBoolValue" Id="{b81252c0-63f8-03fe-3fac-d80941b090ab}">
+      <Declaration><![CDATA[METHOD TrueBoolValue : BOOL
+VAR
+	value : TrueBoolValue;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Get true bool value');
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := value.Value,
+	Message := 'TrueBoolValue should return TRUE value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

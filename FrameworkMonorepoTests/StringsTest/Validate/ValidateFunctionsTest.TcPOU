@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ValidateFunctionsTest" Id="{cb16a091-8ccb-0ed8-19c5-6ad231cd9912}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ValidateFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[StringBeginsWithAnyFunction();
+StringEndsWithAnyFunction();]]></ST>
+    </Implementation>
+    <Method Name="StringBeginsWithAnyFunction" Id="{800b0c27-0a41-0ee5-0ced-ca7be9a08bff}">
+      <Declaration><![CDATA[METHOD StringBeginsWithAnyFunction : BOOL
+VAR
+	test : T_MaxString := 'this is test string';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('String begins with');
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := StringBeginsWithAny(test, 'nothing'),
+	Message := 'Should return FALSE because string does not begin with checked value');
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := StringBeginsWithAny(test, 'this'),
+	Message := 'Should return TRUE because string begins with checked value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StringEndsWithAnyFunction" Id="{1a96034c-2cd2-0bb9-2016-37253a64c0e9}">
+      <Declaration><![CDATA[METHOD StringEndsWithAnyFunction : BOOL
+VAR
+	test : T_MaxString := 'this is test string';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('String ends with');
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := StringBeginsWithAny(test, 'nothing'),
+	Message := 'Should return FALSE because string does not end with checked value');
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := StringEndsWithAny(test, 'string'),
+	Message := 'Should return TRUE because string ends with checked value');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

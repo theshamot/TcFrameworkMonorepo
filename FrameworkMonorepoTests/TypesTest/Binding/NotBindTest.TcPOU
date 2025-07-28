@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="NotBindTest" Id="{33f16734-939c-051d-1d83-9b9281248edf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK NotBindTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[BindAndTestBinding();]]></ST>
+    </Implementation>
+    <Method Name="BindAndTestBinding" Id="{9eb6c8e7-efc8-0b1b-15d3-ab12e816cb68}">
+      <Declaration><![CDATA[METHOD BindAndTestBinding : BOOL
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	
+	variable : BOOL;
+	binding : BoolValue;
+	disposable : Disposable;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Bind and test binding');
+
+binding := NotBind(variable);
+
+expected := TRUE;
+actual := binding <> 0;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'NotBind should return interface to created Binding');
+	
+variable := FALSE;
+
+expected := TRUE;
+actual := binding.Value;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Binding should return negated value of binded variable');
+	
+__QUERYINTERFACE(binding, disposable);
+disposable.Dispose();
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

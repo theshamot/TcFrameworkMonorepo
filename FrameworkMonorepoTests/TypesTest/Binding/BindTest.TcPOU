@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="BindTest" Id="{1654273e-c19c-0a6b-3a6d-14c2c68360f3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BindTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[BindAndTestBinding();]]></ST>
+    </Implementation>
+    <Method Name="BindAndTestBinding" Id="{cd1605f2-f81c-0982-1c88-c1821a2cd677}">
+      <Declaration><![CDATA[METHOD BindAndTestBinding : BOOL
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	
+	variable : BOOL;
+	binding : BoolValue;
+	disposable : Disposable;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Bind and test binding');
+
+binding := Bind(variable);
+
+expected := TRUE;
+actual := binding <> 0;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Bind should return interface to created Binding');
+	
+variable := TRUE;
+
+expected := TRUE;
+actual := binding.Value;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Binding should return value of binded variable');
+	
+__QUERYINTERFACE(binding, disposable);
+disposable.Dispose();
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

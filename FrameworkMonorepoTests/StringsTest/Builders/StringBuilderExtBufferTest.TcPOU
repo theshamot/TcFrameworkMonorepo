@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="StringBuilderExtBufferTest" Id="{c33f3568-737d-0f8d-016e-c400b31ebd8d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderExtBufferTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AppendAndClear();]]></ST>
+    </Implementation>
+    <Method Name="AppendAndClear" Id="{456e8ba9-e0db-0c67-100d-b68bbdeccdd7}">
+      <Declaration><![CDATA[METHOD AppendAndClear : BOOL
+VAR
+	buffer : STRING(2000);
+	builder : StringBuilderExtBuffer := (Buffer := ToAnyType(buffer));
+	
+	testValue : STRING := ' very long strings';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Append and Clear');
+
+builder
+	.Clear()
+	.Append('SB with external buffer')
+	.Append(' is meant for')
+	.AppendByPointer(ADR(testValue));
+
+AssertEquals_STRING(
+	Expected := 'SB with external buffer is meant for very long strings',
+	Actual := buffer,
+	Message := 'Strings should be properly appended');
+
+builder.Clear();
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := builder.IsEmpty,
+	Message := 'Buffer should be empty');
+	
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

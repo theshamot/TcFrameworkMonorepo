@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.65">
+	<Project ProjectGUID="{372E962D-1286-47C0-85CF-D04E493E4497}" Target64Bit="true" ShowHideConfigurations="#x3c6">
+		<System>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">
+					<Name>TypesTestTask</Name>
+				</Task>
+				<Task Id="4" Priority="21" CycleTime="10000" AmsPort="351" AdtTasks="true">
+					<Name>StringsTestTask</Name>
+				</Task>
+				<Task Id="5" Priority="22" CycleTime="10000" AmsPort="352" AdtTasks="true">
+					<Name>DataTestTask</Name>
+				</Task>
+				<Task Id="6" Priority="23" CycleTime="10000" AmsPort="353" AdtTasks="true">
+					<Name>MathTestTask</Name>
+				</Task>
+				<Task Id="7" Priority="24" CycleTime="10000" AmsPort="354" AdtTasks="true">
+					<Name>TimesTestTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{4ECF911A-1A9B-479B-9EFA-F8800C8A4019}" Name="TypesTest" PrjFilePath="TypesTest\TypesTest.plcproj" TmcFilePath="TypesTest\TypesTest.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TypesTest\TypesTest.tmc" TmcHash="{47FDDDD5-68E5-8F66-9F84-4357A86197EF}">
+					<Name>TypesTest Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{189A3C8A-38C8-4CAB-8A39-F5E58C2443EC}" Name="StringsTest" PrjFilePath="StringsTest\StringsTest.plcproj" TmcFilePath="StringsTest\StringsTest.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{CFB28CEB-4739-F53A-5F28-BF5F4A83FB4B}">
+					<Name>StringsTest Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010040</OTCID>
+							</ManualConfig>
+							<Priority>21</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="21" OTCID="#x08502041"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{835C75BD-06BC-466F-A101-9FF93498219C}" Name="DataTest" PrjFilePath="DataTest\DataTest.plcproj" TmcFilePath="DataTest\DataTest.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{4941E7C3-00BE-26E7-AE3F-38122F16FFBC}">
+					<Name>DataTest Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010050</OTCID>
+							</ManualConfig>
+							<Priority>22</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="22" OTCID="#x08502081"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{1F56573A-F5D8-4D16-9157-1EC753D6EC5B}" Name="MathTest" PrjFilePath="MathTest\MathTest.plcproj" TmcFilePath="MathTest\MathTest.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{B5E3AADD-3C1D-0FB8-A521-5A05573D18E9}">
+					<Name>MathTest Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010060</OTCID>
+							</ManualConfig>
+							<Priority>23</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="23" OTCID="#x085020c1"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{0F712BEB-C677-4931-8D9B-992AE3C31A3F}" Name="TimesTest" PrjFilePath="TimesTest\TimesTest.plcproj" TmcFilePath="TimesTest\TimesTest.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{FDB91130-C4F2-568F-DCF8-58D40BF3700B}">
+					<Name>TimesTest Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010070</OTCID>
+							</ManualConfig>
+							<Priority>24</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="24" OTCID="#x08502101"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+	</Project>
+</TcSmProject>

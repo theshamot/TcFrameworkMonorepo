@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="BooleanExpressionTest" Id="{bb2007ba-7887-0de8-05af-dcdcd4087178}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BooleanExpressionTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Bind2Operands();]]></ST>
+    </Implementation>
+    <Method Name="Bind2Operands" Id="{6f8151a5-c50c-0f6d-1eaf-43caeb034d02}">
+      <Declaration><![CDATA[METHOD Bind2Operands : BOOL
+VAR
+	val1 : BOOL;
+	val2 : BOOL;
+	expAnd : BooleanExpression;
+	expOr : BooleanExpression;
+	expXor : BooleanExpression;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Bind 2 operands');
+
+expAnd.Op2(BooleanOperator.ANDop, Bind(val1), Bind(val2));
+expOr.Op2(BooleanOperator.ORop, Bind(val1), Bind(val2));
+expXor.Op2(BooleanOperator.XORop, Bind(val1), Bind(val2));
+
+val1 := FALSE;
+val2 := FALSE;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := expAnd.Value,
+	Message := 'FALSE AND FALSE should be FALSE');
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := expOr.Value,
+	Message := 'FALSE OR FALSE should be FALSE');
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := expXor.Value,
+	Message := 'FALSE XOR FALSE should be FALSE');
+
+val1 := TRUE;
+val2 := FALSE;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := expAnd.Value,
+	Message := 'TRUE AND FALSE should be FALSE');
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := expOr.Value,
+	Message := 'TRUE OR FALSE should be TRUE');
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := expXor.Value,
+	Message := 'TRUE XOR FALSE should be TRUE');
+
+val1 := TRUE;
+val2 := TRUE;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := expAnd.Value,
+	Message := 'TRUE AND TRUE should be TRUE');
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := expOr.Value,
+	Message := 'TRUE OR TRUE should be TRUE');
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := expXor.Value,
+	Message := 'TRUE XOR TRUE should be FALSE');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="CompareAnyTypeTest" Id="{36603a0f-6f4b-0e3c-0f44-299f9cb37eb0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CompareAnyTypeTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsEqualAnyTypeFunction();
+IsGreaterThanAnyTypeFunction();
+IsGreaterThanOrEqualAnyTypeFunction();
+IsNotEqualAnyTypeFunction();
+IsLessThanAnyTypeFunction();
+IsLessThanOrEqualAnyTypeFunction();]]></ST>
+    </Implementation>
+    <Method Name="IsEqualAnyTypeFunction" Id="{2a6f9f5e-0729-01ef-0c40-5cc10679bdce}">
+      <Declaration><![CDATA[METHOD IsEqualAnyTypeFunction : BOOL
+VAR
+	data1 : STRING;
+	data2 : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Is equal any type');
+
+ClearData(data1);
+ClearData(data2);
+data1 := '';
+data2 := 'some test content';
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.Equal, ToAnyType(data2)),
+	Message := 'Data should not be equal');
+
+data1 := data2;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.Equal, ToAnyType(data2)),
+	Message := 'Data should be equal');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsGreaterThanAnyTypeFunction" Id="{583e28d5-e6a0-0b8b-1a3e-3aa95ee141bd}">
+      <Declaration><![CDATA[METHOD IsGreaterThanAnyTypeFunction : BOOL
+VAR
+	data1 : INT;
+	data2 : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Is greater then any type');
+
+data1 := 5;
+data2 := 5;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThan, ToAnyType(data2)),
+	Message := 'data1 should not be greater then data2');
+
+data1 := 10;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThan, ToAnyType(data2)),
+	Message := 'data1 should be greater then data2');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsGreaterThanOrEqualAnyTypeFunction" Id="{07c9b433-b15c-0534-3762-f257b7e3ed82}">
+      <Declaration><![CDATA[METHOD IsGreaterThanOrEqualAnyTypeFunction : BOOL
+VAR
+	data1 : REAL;
+	data2 : REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Is greater then or equal any type');
+
+data1 := 2.14;
+data2 := 3.14;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThanOrEqual, ToAnyType(data2)),
+	Message := 'data1 should not be greater or equal then data2');
+
+data1 := 3.14;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThanOrEqual, ToAnyType(data2)),
+	Message := 'data1 should be equal to data2');
+
+data1 := 4.14;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.GreaterThanOrEqual, ToAnyType(data2)),
+	Message := 'data1 should be greater then data2');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsLessThanAnyTypeFunction" Id="{328fafa5-04a7-0bb9-3949-0f2d099fcde2}">
+      <Declaration><![CDATA[METHOD IsLessThanAnyTypeFunction : BOOL
+VAR
+	data1 : INT;
+	data2 : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Is less then any type');
+
+data1 := 5;
+data2 := 5;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThan, ToAnyType(data2)),
+	Message := 'data1 should not be less then data2');
+
+data1 := 3;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThan, ToAnyType(data2)),
+	Message := 'data1 should be less then data2');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsLessThanOrEqualAnyTypeFunction" Id="{155866d2-af40-04ed-3748-f165f1c5c220}">
+      <Declaration><![CDATA[METHOD IsLessThanOrEqualAnyTypeFunction : BOOL
+VAR
+	data1 : REAL;
+	data2 : REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Is less then or equal any type');
+
+data1 := 4.14;
+data2 := 3.14;
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThanOrEqual, ToAnyType(data2)),
+	Message := 'data1 should not be less or equal then data2');
+
+data1 := 3.14;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThanOrEqual, ToAnyType(data2)),
+	Message := 'data1 should be equal to data2');
+
+data1 := 2.14;
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.LessThanOrEqual, ToAnyType(data2)),
+	Message := 'data1 should be less then data2');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsNotEqualAnyTypeFunction" Id="{97b255e6-3d93-018f-31d3-fa73a3faa93c}">
+      <Declaration><![CDATA[METHOD IsNotEqualAnyTypeFunction : BOOL
+VAR
+	data1 : STRING;
+	data2 : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Is not equal any type');
+
+ClearData(data1);
+ClearData(data2);
+data1 := 'some test content';
+data2 := 'some test content';
+
+AssertEquals_BOOL(
+	Expected := FALSE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.NotEqual, ToAnyType(data2)),
+	Message := 'Data should not be equal');
+
+data1 := '';
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := CompareAnyType(ToAnyType(data1), ComparisonOperator.NotEqual, ToAnyType(data2)),
+	Message := 'Data should be equal');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

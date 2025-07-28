@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ManipulateFunctionsTest" Id="{df77db8e-f5b8-0964-0508-c929df0bf759}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ManipulateFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AddLeadingZerosFunction();
+GetStringBetweenFunction();
+RemoveStringFromEndFunction();
+ReplaceStringFunction();
+]]></ST>
+    </Implementation>
+    <Method Name="AddLeadingZerosFunction" Id="{a6bb1a07-7b8b-082c-0f68-cef53bad28bb}">
+      <Declaration><![CDATA[METHOD AddLeadingZerosFunction : BOOL
+VAR
+	test : T_MaxString := '555';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Add leading zeros');
+
+AssertEquals_STRING(
+	Expected := '00555',
+	Actual := AddLeadingZeros(test, 5),
+	Message := 'Should pad propper number of zeros');
+
+AssertEquals_STRING(
+	Expected := '555',
+	Actual := AddLeadingZeros(test, 2),
+	Message := 'Should do nothing if formatter string already has more chars');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetStringBetweenFunction" Id="{b8e8d368-5bd6-0967-2fa3-9ea23462cb23}">
+      <Declaration><![CDATA[METHOD GetStringBetweenFunction : BOOL
+VAR
+	test0 : T_MaxString := '1';
+	test1 : T_MaxString := '[2]';
+	test2 : T_MaxString := 'TestValue[3]rest';
+	actual : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Get string between');
+
+actual := GetStringBetween(test0, '[', ']');
+
+AssertEquals_STRING(
+	Expected := '',
+	Actual := actual,
+	Message := 'Should return nothing');
+
+actual := GetStringBetween(test1, '[', ']');
+
+AssertEquals_STRING(
+	Expected := '2',
+	Actual := actual,
+	Message := 'Should return content of brackets');
+
+actual := GetStringBetween(test2, '[', ']');
+
+AssertEquals_STRING(
+	Expected := '3',
+	Actual := actual,
+	Message := 'Should return content of brackets');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveStringFromEndFunction" Id="{1f9f58a2-c116-05f0-1f1d-dab6baffa2c5}">
+      <Declaration><![CDATA[METHOD RemoveStringFromEndFunction : BOOL
+VAR
+	test : T_MaxString := 'Last word will be removed';
+	actual : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Remove string from end');
+
+actual := RemoveStringFromEnd(test, 'removed');
+
+AssertEquals_STRING(
+	Expected := 'Last word will be ',
+	Actual := actual,
+	Message := 'Should remove last word from test string');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceStringFunction" Id="{41cd62b4-7992-0572-3aae-07020e4931df}">
+      <Declaration><![CDATA[METHOD ReplaceStringFunction : BOOL
+VAR
+	test : T_MaxString := 'this is test string';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Replace string');
+
+ReplaceString(test, 'not here', 'replaced');
+
+AssertEquals_STRING(
+	Expected := 'this is test string',
+	Actual := test,
+	Message := 'Should do nothing because searched string is not there');
+
+ReplaceString(test, 'test', 'replaced');
+
+AssertEquals_STRING(
+	Expected := 'this is replaced string',
+	Actual := test,
+	Message := 'Should replace found string');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

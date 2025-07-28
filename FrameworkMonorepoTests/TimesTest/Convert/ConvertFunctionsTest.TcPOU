@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ConvertFunctionsTest" Id="{a5766de2-5a51-0512-32c1-c1b3a7facdf8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ConvertFunctionsTest EXTENDS FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SecondsToTimeFunction();
+TimeToSecondsFunction();
+]]></ST>
+    </Implementation>
+    <Method Name="SecondsToTimeFunction" Id="{5117e305-ba66-0716-321c-d5fc78e90486}">
+      <Declaration><![CDATA[METHOD SecondsToTimeFunction
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('SecondsToTime function');
+
+AssertEquals_TIME(
+	Expected := T#5S,
+	Actual := SecondsToTime(5),
+	Message := 'Converted time is not correct'
+);
+
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TimeToSecondsFunction" Id="{4ed5cb3d-9187-01b0-3453-94e6ce3eced2}">
+      <Declaration><![CDATA[METHOD TimeToSecondsFunction
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('TimeToSeconds function');
+
+AssertEquals_LREAL(
+	Expected := 5,
+	Actual := TimeToSeconds(T#5S),
+	Delta := 0,
+	Message := 'Converted seconds are not correct'
+);
+
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

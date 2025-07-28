@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="PRG_Test" Id="{380864e4-85d3-01fc-242a-a3eab7227cbd}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Test
+VAR
+	comparisonFunctionsTest : ComparisonFunctionsTest;
+	compareAnyTypeTest : CompareAnyTypeTest;
+	
+	manipulateFunctionsTest : ManipulateFunctionsTest;
+	quickSortFunctionsTest : QuickSortFunctionsTest;
+	SortFunctionsTest : SortFunctionsTest;
+
+	tableSerializerTest : TableSerializerTest;
+	tableDeserializerTest : TableDeserializerTest;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TcUnit.RUN();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

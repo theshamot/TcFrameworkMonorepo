@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="BoolBindingReadOnlyTest" Id="{6f6aa6ee-3f80-0569-2a76-15890d9b574f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BoolBindingReadOnlyTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CheckIsBinded();
+BindingReturnsSameValue();
+NegatedBindingReturnsNegatedValue();]]></ST>
+    </Implementation>
+    <Method Name="BindingReturnsSameValue" Id="{cf4f47ce-8a76-03d9-3c3a-c49c5b7d75ad}">
+      <Declaration><![CDATA[METHOD BindingReturnsSameValue : BOOL
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	
+	binding : BoolBindingReadOnly;
+	variable : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Binding returns same value');
+
+binding.Bind(variable);
+
+expected := FALSE;
+actual := binding.Value;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Value should return FALSE if binded variable is FALSE');
+	
+variable := TRUE;
+
+expected := TRUE;
+actual := binding.Value;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Value should return TRUE if binded variable is TRUE');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckIsBinded" Id="{20dbe522-faf1-0fc5-0fe6-786020207073}">
+      <Declaration><![CDATA[METHOD CheckIsBinded : BOOL
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	
+	binding : BoolBindingReadOnly;
+	variable : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Check binded');
+
+expected := FALSE;
+actual := binding.IsBinded;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'IsBinded should be FALSE before binding');
+
+binding.Bind(variable);
+
+expected := TRUE;
+actual := binding.IsBinded;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'IsBinded should be TRUE after successful Bind()');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="NegatedBindingReturnsNegatedValue" Id="{3c48ae1d-44e9-0387-3f0c-4ea4ae8a5cfa}">
+      <Declaration><![CDATA[METHOD NegatedBindingReturnsNegatedValue : BOOL
+VAR
+	expected : BOOL;
+	actual : BOOL;
+	
+	binding : BoolBindingReadOnly;
+	variable : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Negated binding returns negated value');
+
+binding.Bind(variable);
+binding.Negate := TRUE;
+
+expected := TRUE;
+actual := binding.Value;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Value should return TRUE if binded variable is FALSE');
+	
+variable := TRUE;
+
+expected := FALSE;
+actual := binding.Value;
+
+AssertEquals(
+	Expected := expected,
+	Actual := actual,
+	Message := 'Value should return FALSE if binded variable is TRUE');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

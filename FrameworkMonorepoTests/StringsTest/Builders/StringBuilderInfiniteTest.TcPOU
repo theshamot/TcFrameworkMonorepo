@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="StringBuilderInfiniteTest" Id="{a62c1232-1b79-0e39-242b-204a06f7f4f9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderInfiniteTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AppendAndClear();
+CheckCapacityHasIncreased();]]></ST>
+    </Implementation>
+    <Method Name="AppendAndClear" Id="{e4025a5f-9c9a-0cf2-212f-040abb046068}">
+      <Declaration><![CDATA[METHOD AppendAndClear : BOOL
+VAR
+	builder : StringBuilderInfinite;
+	testValue : STRING := ' very long strings without care';
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Append and Clear');
+
+builder
+	.Clear()
+	.Append('SB infinite')
+	.Append(' is meant for')
+	.AppendByPointer(ADR(testValue));
+
+AssertEquals_STRING(
+	Expected := 'SB infinite is meant for very long strings without care',
+	Actual := builder.Value^,
+	Message := 'Strings should be properly appended');
+
+builder.Clear();
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := builder.IsEmpty,
+	Message := 'String should be empty');
+	
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CheckCapacityHasIncreased" Id="{2055aa43-3d87-064b-299b-02479ee45bc0}">
+      <Declaration><![CDATA[METHOD CheckCapacityHasIncreased : BOOL
+VAR
+	builder : StringBuilderInfinite;
+	i : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Check capacity has increased');
+
+AssertEquals_DINT(
+	Expected := 1024,
+	Actual := builder.Capacity,
+	Message := 'Initial capacity should be 1000');
+	
+builder.Clear();
+FOR i := 0 TO 999 DO
+	builder.Append('0123456789');
+END_FOR
+
+AssertEquals_DINT(
+	Expected := 10000,
+	Actual := builder.Length,
+	Message := 'String should be 10000 long');
+
+AssertEquals_DINT(
+	Expected := 16384,
+	Actual := builder.Capacity,
+	Message := 'Capacity should be increased to 16384');
+	
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

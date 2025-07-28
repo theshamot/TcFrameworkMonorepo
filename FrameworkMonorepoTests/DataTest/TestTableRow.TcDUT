@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="TestTableRow" Id="{78518c22-8f2c-027f-0b50-e7ab234bdcee}">
+    <Declaration><![CDATA[TYPE TestTableRow :
+STRUCT
+	timestamp : TIME;
+	value1 : INT;
+	value2 : REAL;
+	description : STRING;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="QuickSortFunctionsTest" Id="{2847e832-90f2-03af-1033-4a0dd41c3b29}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK QuickSortFunctionsTest EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[QuickSortREALFunction();]]></ST>
+    </Implementation>
+    <Method Name="QuickSortREALFunction" Id="{278f101c-831c-0fa3-0d8c-697a19e61749}">
+      <Declaration><![CDATA[METHOD QuickSortREALFunction : BOOL
+VAR
+	data : ARRAY[0..4] OF REAL;
+	expected : ARRAY[0..4] OF REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('QuickSort REAL');
+
+data[0] := 3;
+data[1] := 1;
+data[2] := 2;
+data[3] := 5;
+data[4] := 4;
+
+QuickSortREAL(data, 0, 4);
+
+expected[0] := 1;
+expected[1] := 2;
+expected[2] := 3;
+expected[3] := 4;
+expected[4] := 5;
+
+AssertArrayEquals_REAL(
+	Expecteds := expected,
+	Actuals := data,
+	Delta := 0.1,
+	Message := 'Array should be sorter');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

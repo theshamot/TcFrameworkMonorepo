@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="StringBuilder255Test" Id="{45374ba5-d5f4-0307-1f24-494f4480db70}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StringBuilder255Test EXTENDS TcUnit.FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AppendAndClear();]]></ST>
+    </Implementation>
+    <Method Name="AppendAndClear" Id="{7e75f3b5-1f6d-003f-06c0-bda485456b0c}">
+      <Declaration><![CDATA[METHOD AppendAndClear : BOOL
+VAR
+	builder : StringBuilder255;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Append and Clear');
+
+builder
+	.Clear()
+	.Append('1')
+	.Append('2');
+
+AssertEquals_STRING(
+	Expected := '12',
+	Actual := builder.GetString(),
+	Message := 'Should return Appended strings using GetString() method');
+
+AssertEquals_STRING(
+	Expected := '12',
+	Actual := builder.Value,
+	Message := 'Should return string using Value property');
+
+AssertEquals_DINT(
+	Expected := 2,
+	Actual := builder.Length,
+	Message := 'Should return string length');	
+
+builder.Clear();
+
+AssertEquals_BOOL(
+	Expected := TRUE,
+	Actual := builder.IsEmpty,
+	Message := 'Should return that string is empty');
+	
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
