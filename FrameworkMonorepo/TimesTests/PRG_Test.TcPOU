@@ -3,8 +3,8 @@
   <POU Name="PRG_Test" Id="{386d7645-b19a-4291-b699-b6f2f3f4c2a7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM PRG_Test
 VAR
-	convertFunctionsTest : ConvertFunctionsTest();
-	periodicTriggerTest : PeriodicTriggerTest();
+	convertFunctionsTest : ConvertFunctionsTest;
+	periodicTriggerTest : PeriodicTriggerTest;
 END_VAR
 ]]></Declaration>
     <Implementation>
