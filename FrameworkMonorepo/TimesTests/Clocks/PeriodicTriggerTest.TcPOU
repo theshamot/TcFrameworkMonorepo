@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="PeriodicTriggerTest" Id="{89906474-ac38-00c4-0afd-be81547e2356}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PeriodicTriggerTest EXTENDS FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[KeepDisabled();
+TriggerWith10msPeriod();
+TriggerWith10msPeriodAndPulseAtStart();
+]]></ST>
+    </Implementation>
+    <Method Name="KeepDisabled" Id="{b227ae98-d2c6-05c9-1048-283422f7dbef}">
+      <Declaration><![CDATA[METHOD KeepDisabled
+VAR
+END_VAR
+VAR_INST
+	pt : PeriodicTrigger := (Enable := FALSE, Period := T#200MS);
+	timer : TON := (IN := TRUE, PT := T#1S);
+	wasOn : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Keep disabled');
+
+pt.Cyclic();
+wasOn S= pt.Trigger;
+
+timer();
+IF (timer.Q) THEN
+	timer.IN := FALSE;
+	
+	AssertEquals_BOOL(
+		Expected := FALSE,
+		Actual := wasOn,
+		Message := 'Periodic trigger triggered when not enabled.'
+	);
+	
+	TEST_FINISHED();
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TriggerWith10msPeriod" Id="{5366cfd8-cbdd-0f11-2b47-6d1c24fc89ab}">
+      <Declaration><![CDATA[// Test has to be run with 1 ms cycle time
+METHOD TriggerWith10msPeriod
+VAR
+END_VAR
+VAR_INST
+	pt : PeriodicTrigger := (Enable := TRUE, Period := T#10MS);
+	expected : ARRAY[0..40] OF BOOL;
+	actual : ARRAY[0..40] OF BOOL;
+	cycle : INT := 0;
+	init : BOOL := TRUE;
+END_VAR
+VAR CONSTANT
+	EndCycle : INT := 40;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Trigger with 10 ms period');
+
+IF (init) THEN
+	init := FALSE;
+	expected[10] := TRUE;
+	expected[20] := TRUE;
+	expected[30] := TRUE;
+END_IF
+
+pt.Cyclic();
+
+IF (cycle < EndCycle) THEN 
+	actual[cycle] := pt.Trigger;
+	cycle := cycle + 1;
+
+	IF (cycle = EndCycle) THEN
+		
+		AssertArrayEquals_BOOL(
+			Expecteds := expected,
+			Actuals := actual,
+			Message := 'Periodic trigger should trigger at start of each period after the starting one.'
+		);
+		
+		TEST_FINISHED();
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TriggerWith10msPeriodAndPulseAtStart" Id="{ccb7b46a-6343-0a62-1047-7259a0acf182}">
+      <Declaration><![CDATA[// Test has to be run with 1 ms cycle time
+METHOD TriggerWith10msPeriodAndPulseAtStart
+VAR
+END_VAR
+VAR_INST
+	pt : PeriodicTrigger := (Enable := TRUE, Period := T#10MS, PulseAtStart := TRUE);
+	expected : ARRAY[0..40] OF BOOL;
+	actual : ARRAY[0..40] OF BOOL;
+	cycle : INT := 0;
+	init : BOOL := TRUE;
+END_VAR
+VAR CONSTANT
+	EndCycle : INT := 40;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Trigger with 10 ms period and pulse at start');
+
+IF (init) THEN
+	init := FALSE;
+	expected[0] := TRUE;
+	expected[10] := TRUE;
+	expected[20] := TRUE;
+	expected[30] := TRUE;
+END_IF
+
+pt.Cyclic();
+
+IF (cycle < EndCycle) THEN 
+	actual[cycle] := pt.Trigger;
+	cycle := cycle + 1;
+
+	IF (cycle = EndCycle) THEN
+		
+		AssertArrayEquals_BOOL(
+			Expecteds := expected,
+			Actuals := actual,
+			Message := 'Periodic trigger should trigger at start of each period including the starting one.'
+		);
+		
+		TEST_FINISHED();
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -6,20 +6,23 @@
 				<Cpu CpuId="23"/>
 			</Settings>
 			<Tasks>
-				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">
 					<Name>BindingTestTask</Name>
 				</Task>
-				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
+				<Task Id="4" Priority="21" CycleTime="10000" AmsPort="351" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
-				<Task Id="5" Priority="22" CycleTime="100000" AmsPort="352" AdtTasks="true">
+				<Task Id="5" Priority="22" CycleTime="10000" AmsPort="352" AdtTasks="true">
 					<Name>PlcTask1</Name>
 				</Task>
-				<Task Id="6" Priority="23" CycleTime="100000" AmsPort="353" AdtTasks="true">
+				<Task Id="6" Priority="23" CycleTime="10000" AmsPort="353" AdtTasks="true">
 					<Name>PlcTask2</Name>
 				</Task>
-				<Task Id="7" Priority="24" CycleTime="100000" AmsPort="354" AdtTasks="true">
+				<Task Id="7" Priority="24" CycleTime="10000" AmsPort="354" AdtTasks="true">
 					<Name>MathTestTask</Name>
+				</Task>
+				<Task Id="8" Priority="25" CycleTime="10000" AmsPort="355" AdtTasks="true">
+					<Name>TimesTestsTask</Name>
 				</Task>
 			</Tasks>
 			<TypeSystem>
@@ -77,7 +80,7 @@
 								<OTCID>#x02010030</OTCID>
 							</ManualConfig>
 							<Priority>20</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
@@ -97,7 +100,7 @@
 								<OTCID>#x02010040</OTCID>
 							</ManualConfig>
 							<Priority>21</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
@@ -117,7 +120,7 @@
 								<OTCID>#x02010050</OTCID>
 							</ManualConfig>
 							<Priority>22</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
@@ -198,7 +201,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{DECB8290-75B5-4EB2-B8D8-A8957F281ECA}" Name="MathTests" PrjFilePath="MathTests\MathTests.plcproj" TmcFilePath="MathTests\MathTests.tmc" ReloadTmc="true" AmsPort="863" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MathTests\MathTests.tmc" TmcHash="{36E0035D-C590-AF3E-9E69-BC36D92D72BF}">
+				<Instance Id="#x08502300" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="MathTests\MathTests.tmc" TmcHash="{1C47CC03-E2E1-6544-AAA8-25461EB9487D}">
 					<Name>MathTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -209,11 +212,31 @@
 								<OTCID>#x02010070</OTCID>
 							</ManualConfig>
 							<Priority>24</Priority>
-							<CycleTime>10000000</CycleTime>
+							<CycleTime>1000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="24" OTCID="#x08502301"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{B2EED482-DD5D-4FE7-B28C-21A696F98455}" Name="TimesTests" PrjFilePath="TimesTests\TimesTests.plcproj" TmcFilePath="TimesTests\TimesTests.tmc" ReloadTmc="true" AmsPort="864" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502340" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TimesTests\TimesTests.tmc" TmcHash="{36E2D6D2-B63A-F6E8-51B4-ADAB2BCA2B54}">
+					<Name>TimesTests Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>0</Id>
+							<Name>PlcTask</Name>
+							<ManualConfig>
+								<OTCID>#x02010080</OTCID>
+							</ManualConfig>
+							<Priority>25</Priority>
+							<CycleTime>1000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="25" OTCID="#x08502341"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>

@@ -19,7 +19,7 @@
     <Company>TomasRompotl</Company>
     <Released>false</Released>
     <Title>Math</Title>
-    <ProjectVersion>0.0.2</ProjectVersion>
+    <ProjectVersion>0.0.1</ProjectVersion>
     <CombineIds>true</CombineIds>
   </PropertyGroup>
   <ItemGroup>
