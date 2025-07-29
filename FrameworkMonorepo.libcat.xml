@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LibraryCategories xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="LibraryCategories.xsd">
+	<LibraryCategory>
+		<Id>901231b5-5076-4b2d-a97d-533e8e1845c4</Id>
+		<Version>1.0.0.0</Version>
+		<DefaultName>FrameworkMonorepo</DefaultName>
+	</LibraryCategory>
+</LibraryCategories>

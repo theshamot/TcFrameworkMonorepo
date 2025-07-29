@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ReflectionTest" Id="{f12a370c-bcbc-088d-3cc3-c89575cfef88}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ReflectionTest EXTENDS TcUnit.FB_TestSuite
+VAR
+	reflection : Reflection(THIS, SIZEOF(THIS^));
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GetAllData();]]></ST>
+    </Implementation>
+    <Method Name="GetAllData" Id="{9926ef1f-d076-0efd-3a93-f80c25b9ed12}">
+      <Declaration><![CDATA[METHOD GetAllData : BOOL
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('Get all data');
+
+AssertEquals_STRING(
+	Actual := reflection.InstanceName,
+	Expected := 'FrameworkMonorepoTests.FMTypesTests.PRG_Test.reflectionTest',
+	Message := 'InstanceName was not obtained correctly');
+
+AssertEquals_STRING(
+	Actual := reflection.SolutionName,
+	Expected := 'FrameworkMonorepoTests',
+	Message := 'SolutionName was not obtained correctly');
+
+AssertEquals_STRING(
+	Actual := reflection.ProjectName,
+	Expected := 'FMTypesTests',
+	Message := 'ProjectName was not obtained correctly');
+
+AssertEquals_STRING(
+	Actual := reflection.ParentName,
+	Expected := 'PRG_Test',
+	Message := 'ParentName was not obtained correctly');
+
+AssertEquals_STRING(
+	Actual := reflection.Name,
+	Expected := 'reflectionTest',
+	Message := 'Name was not obtained correctly');
+
+AssertEquals_STRING(
+	Actual := reflection.ObjectPath,
+	Expected := 'PRG_Test.reflectionTest',
+	Message := 'ObjectPath was not obtained correctly');
+
+AssertEquals_STRING(
+	Actual := reflection.TypeName,
+	Expected := 'ReflectionTest',
+	Message := 'TypeName was not obtained correctly');
+
+TEST_FINISHED();]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -4,26 +4,26 @@
 		<System>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">
-					<Name>TypesTestTask</Name>
+					<Name>FMTypesTestsTask</Name>
 				</Task>
 				<Task Id="4" Priority="21" CycleTime="10000" AmsPort="351" AdtTasks="true">
-					<Name>StringsTestTask</Name>
+					<Name>FMStringsTestsTask</Name>
 				</Task>
 				<Task Id="5" Priority="22" CycleTime="10000" AmsPort="352" AdtTasks="true">
-					<Name>DataTestTask</Name>
+					<Name>FMDataTestsTask</Name>
 				</Task>
 				<Task Id="6" Priority="23" CycleTime="10000" AmsPort="353" AdtTasks="true">
-					<Name>MathTestTask</Name>
+					<Name>FMMathTestsTask</Name>
 				</Task>
 				<Task Id="7" Priority="24" CycleTime="10000" AmsPort="354" AdtTasks="true">
-					<Name>TimesTestTask</Name>
+					<Name>FMTimeTestsTask</Name>
 				</Task>
 			</Tasks>
 		</System>
 		<Plc>
-			<Project GUID="{4ECF911A-1A9B-479B-9EFA-F8800C8A4019}" Name="TypesTest" PrjFilePath="TypesTest\TypesTest.plcproj" TmcFilePath="TypesTest\TypesTest.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TypesTest\TypesTest.tmc" TmcHash="{47FDDDD5-68E5-8F66-9F84-4357A86197EF}">
-					<Name>TypesTest Instance</Name>
+			<Project GUID="{4ECF911A-1A9B-479B-9EFA-F8800C8A4019}" Name="FMTypesTests" PrjFilePath="FMTypesTests\FMTypesTests.plcproj" TmcFilePath="FMTypesTests\FMTypesTests.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTypesTests\FMTypesTests.tmc" TmcHash="{17C4FED1-BB31-5804-34FF-BD920236D0C9}">
+					<Name>FMTypesTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
@@ -41,9 +41,9 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
-			<Project GUID="{189A3C8A-38C8-4CAB-8A39-F5E58C2443EC}" Name="StringsTest" PrjFilePath="StringsTest\StringsTest.plcproj" TmcFilePath="StringsTest\StringsTest.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{CFB28CEB-4739-F53A-5F28-BF5F4A83FB4B}">
-					<Name>StringsTest Instance</Name>
+			<Project GUID="{189A3C8A-38C8-4CAB-8A39-F5E58C2443EC}" Name="FMStringsTests" PrjFilePath="FMStringsTests\FMStringsTests.plcproj" TmcFilePath="FMStringsTests\FMStringsTests.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMStringsTests\FMStringsTests.tmc" TmcHash="{D8BC5AEF-CD5C-83FC-218F-9E12C1032487}">
+					<Name>FMStringsTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
@@ -61,9 +61,9 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
-			<Project GUID="{835C75BD-06BC-466F-A101-9FF93498219C}" Name="DataTest" PrjFilePath="DataTest\DataTest.plcproj" TmcFilePath="DataTest\DataTest.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{4941E7C3-00BE-26E7-AE3F-38122F16FFBC}">
-					<Name>DataTest Instance</Name>
+			<Project GUID="{835C75BD-06BC-466F-A101-9FF93498219C}" Name="FMDataTests" PrjFilePath="FMDataTests\FMDataTests.plcproj" TmcFilePath="FMDataTests\FMDataTests.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMDataTests\FMDataTests.tmc" TmcHash="{AE7656BF-CFA1-CCB4-D5EF-BCF521E5D26D}">
+					<Name>FMDataTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
@@ -81,9 +81,9 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
-			<Project GUID="{1F56573A-F5D8-4D16-9157-1EC753D6EC5B}" Name="MathTest" PrjFilePath="MathTest\MathTest.plcproj" TmcFilePath="MathTest\MathTest.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{B5E3AADD-3C1D-0FB8-A521-5A05573D18E9}">
-					<Name>MathTest Instance</Name>
+			<Project GUID="{1F56573A-F5D8-4D16-9157-1EC753D6EC5B}" Name="FMMathTests" PrjFilePath="FMMathTests\FMMathTests.plcproj" TmcFilePath="FMMathTests\FMMathTests.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMMathTests\FMMathTests.tmc" TmcHash="{7977BA75-5C0A-C33A-6206-EE85F7D3A456}">
+					<Name>FMMathTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
@@ -101,9 +101,9 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
-			<Project GUID="{0F712BEB-C677-4931-8D9B-992AE3C31A3F}" Name="TimesTest" PrjFilePath="TimesTest\TimesTest.plcproj" TmcFilePath="TimesTest\TimesTest.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{FDB91130-C4F2-568F-DCF8-58D40BF3700B}">
-					<Name>TimesTest Instance</Name>
+			<Project GUID="{0F712BEB-C677-4931-8D9B-992AE3C31A3F}" Name="FMTimeTests" PrjFilePath="FMTimeTests\FMTimeTests.plcproj" TmcFilePath="FMTimeTests\FMTimeTests.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTimeTests\FMTimeTests.tmc" TmcHash="{91D9A101-601A-F9A6-0FE4-1333DBD037B0}">
+					<Name>FMTimeTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>
