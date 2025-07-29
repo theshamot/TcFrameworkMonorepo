@@ -81,7 +81,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{8CC7B01A-23A8-4E47-8E43-E4DD75371101}" Name="FMRecipes" PrjFilePath="FMRecipes\FMRecipes.plcproj" TmcFilePath="FMRecipes\FMRecipes.tmc" ReloadTmc="true" AmsPort="858" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMRecipes\FMRecipes.tmc" TmcHash="{BBEF2BDA-0812-C11E-B145-D1C0BC5F2EA1}">
+				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMRecipes\FMRecipes.tmc" TmcHash="{D91ADBBC-1747-2A4E-B437-641A0BA14E7D}">
 					<Name>FMRecipes Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

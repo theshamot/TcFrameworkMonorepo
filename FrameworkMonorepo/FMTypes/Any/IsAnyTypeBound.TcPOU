@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="IsAnyTypeBound" Id="{ef7a7cc5-344a-078b-1ecf-778b92580513}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION IsAnyTypeBound : BOOL
+VAR_INPUT
+	anytype : __SYSTEM.AnyType;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IsAnyTypeBound := anytype.pValue <> 0 AND anytype.diSize > 0;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

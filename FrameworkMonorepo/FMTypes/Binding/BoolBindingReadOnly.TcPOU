@@ -29,15 +29,15 @@ END_VAR
         <ST><![CDATA[__DELETE(THIS);]]></ST>
       </Implementation>
     </Method>
-    <Property Name="IsBinded" Id="{b98b2f4c-bef9-4cbe-8145-c6052f4c6749}">
+    <Property Name="IsBound" Id="{b98b2f4c-bef9-4cbe-8145-c6052f4c6749}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY IsBinded : BOOL]]></Declaration>
+PROPERTY IsBound : BOOL]]></Declaration>
       <Get Name="Get" Id="{c3ecef46-ab78-4488-800b-ef0c98e1f08e}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[IsBinded := __ISVALIDREF(ref);]]></ST>
+          <ST><![CDATA[IsBound := __ISVALIDREF(ref);]]></ST>
         </Implementation>
       </Get>
     </Property>

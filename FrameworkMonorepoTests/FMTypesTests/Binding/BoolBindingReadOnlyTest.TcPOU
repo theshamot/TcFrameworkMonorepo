@@ -6,7 +6,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CheckIsBinded();
+      <ST><![CDATA[CheckIsBound();
 BindingReturnsSameValue();
 NegatedBindingReturnsNegatedValue();]]></ST>
     </Implementation>
@@ -31,7 +31,7 @@ actual := binding.Value;
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'Value should return FALSE if binded variable is FALSE');
+	Message := 'Value should return FALSE if bound variable is FALSE');
 	
 variable := TRUE;
 
@@ -41,13 +41,13 @@ actual := binding.Value;
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'Value should return TRUE if binded variable is TRUE');
+	Message := 'Value should return TRUE if bound variable is TRUE');
 
 TEST_FINISHED();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="CheckIsBinded" Id="{20dbe522-faf1-0fc5-0fe6-786020207073}">
-      <Declaration><![CDATA[METHOD CheckIsBinded : BOOL
+    <Method Name="CheckIsBound" Id="{20dbe522-faf1-0fc5-0fe6-786020207073}">
+      <Declaration><![CDATA[METHOD CheckIsBound : BOOL
 VAR
 	expected : BOOL;
 	actual : BOOL;
@@ -57,25 +57,25 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[TcUnit.TEST('Check binded');
+        <ST><![CDATA[TcUnit.TEST('Check bound');
 
 expected := FALSE;
-actual := binding.IsBinded;
+actual := binding.IsBound;
 
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'IsBinded should be FALSE before binding');
+	Message := 'IsBound should be FALSE before binding');
 
 binding.Bind(variable);
 
 expected := TRUE;
-actual := binding.IsBinded;
+actual := binding.IsBound;
 
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'IsBinded should be TRUE after successful Bind()');
+	Message := 'IsBound should be TRUE after successful Bind()');
 
 TEST_FINISHED();]]></ST>
       </Implementation>
@@ -102,7 +102,7 @@ actual := binding.Value;
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'Value should return TRUE if binded variable is FALSE');
+	Message := 'Value should return TRUE if bound variable is FALSE');
 	
 variable := TRUE;
 
@@ -112,7 +112,7 @@ actual := binding.Value;
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'Value should return FALSE if binded variable is TRUE');
+	Message := 'Value should return FALSE if bound variable is TRUE');
 
 TEST_FINISHED();]]></ST>
       </Implementation>

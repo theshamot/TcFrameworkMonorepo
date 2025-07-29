@@ -142,7 +142,7 @@ PROPERTY ValueString : T_MaxString]]></Declaration>
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[IF (IsAnyTypeBinded(_Value)) THEN
+          <ST><![CDATA[IF (IsAnyTypeBound(_Value)) THEN
 	ValueString := AnyTypeToString(_Value);
 END_IF]]></ST>
         </Implementation>

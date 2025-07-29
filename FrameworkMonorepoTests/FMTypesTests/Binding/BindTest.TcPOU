@@ -40,7 +40,7 @@ actual := binding.Value;
 AssertEquals(
 	Expected := expected,
 	Actual := actual,
-	Message := 'Binding should return value of binded variable');
+	Message := 'Binding should return value of bound variable');
 	
 __QUERYINTERFACE(binding, disposable);
 disposable.Dispose();

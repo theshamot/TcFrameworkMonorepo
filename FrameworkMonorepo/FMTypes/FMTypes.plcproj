@@ -59,7 +59,7 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Any\IsAnyTypeBinded.TcPOU">
+    <Compile Include="Any\IsAnyTypeBound.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>

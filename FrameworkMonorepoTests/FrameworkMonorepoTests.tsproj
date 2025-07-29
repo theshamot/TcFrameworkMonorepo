@@ -22,7 +22,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{4ECF911A-1A9B-479B-9EFA-F8800C8A4019}" Name="FMTypesTests" PrjFilePath="FMTypesTests\FMTypesTests.plcproj" TmcFilePath="FMTypesTests\FMTypesTests.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTypesTests\FMTypesTests.tmc" TmcHash="{17C4FED1-BB31-5804-34FF-BD920236D0C9}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTypesTests\FMTypesTests.tmc" TmcHash="{9B8661C2-5E5D-0AC0-5BCF-8A2D1513878D}">
 					<Name>FMTypesTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -62,7 +62,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{835C75BD-06BC-466F-A101-9FF93498219C}" Name="FMDataTests" PrjFilePath="FMDataTests\FMDataTests.plcproj" TmcFilePath="FMDataTests\FMDataTests.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMDataTests\FMDataTests.tmc" TmcHash="{AE7656BF-CFA1-CCB4-D5EF-BCF521E5D26D}">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMDataTests\FMDataTests.tmc" TmcHash="{A18610F8-B73B-19BB-901D-CEBDB89C82A7}">
 					<Name>FMDataTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -82,7 +82,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{1F56573A-F5D8-4D16-9157-1EC753D6EC5B}" Name="FMMathTests" PrjFilePath="FMMathTests\FMMathTests.plcproj" TmcFilePath="FMMathTests\FMMathTests.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMMathTests\FMMathTests.tmc" TmcHash="{7977BA75-5C0A-C33A-6206-EE85F7D3A456}">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMMathTests\FMMathTests.tmc" TmcHash="{A7000892-8AA6-189B-44BB-51F325C9F682}">
 					<Name>FMMathTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -102,7 +102,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{0F712BEB-C677-4931-8D9B-992AE3C31A3F}" Name="FMTimeTests" PrjFilePath="FMTimeTests\FMTimeTests.plcproj" TmcFilePath="FMTimeTests\FMTimeTests.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTimeTests\FMTimeTests.tmc" TmcHash="{91D9A101-601A-F9A6-0FE4-1333DBD037B0}">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTimeTests\FMTimeTests.tmc" TmcHash="{5247C179-4EE9-9C3A-6DED-F472701EC02F}">
 					<Name>FMTimeTests Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

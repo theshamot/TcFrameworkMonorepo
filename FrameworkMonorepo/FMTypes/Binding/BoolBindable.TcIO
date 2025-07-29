@@ -10,9 +10,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Property Name="IsBinded" Id="{bf207122-e156-4541-9506-c25dc82fbd26}">
+    <Property Name="IsBound" Id="{bf207122-e156-4541-9506-c25dc82fbd26}">
       <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
-PROPERTY IsBinded : BOOL]]></Declaration>
+PROPERTY IsBound : BOOL]]></Declaration>
       <Get Name="Get" Id="{9887206b-7c43-4055-99d6-088a465da390}">
         <Declaration><![CDATA[]]></Declaration>
       </Get>
