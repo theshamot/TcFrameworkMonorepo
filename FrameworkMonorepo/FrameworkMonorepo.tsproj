@@ -57,7 +57,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{3C21609A-87C3-4CAE-A356-8072488C42DC}" Name="FMData" PrjFilePath="FMData\FMData.plcproj" TmcFilePath="FMData\FMData.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMData\FMData.tmc" TmcHash="{6BB45673-A108-A161-8F87-520529D9E135}">
+				<Instance Id="#x08502080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMData\FMData.tmc" TmcHash="{02D6F8A8-4EA0-7D12-9C8A-B1D45493E598}">
 					<Name>FMData Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -81,7 +81,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{8CC7B01A-23A8-4E47-8E43-E4DD75371101}" Name="FMRecipes" PrjFilePath="FMRecipes\FMRecipes.plcproj" TmcFilePath="FMRecipes\FMRecipes.tmc" ReloadTmc="true" AmsPort="858" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMRecipes\FMRecipes.tmc" TmcHash="{D91ADBBC-1747-2A4E-B437-641A0BA14E7D}">
+				<Instance Id="#x085021c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMRecipes\FMRecipes.tmc" TmcHash="{0AC58DD2-F51B-F51E-80EA-9BE1A38C6AAF}">
 					<Name>FMRecipes Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -105,7 +105,7 @@
 				</Instance>
 			</Project>
 			<Project GUID="{953DA86C-A3BE-407B-8547-3E99333FBF99}" Name="FMTime" PrjFilePath="FMTime\FMTime.plcproj" TmcFilePath="FMTime\FMTime.tmc" ReloadTmc="true" AmsPort="860" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502240" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTime\FMTime.tmc" TmcHash="{06B89A59-0210-7B6F-AE5F-F0BF4BCA7D62}">
+				<Instance Id="#x08502240" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMTime\FMTime.tmc" TmcHash="{97294A76-806F-3F1A-6606-C62CB44F057F}">
 					<Name>FMTime Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
@@ -131,6 +131,30 @@
 			<Project GUID="{F13CC73C-ED1E-40B5-9CB0-4C81D85EC09B}" Name="FMEvents" PrjFilePath="FMEvents\FMEvents.plcproj" TmcFilePath="FMEvents\FMEvents.tmc" ReloadTmc="true" AmsPort="862" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x085022c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="FMEvents\FMEvents.tmc" TmcHash="{31C65AFC-4FFA-38F3-E5ED-0FF0D8FE426A}">
 					<Name>FMEvents Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
+			<Project GUID="{A3439E66-E210-475B-8CD2-F0BBDCCC2254}" Name="FMBasicDevices" PrjFilePath="FMBasicDevices\FMBasicDevices.plcproj" TmcFilePath="FMBasicDevices\FMBasicDevices.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{6CEED5C6-B405-B073-3616-25C3B77535E9}">
+					<Name>FMBasicDevices Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
+			<Project GUID="{1D43DBC1-ED5A-4799-817E-FC42FA2F3F14}" Name="FMCmd" PrjFilePath="FMCmd\FMCmd.plcproj" TmcFilePath="FMCmd\FMCmd.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcHash="{4EDF9F6A-D479-58C9-BE5B-1C60E2AE03F9}">
+					<Name>FMCmd Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>
 						<Context>

@@ -6,7 +6,7 @@
     <ProjectGuid>{6fbf6e92-fb4d-4371-9288-fd05e9ab792a}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>true</WriteProductVersion>
+    <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>FMMath</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
@@ -33,11 +33,44 @@
     </SelectedLibraryCategories>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Fraction" />
+    <Folder Include="Arithmetic" />
     <Folder Include="Point" />
+    <Folder Include="Point\Equals" />
     <Folder Include="Range" />
+    <Folder Include="Range\Equals" />
+    <Folder Include="Range\IsInRange" />
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fraction\Fraction.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Arithmetic\ModuloLREAL.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Arithmetic\Pow2.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Arithmetic\Pow3.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Point\Equals\EqualsLREAL.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Point\Equals\EqualsPoint2D.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Point\Equals\EqualsPoint3D.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Point\Point3D.TcDUT">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -46,15 +79,19 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Range\IsInRangeInclusive.TcPOU">
+    <Compile Include="Range\Equals\EqualsRange.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Range\IsInRangeInclusive2D.TcPOU">
+    <Compile Include="Range\IsInRange\IsInRangeInclusive.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="Range\IsInRangeInclusive3D.TcPOU">
+    <Compile Include="Range\IsInRange\IsInRangeInclusive2D.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Range\IsInRange\IsInRangeInclusive3D.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -78,6 +115,12 @@
     <None Include="FMMath.tmc">
       <SubType>Content</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Math">
+      <DefaultResolution>Tc2_Math, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Math</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

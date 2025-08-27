@@ -6,7 +6,7 @@
     <ProjectGuid>{8cc7b01a-23a8-4e47-8e43-e4dd75371101}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>true</WriteProductVersion>
+    <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>FMRecipes</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>

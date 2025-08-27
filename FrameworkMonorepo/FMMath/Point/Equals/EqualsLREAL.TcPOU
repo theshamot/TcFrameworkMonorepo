@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="EqualsLREAL" Id="{4aed6c8e-a7ce-0483-24c2-2e396af5ff43}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION EqualsLREAL : BOOL
+VAR_INPUT
+	n1 : LREAL;
+	n2 : LREAL;
+	epsilon : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[EqualsLREAL := ABS(n1 - n2) <= epsilon;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PartialDataEqualsUntil" Id="{ea535054-48b1-0666-38e2-e3c7d1adfa49}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION PartialDataEqualsUntil : BOOL
+VAR_INPUT
+	a : ANY;
+	b : ANY;
+	untilVariableInA : ANY;
+END_VAR
+VAR
+	length : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF (a.diSize <> b.diSize) THEN
+	RETURN;
+END_IF
+IF (NOT (a.pValue <= untilVariableInA.pValue
+	AND (untilVariableInA.pValue + TO_DWORD(untilVariableInA.diSize)) <= (a.pValue + TO_DWORD(a.diSize)))) THEN
+	RETURN;
+END_IF
+
+length := untilVariableInA.pValue - a.pValue;
+PartialDataEqualsUntil := MEMCMP(pBuf1 := a.pValue, pBuf2 := b.pValue, n := length) = 0;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

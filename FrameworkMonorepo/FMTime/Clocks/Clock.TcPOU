@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Clock" Id="{12e9d754-7a2e-04e4-151b-81bf53a123a4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Clock IMPLEMENTS Cyclic
+VAR
+	_Enable : BOOL;
+	_Period : TIME;
+	_Duty : LREAL := 0.5;
+	switchTime : TIME;
+	timer : TON;
+	_Clock : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="CalcSwitchTime" Id="{eeb3fa65-90da-0834-10c0-64a9d6b20f5f}">
+      <Declaration><![CDATA[METHOD PRIVATE CalcSwitchTime
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[switchTime := LREAL_TO_TIME(TIME_TO_LREAL(_Period) * _Duty);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Clock" Id="{94afcf8c-3fec-03bf-0ea5-551f99fbc25b}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Clock : BOOL]]></Declaration>
+      <Get Name="Get" Id="{86ccfb57-1f88-0117-3a6c-95826046587c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Clock := _Clock;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Cyclic" Id="{d126b246-8ccf-0404-1dbe-459eed47bff6}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[timer(IN := _Enable, PT := _Period);
+IF (timer.Q) THEN
+	timer(IN := FALSE);
+	timer(IN := TRUE);
+END_IF
+_Clock := _Enable AND timer.ET >= switchTime;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Duty" Id="{62ad35f6-8917-03d8-1e82-2f52ccf6ca78}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Duty : LREAL]]></Declaration>
+      <Get Name="Get" Id="{8de1ac67-05b7-0036-0652-56a889ec5cee}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Duty := _Duty;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3b362bf6-5c6f-0809-0f27-e988aae87027}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Duty := Duty;
+CalcSwitchTime();
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Enable" Id="{6422a66f-fc11-03a1-3de3-f3d118b6b8d2}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Enable : BOOL]]></Declaration>
+      <Get Name="Get" Id="{bbcdd0d0-b0bb-0fb1-3dd7-9ea84861c7f8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Enable := _Enable;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5d4d4c96-c66a-0ee5-2455-16a7b2586cfe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Enable := Enable;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Frequency" Id="{4bffecbf-5949-0b82-0871-84e2d868ed16}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Frequency : LREAL]]></Declaration>
+      <Get Name="Get" Id="{4748602e-ad65-03da-167f-a836679cba0a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF (_Period > T#0S) THEN
+	Frequency := 1000/TIME_TO_LREAL(_Period);
+ELSE
+	Frequency := 0;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{22da3ccc-c4cc-06b8-171f-3c72e810f4b3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF (Frequency > 0) THEN
+	_Period := LREAL_TO_TIME(1000/Frequency);
+ELSE
+	_Period := T#0S;
+END_IF
+CalcSwitchTime();
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="Period" Id="{40003a89-ed2a-0499-316a-9142e6fbe1ba}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Period : TIME]]></Declaration>
+      <Get Name="Get" Id="{1055d6d0-8094-0eb5-2db3-34798008d588}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Period := _Period;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b3042076-8a6c-0519-1c2d-dd4b07d3ce04}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Period := Period;
+CalcSwitchTime();
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

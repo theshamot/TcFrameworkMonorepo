@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="ReplaceString" Id="{1d9a911a-d2c2-41a5-bc59-e93c9a23e24a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION ReplaceString
 VAR_INPUT

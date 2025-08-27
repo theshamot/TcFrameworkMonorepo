@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="BeaconItem" Id="{e4887bfd-7446-0050-2144-2d137e0b82fe}">
+    <Declaration><![CDATA[TYPE BeaconItem :
+STRUCT
+	Number : INT;
+	Clock : Clock;
+	Output : REFERENCE TO BOOL;
+	Duration : TON;
+	DurationTime : TIME;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

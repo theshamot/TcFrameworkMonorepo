@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="EqualsRange" Id="{bf5b60eb-5b53-0f64-3dc8-e3bca8b3d687}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION EqualsRange : BOOL
+VAR_INPUT
+	range1 : Range;
+	range2 : Range;
+	epsilon : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[EqualsRange := EqualsLREAL(range1.Bottom, range2.Bottom, epsilon)
+			AND EqualsLREAL(range1.Top, range2.Top, epsilon);
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

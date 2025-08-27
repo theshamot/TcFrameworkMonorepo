@@ -6,7 +6,7 @@
     <ProjectGuid>{953da86c-a3be-407b-8547-3e99333fbf99}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>true</WriteProductVersion>
+    <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>FMTime</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
@@ -40,6 +40,10 @@
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clocks\Clock.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Clocks\PeriodicTrigger.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

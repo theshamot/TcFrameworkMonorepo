@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="Fraction" Id="{9fe5d316-993a-0d8a-0313-85b3ff3b56bb}">
+    <Declaration><![CDATA[TYPE Fraction :
+STRUCT
+	Numerator : LREAL;
+	Denominator : LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

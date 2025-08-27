@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="SecondsToTime" Id="{9f0ce1c2-aa18-084e-2cc7-2c5d5d34bc29}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION SecondsToTime : TIME
 VAR_INPUT

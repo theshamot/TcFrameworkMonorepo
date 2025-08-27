@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="StringBuilderExtBuffer" Id="{261b6625-c824-4ba7-8b30-9e72c2ea80b1}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StringBuilderExtBuffer
 VAR

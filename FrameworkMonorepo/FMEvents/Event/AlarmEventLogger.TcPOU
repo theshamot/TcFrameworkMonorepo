@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="AlarmEventLogger" Id="{d0e3ccbe-965e-0019-3a52-a4d182233dd4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK AlarmEventLogger IMPLEMENTS Alarm
 VAR

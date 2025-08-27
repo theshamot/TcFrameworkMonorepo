@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Cmd" Id="{e23cdf38-cc76-0c17-2044-3ae4f0301a3a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Cmd IMPLEMENTS Cyclic
+VAR
+	startProcess : NT_StartProcess;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="Busy" Id="{f4f874ce-deca-0e62-3247-4257d5a8c677}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{eea6cd53-5635-0863-1b3b-41b5fae984cc}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := startProcess.BUSY;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Cyclic" Id="{ed11f2c0-e81a-0565-3a5c-1410b332b0d4}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[startProcess(START := FALSE);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Execute" Id="{351eff9e-be49-0b05-0b20-79f307f3c593}">
+      <Declaration><![CDATA[METHOD Execute
+VAR_INPUT
+	command : T_MaxString;
+	arguments : T_MaxString;
+	workingDirectory : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[startProcess(
+	DIRNAME := workingDirectory,
+	PATHSTR := command,
+	COMNDLINE := arguments,
+	START := TRUE
+);
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

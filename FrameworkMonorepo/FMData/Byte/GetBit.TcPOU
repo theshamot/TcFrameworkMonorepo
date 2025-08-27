@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetBit" Id="{42277088-d5a2-0a8f-1797-6626b69cb432}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetBit : BOOL
+VAR_INPUT
+	data			: ANY;
+	bitIndex		: UDINT;
+END_VAR
+VAR
+	byteIndex		: UDINT;
+	bitNumber		: UDINT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[byteIndex := bitIndex / 8;
+bitNumber := bitIndex MOD 8;
+GetBit := BYTE_TO_BOOL(SHR(data.pValue[byteIndex], bitNumber) AND 16#01);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

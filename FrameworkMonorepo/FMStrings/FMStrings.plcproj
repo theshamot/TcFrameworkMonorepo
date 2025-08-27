@@ -6,7 +6,7 @@
     <ProjectGuid>{9d2aad14-8761-40ea-bb8c-b613084badee}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>true</WriteProductVersion>
+    <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>FMStrings</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>

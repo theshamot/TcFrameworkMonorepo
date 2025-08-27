@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="_QuickSort" Id="{bf682295-dce2-071a-1968-ae0df214bdd1}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION INTERNAL _QuickSort
 VAR_INPUT

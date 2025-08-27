@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="EqualsPoint2D" Id="{cfbe5c7c-4031-081c-3d4b-77d3c4948084}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION EqualsPoint2D : BOOL
+VAR_INPUT
+	p1 : Point2D;
+	p2 : Point2D;
+	epsilon : Point2D;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[EqualsPoint2D := EqualsLREAL(p1.X, p2.X, epsilon.X)
+			AND EqualsLREAL(p1.Y, p2.Y, epsilon.Y);
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

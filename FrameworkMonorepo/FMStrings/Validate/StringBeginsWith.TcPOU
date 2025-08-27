@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="StringBeginsWith" Id="{ad6f003b-91a3-0195-1c5a-34153d758fe5}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION StringBeginsWith : BOOL
 VAR_INPUT

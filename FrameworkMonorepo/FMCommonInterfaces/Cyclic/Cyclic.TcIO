@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+<TcPlcObject Version="1.1.0.1">
   <Itf Name="Cyclic" Id="{6715db9d-9390-03be-1292-a6e9996f2bd7}">
     <Declaration><![CDATA[INTERFACE Cyclic EXTENDS Queryable
 ]]></Declaration>

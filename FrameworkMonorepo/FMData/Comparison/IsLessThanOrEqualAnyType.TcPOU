@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="IsLessThanOrEqualAnyType" Id="{2b1c8f92-0781-0e7b-2091-b8bea93306d5}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION IsLessThanOrEqualAnyType : BOOL
 VAR_INPUT

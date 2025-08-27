@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ByteOr8Bits" Id="{9e3ed942-6806-019f-1220-8db92fbb0955}">
+    <Declaration><![CDATA[TYPE ByteOr8Bits :
+UNION
+	Byte_ : BYTE;
+	Bits8 : Bits8;
+END_UNION
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

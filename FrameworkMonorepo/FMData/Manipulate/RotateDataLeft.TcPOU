@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="RotateDataLeft" Id="{0f222a2b-01e7-028e-2d00-920ee600fdee}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION RotateDataLeft
+VAR_INPUT
+	data : POINTER TO BYTE;
+	length : UDINT;
+	byteCount : UDINT; // How far to the left are rotated
+END_VAR
+VAR
+	overflownData : POINTER TO BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[overflownData := __NEW(BYTE, byteCount);
+MEMCPY(destAddr := overflownData, srcAddr := data, n := byteCount);
+MEMMOVE(destAddr := data, srcAddr := data + byteCount, n := length - byteCount);
+MEMCPY(destAddr := data + (length - byteCount), srcAddr := overflownData, n := byteCount);
+__DELETE(overflownData);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

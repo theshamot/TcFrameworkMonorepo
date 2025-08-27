@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="IsGreaterThanAnyType" Id="{bc215b7b-077d-00ac-3bc2-da49398e4869}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION IsGreaterThanAnyType : BOOL
 VAR_INPUT

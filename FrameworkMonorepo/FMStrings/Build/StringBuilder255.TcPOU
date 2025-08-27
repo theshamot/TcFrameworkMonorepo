@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="StringBuilder255" Id="{b6b3672a-e798-4798-8505-28948b4a51c2}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK StringBuilder255
 VAR

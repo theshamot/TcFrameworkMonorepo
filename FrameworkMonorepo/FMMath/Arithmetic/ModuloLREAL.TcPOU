@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="ModuloLREAL" Id="{49038c5a-4f9c-05e8-19b7-02e574464d39}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ModuloLREAL : LREAL
+VAR_INPUT
+	divident : LREAL;
+	modulus : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ModuloLREAL := divident - modulus * FLOOR(divident / modulus);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

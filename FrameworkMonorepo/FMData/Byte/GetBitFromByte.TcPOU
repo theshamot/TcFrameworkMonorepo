@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="GetBitFromByte" Id="{fae73bce-5cad-0a87-0096-d85ad2ddbe8b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION GetBitFromByte : BOOL
+VAR_INPUT
+	dataByte : BYTE;
+	bitNumber : USINT;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GetBitFromByte := (SHR(dataByte, bitNumber) AND 1) = 1;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

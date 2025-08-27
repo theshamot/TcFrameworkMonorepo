@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Button" Id="{d569d8a9-7e03-0aa5-3d2e-7c27e4d10705}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Button IMPLEMENTS Cyclic
+VAR
+	button : REFERENCE TO BOOL;
+	
+	filter : TON;
+	pressTrigger : R_TRIG;
+	
+	_FilterTime : TIME := T#100MS;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Cyclic" Id="{5b29a088-3e9d-08f4-21b4-8532b302deaf}">
+      <Declaration><![CDATA[METHOD Cyclic
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[filter(IN := button, PT := _FilterTime);
+pressTrigger(CLK := filter.Q);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{ac3729d4-f2cc-0ea2-202c-6118d95bfee1}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	
+	button : REFERENCE TO BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.button REF= button;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="FilterTime" Id="{7a2f641b-45fe-0455-3d82-2c81a93ea53c}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY FilterTime : TIME]]></Declaration>
+      <Get Name="Get" Id="{4467cda2-6906-0390-3f7f-e6fea05a46d4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FilterTime := _FilterTime;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{996e3d42-0b6b-0eac-3953-4320d73d986c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_FilterTime := FilterTime;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="JustPressed" Id="{fe73df22-7eaa-011e-3033-2771177e0dae}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY JustPressed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a5652bf4-4b6e-0019-1a24-f274b25514f9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[JustPressed := pressTrigger.Q;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="Pressed" Id="{82fe1aed-3d4d-0cd6-2d4f-f6c9ffe206fa}">
+      <Declaration><![CDATA[{attribute 'monitoring' := 'call'}
+PROPERTY Pressed : BOOL]]></Declaration>
+      <Get Name="Get" Id="{112b16ba-5aa1-05f7-0e97-36bc9fdbf6ef}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Pressed := filter.Q;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

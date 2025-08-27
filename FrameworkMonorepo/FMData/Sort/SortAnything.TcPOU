@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+<TcPlcObject Version="1.1.0.1">
   <POU Name="SortAnything" Id="{75e13391-e630-0675-3459-e7fdd87162d1}" SpecialFunc="None">
     <Declaration><![CDATA[// sort any array of anything
 FUNCTION SortAnything

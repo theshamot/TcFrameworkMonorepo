@@ -6,7 +6,7 @@
     <ProjectGuid>{3c21609a-87c3-4cae-a356-8072488c42dc}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <DownloadApplicationInfo>true</DownloadApplicationInfo>
-    <WriteProductVersion>true</WriteProductVersion>
+    <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>FMData</Name>
     <ProgramVersion>3.1.4024.0</ProgramVersion>
@@ -33,6 +33,7 @@
     </SelectedLibraryCategories>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="Byte" />
     <Folder Include="Comparison" />
     <Folder Include="Manipulate" />
     <Folder Include="QuickSort" />
@@ -41,6 +42,22 @@
     <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Byte\Bits8.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Byte\ByteOr8Bits.TcDUT">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Byte\GetBit.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Byte\GetBitFromByte.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Comparison\CompareAnyType.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -77,11 +94,23 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="Comparison\PartialDataEqualsUntil.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="Manipulate\ClearData.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="Manipulate\ClearDataAnyType.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Manipulate\RotateDataLeft.TcPOU">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="Manipulate\RotateDataRight.TcPOU">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>

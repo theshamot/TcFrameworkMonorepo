@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="BeaconParameters" Id="{4cdd214e-71cb-0a4a-3fb6-da8008440e87}" ParameterList="True">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	MaxColorCount : INT := 4;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

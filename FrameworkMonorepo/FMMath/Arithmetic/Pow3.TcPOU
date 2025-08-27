@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Pow3" Id="{6c6a1f87-6dfb-0c65-39e0-c1d43287ffe2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Pow3 : LREAL
+VAR_INPUT
+	number : LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Pow3 := number * number * number;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
